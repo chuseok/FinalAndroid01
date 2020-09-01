@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dragon.mapper.ProductMapper">
+<resultMap type="org.dragon.domain.ProductVO" id="product">
+	<id column="proid" property="productId"/>
+	<result column="proname" property="productName"/>
+	<result column="proimg" property="productImage"/>
+	<result column="price" property="price"/>
+	<result column="category" property="category"/>
+	<result column="description" property="description"/>
+</resultMap>
+<select id="getList" resultMap="product">
+<![CDATA[
+	select * from product
+]]>
+</select>
+
+<select id="get" resultMap="product">
+	select * from product where proname =#{proname}
+</select>
+
+<select id="getListByCategory" resultMap="product">
+<![CDATA[
+	select * from product where category = #{category}
+]]>
+</select>
+<select id="getById" resultMap="product">
+	select * from product where proid=#{proid}
+</select>
+</mapper>

@@ -1,0 +1,376 @@
+
+/*초기화*/
+html, body, div, span, applet, object, iframe,
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+
+a, abbr, acronym, address, big, cite, code,
+
+del, dfn, em, img, ins, kbd, q, s, samp,
+
+small, strike, strong, sub, sup, tt, var,
+
+b, u, i, center,
+
+dl, dt, dd, ol, ul, li,
+
+fieldset, form, label, legend,
+
+table, caption, tbody, tfoot, thead, tr, th, td,
+
+article, aside, canvas, details, embed, 
+
+figure, figcaption, footer, header, hgroup, 
+
+menu, nav, output, ruby, section, summary,
+
+time, mark, audio, video {
+
+    margin: 0;
+
+    padding: 0;
+
+    border: 0;
+
+    font-size: 100%;
+
+    font: inherit;
+
+    vertical-align: baseline;
+
+}
+html, body {
+	 min-height: 100%;
+}
+
+* {
+  box-sizing: inherit;
+
+}
+
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #fff;
+}
+
+/*header*/
+
+header {
+  background-color: #f85f73;
+}
+
+header a {
+  color: #fff;
+}
+
+.header-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 81.25em;
+  padding: 0 2.5em;
+  margin: 0 auto;
+  height: 5em;
+  background-color: #f85f73;
+  color: #fff;
+}
+
+.header-navbar .header-logo {
+	min-width: 80px;
+	height: 30px;
+  font-family: 'Gamja Flower', cursive;
+}
+
+.header-transitionGroup-Wrapper {
+  display: flex;
+  width: inherit;
+  width: 80%;
+  height: 5em;
+  align-items: center;
+  margin-left: 80px;
+}
+
+.header-transitionGroup-Wrapper div {
+  padding: 8px 12px;
+}
+
+.header-transitionGroup-Wrapper button {
+  border-style: none;
+  background-color: #f85f73;
+  width: 7em;
+  font-size: 15px;
+}
+
+.header-transitionGroup-Wrapper button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+
+.header-logo {
+  font-size: 30px;
+  color: #fff
+}
+
+.header-searchSection {
+  border-right: 1px solid #e3dfc8;
+}
+
+.header-searchSection button {
+	color: #fff;
+}
+
+.header-createSection {
+  display: inherit;
+  width: 85%;
+  color: #fff;
+}
+
+.header-createSection a {
+  min-width: 80px;
+}
+
+.header-createSection a:hover {
+  opacity: 0.5;
+}
+
+.header-createSection i {
+  padding: 0 5px;
+}
+
+.header-userSection {
+  display: inline-block;
+  text-align: right;
+  width: 15%;
+}
+
+/*main-contents*/
+
+.HomeLayout {
+  margin: 0 auto;
+  min-height:100vh;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.HomeLayout-container {
+  display: table;
+  max-width: 1300px;
+  margin: auto;
+  height: 100vh;
+  min-height: 100%;
+  background-color: #fff;
+}
+
+/*sidebar*/
+.HomeLayout-sidebar { 
+  display: table-cell;
+  position: relative;
+  height: 100%;
+  background-color: rgb(251, 251, 251);
+  font-size: 14px;
+  
+}
+
+.sidebar-navSection {
+  padding: 20px;
+  line-height: 1.625;
+  font-size: 100%;
+  width: 265px;
+  border-bottom: 1px solid #ebecf1;
+}
+
+.sidenav-menuItem {
+  display: inline-block;
+  width: 100%;
+  height: 45px;
+}
+
+.sidenav-menuItem-home {
+  display: inline-block;
+  width: calc(100% + 40px);
+  height: 45px;
+  margin-left: -20px;
+  background-color: #f9d56e;
+}
+
+.sidenav-menuItem-home .UlmenuItem {
+  margin-left: 20px;
+}
+
+.sidenav-menuItem-home .UlmenuItem .UlmenuItem-inner {
+  display: inline-block;
+  padding: 10px 5px;
+  box-sizing: inherit;
+  width: 100%;
+}
+
+.UlmenuItem .UlmenuItem-inner i {
+  padding-right: 10px;
+}
+
+.sidenav-menuItem .UlmenuItem {
+  width: 100%;
+  display:inline-block;
+}
+
+.sidenav-menuItem .UlmenuItem a {
+  color: black;
+}
+
+.sidenav-menuItem .UlmenuItem a:hover {
+  display: block;
+  background-color: #f9d56e;
+  margin-left: -20px;
+  width: calc(100% + 40px);
+}
+
+.sidenav-menuItem .UlmenuItem .UlmenuItem-inner {
+  display: inline-block;
+  padding: 10px 5px;
+  box-sizing: inherit;
+  width: 100%;
+}
+
+.sidenav-menuItem .UlmenuItem a .UlmenuItem-inner:hover {
+  margin-left: 20px;
+}
+
+.UlmenuItem-extend {
+  padding-left: 20px;
+
+}
+.UlmenuItem-extend i {
+  padding-right: 10px;
+}
+
+.sidenav-menuItem .UlmenuItem-extend .UlmenuItem-inner {
+  display: inline-block;
+  padding: 10px 5px;
+  box-sizing: inherit;
+  width: 100%;
+}
+
+.sidenav-menuItem .UlmenuItem-extend a{
+	color: black;
+}
+
+.sidenav-menuItem .UlmenuItem-extend a:hover {
+  color: #ff9a76;
+}
+
+
+/*sidebar-footer*/
+
+.sidebar-footer {
+  padding: 20px;
+  line-height: 1.625;
+  font-size: 100%;
+}
+
+.sidebar-footer a {
+  color: #ff9a76;
+  padding: 8px 0;
+}
+
+.sidebar-footer .social-icons {
+
+  color: #ff9a76;
+}
+
+.sidebar-footer .social-icons i {
+  padding: 20px 4px;
+}
+
+/*main-contents*/
+.HomeLayout-main {
+  display: table-cell;
+  position: relative;
+  font-size: 14px;
+  width: 830px;
+  height: 100vh;
+}
+
+.mainWrapper {
+  height: 100vh;
+}
+
+.mainWrapper .mainContents {
+  padding: 0 40px;
+}
+
+.mainContents-recentFeed {
+  padding: 0;
+}
+
+.mainContents-recentFeed .recentFeed-cards {
+  display: flex;
+  position: relative;
+  flex-direction:row;
+  flex-wrap: wrap;
+}
+
+.mainContents-recentFeed .recentFeed-cards .recentFeed-cardItem {
+  width: 340px;
+  height: 180px;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin: 10px;
+  background-color: rgb(224, 224, 224);
+  position:relative
+}
+
+.mainContents-recentFeed .recentFeed-cards .recentFeed-cardItem-inner {
+  padding: 0.75rem 1rem;
+  display: flex;
+}
+
+.mainContents-recentFeed .recentFeed-cards .recenFeed-cardItem-LinkBox {
+	width: 340px;
+  height: 180px;
+  /* border: 1px solid black; */
+  border-radius: 6px;
+  position: absolute;
+  z-index:100;
+  top : 0;
+  left: 0;
+}
+
+.mainContents-recentFeed .recentFeed-cards .recenFeed-cardItem-LinkBox a {
+	position: absolute;
+	display: inherit;
+	width: 100%;
+	height: 100%;	
+	top : 0;
+  left: 0;
+}
+	
+.mainContents-recommand {
+  padding: 20px 0;
+}
+
+.mainContents-recommand .recommand-cards {
+  display: flex;
+  position: relative;
+  flex-direction:row;
+  flex-wrap: wrap;
+}
+
+.mainContents-recommand .recommand-cards .recommand-cardItem {
+  width: 300px;
+  height: 180px;
+  border: 1px solid black;
+  border-radius: 6px;
+  margin: 10px;
+	background-color: rgb(224, 224, 224);
+	}
+
+
+
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+	<bean id="customAccessDenied" class="org.login.security.CustomAccessDeniedHandler"></bean>
+	<bean id="customLoginSuccess" class="org.login.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customPasswordEncoder" class="org.login.security.CustomNoOpPasswordEncoder"></bean>
+	<bean id="customUserDetailsService" class="org.login.security.CustomUserDetailsService"></bean>	
+	<bean id="SessionDestoryListener" class="org.dragon.listener.SessionDestoryListener"></bean>
+	
+	<security:http auto-config="true" use-expressions="true">
+	
+	<security:intercept-url pattern="/sample/all" access="permitAll"/>
+	<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')"/>
+	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>
+
+	<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+	<security:access-denied-handler ref="customAccessDenied"/>
+	
+	<security:logout logout-url="/customLogout" invalidate-session="true"/>
+	
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+	
+	
+	</security:http>
+
+<security:authentication-manager>
+<security:authentication-provider user-service-ref="customUserDetailsService">
+
+<!-- <security:jdbc-user-service data-source-ref="dataSource" 
+	  users-by-username-query="select userId, userPwd, enabled from  mem where userid = ?"
+	     authorities-by-username-query="select userId, auth from tbl_member_auth where userId=? "/> -->
+<security:password-encoder ref="customPasswordEncoder"/>
+	    </security:authentication-provider>
+</security:authentication-manager>
+</beans>

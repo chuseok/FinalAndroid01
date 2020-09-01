@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dragon.mapper.DragonMapper">
+<resultMap type="java.util.HashMap" id="selectMap">
+	<result property="level0" column="level0"/>
+	<result property="level1" column="level1"/>
+	<result property="level2" column="level2"/>
+	<result property="level3" column="level3"/>
+</resultMap>
+<select id="get" resultType="org.dragon.domain.DragonVO">
+	select * from dragoninfo where userid = #{userId} and equip = '1'
+</select>
+<select id="getAll" resultType="org.dragon.domain.DragonVO">
+	select * from dragoninfo where userid = #{userId}
+</select>
+
+<insert id="create">
+	insert into dragoninfo
+	(userid, totallevel, levelvalue, foodvalue, toyvalue, dragonid, equip, backgroundid) 
+	values(#{userId}, #{totalLevel},#{levelValue},#{foodValue},
+	#{toyValue}, #{dragonId}, #{equip}, #{backgroundId})
+</insert>
+
+<update id="update">
+	update dragoninfo
+	set totallevel = #{totalLevel},
+	levelvalue = #{levelValue},
+	foodvalue = #{foodValue},
+	toyvalue = #{toyValue}
+	where userid = #{userId}
+	and equip = '1'
+</update>
+<select id="getCoin" resultType="int">
+	select coin from mem where userid = #{userId}
+</select>
+
+<update id="updateCoin">
+	update mem
+	set coin = #{coin}
+	where userid = #{userId}
+</update>
+
+<select id="getegg" resultType="int">
+	select eggid from dragonlist, dragoninfo
+	where dragonlist.dragonid = dragoninfo.dragonid
+	and dragoninfo.equip ='1'
+	and userid = #{userId}
+</select>
+<select id="getDragonId" resultType="int">
+	select dragonid 
+	from dragonlist
+	where eggid = #{productId}
+</select>
+
+<update id="updateEqiup">
+	update dragoninfo
+	set equip = #{equip}
+	where userid = #{userId}
+	and dragonid = #{dragonId}
+</update>
+<select id="getImageByLevel" parameterType="int" resultMap="selectMap">
+	select proimg as level0, level1, level2, level3
+	from dragonlist, product where dragonlist.eggid = product.proid 
+	and dragonid = #{dragonId}
+</select>
+<select id="getBackground" resultType="int">
+	select backgroundid 
+	from dragoninfo
+	where userid = #{userId}
+</select>
+<update id="updateBackground">
+	update dragoninfo
+	set backgroundid = #{backgroundId}
+	where userid = #{userId}
+	and dragonid = #{dragonId}
+</update>
+
+<update id="updateFoodValue">
+	update dragoninfo
+	set foodvalue = #{foodValue}
+	where userid = #{userId}
+	and dragonid = #{dragonId}
+</update>
+<delete id="delete">
+	delete from dragoninfo
+	where userid = #{userId}
+	and dragonid = #{dragonId}
+</delete>
+<select id="getProductId" resultType="int">
+	select eggid 
+	from dragonlist
+	where dragonid = #{dragonId}
+</select>
+</mapper>

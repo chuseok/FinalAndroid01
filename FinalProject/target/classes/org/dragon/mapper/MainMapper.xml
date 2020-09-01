@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dragon.mapper.MainMapper">
+	<insert id="create">
+		insert into users values(#{userId},sysdate)
+	</insert>
+	
+	<select id="getDate" resultType="Date">
+		select lastconn from mem
+		where userid = #{userId}
+	</select>
+	<update id="updateDate">
+		update mem
+		set lastconn = sysdate
+		where userid = #{userId}
+	</update>
+
+</mapper>

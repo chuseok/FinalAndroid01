@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.login.mapper.MemberMapper">
+
+	<select id="getList" resultType="org.login.domain.MemberVO">
+<![CDATA[ select * from mem]]>
+	</select>
+	
+	<insert id="insert">
+	insert into mem (userId,userPwd,userName,birthday,phoneNo,email)
+	values (#{userId},#{userPwd},#{userName},#{birthday},#{phoneNo},#{email})
+	</insert>
+	<insert id="insertAuth">
+	insert into tbl_member_auth(userId,auth)
+	values (#{userId},'ROLE_MEMBER')
+	</insert>
+	
+	
+<select id="idCheck" resultType="int">
+select count(*) from mem where userId = #{userId}
+</select>
+
+
+<select id="nameCheck" resultType="int">
+select count(*) from mem where userName = #{userName}
+</select>
+
+<select id="PwdCheck" resultType="int">
+select count(*) from mem where userId = #{userId} AND userPwd = #{userPwd}
+</select>
+
+
+<delete id="withdrawal"> 
+delete from mem
+where userId = #{userId} and userPwd = #{userPwd}
+</delete>
+<delete id="removeauth">
+delete from tbl_member_auth 
+where userId = #{userId}
+</delete>
+
+
+<update id="modify">
+UPDATE mem SET userName=#{userName} WHERE userId=#{userId}
+</update>
+<update id="modify2">
+UPDATE mem SET userPwd=#{userPwd} WHERE userId=#{userId}
+</update>
+<update id="modify3">
+UPDATE mem SET phoneNo=#{phoneNo} WHERE userId=#{userId}
+</update>
+<update id="modify4">
+UPDATE mem SET email=#{email} WHERE userId=#{userId}
+</update>
+
+<resultMap type="org.login.domain.MemberVO" id="memberMap">
+<id property="userId" column="userId"/>
+<result property="userId" column="userId"/>
+<result property="userPwd" column="userPwd"/>
+<result property="userName" column="userName"/>
+<result property="birthday" column="birthday"/>
+<result property="phoneNo" column="phoneNo"/>
+<result property="email" column="email"/>
+<result property="lastConn" column="lastConn"/>
+<collection property="authList" resultMap="authMap">
+</collection>
+</resultMap>
+
+<resultMap type="org.login.domain.AuthVO" id="authMap">
+<result property="userId" column="userId"/>
+<result property="auth" column="auth"/>
+</resultMap>
+
+
+<select id="read" resultMap="memberMap">
+SELECT mem.userId, userPwd, userName, enabled, birthday, phoneNo, email, lastConn, auth 
+FROM mem mem LEFT OUTER JOIN tbl_member_auth auth on mem.userId = auth.userId
+WHERE mem.userId = #{userId}
+</select>
+	</mapper>
