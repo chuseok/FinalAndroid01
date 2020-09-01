@@ -87,9 +87,6 @@ public class LoginActivity extends AppCompatActivity {
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
-
                                 }
                             }
 
