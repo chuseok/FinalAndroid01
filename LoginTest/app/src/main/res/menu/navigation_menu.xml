@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="계정정보">
+        <menu>
+            <item android:title="My Account"/>
+        </menu>
+    </item>
+    <group android:id="@+id/word">
+
+        <item android:id="@+id/wordSort"
+            android:title="단어장 정렬"/>
+        <item android:id="@+id/wordTest"
+            android:title="단어장 테스트"/>
+    </group>
+
+    <group android:id="@+id/dragon">
+        <item android:id="@+id/dragonList"
+            android:title="자신의 용 목록"/>
+        <item android:id="@+id/itemList"
+            android:title="아이템 목록"/>
+    </group>
+
+
+
+</menu>
