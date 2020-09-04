@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.logintest.adapter.CardViewAdapter;
 import com.example.logintest.domain.Model;
+import com.example.logintest.manager.SharedPrefManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -145,5 +146,12 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    @Override
+    protected void onDestroy() {
+// TODO Auto-generated method stub
+        super.onDestroy();
+        SharedPrefManager session = SharedPrefManager.getInstance(getApplicationContext());
+        session.logout();
     }
 }
