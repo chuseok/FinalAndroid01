@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText userPwd;
     ProgressBar progressBar;
     Button loginBtn;
+    TextView registerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,19 @@ public class LoginActivity extends AppCompatActivity {
         userId = findViewById(R.id.userId);
         userPwd = findViewById(R.id.userPwd);
         loginBtn = findViewById(R.id.loginButton);
+        registerTextView = findViewById(R.id.registerTextView);
         progressBar.setVisibility(View.GONE);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userLogin();
+            }
+        });
+        registerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent registerActivity = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(registerActivity);
             }
         });
     }
