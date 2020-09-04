@@ -152,6 +152,6 @@ public class MainActivity extends AppCompatActivity {
 // TODO Auto-generated method stub
         super.onDestroy();
         SharedPrefManager session = SharedPrefManager.getInstance(getApplicationContext());
-        session.logout();
+        session.destorySession();
     }
 }
