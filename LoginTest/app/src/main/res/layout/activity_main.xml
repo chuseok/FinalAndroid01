@@ -13,13 +13,33 @@
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_left"
-        android:layout_width="wrap_content"
+        android:id="@+id/activity_main_nav_view_left"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:clipToPadding="false"
         app:menu="@menu/navigation_menu">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="start"
+                android:background="#FF0505"
+                android:text="a" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +57,7 @@
 
     </com.google.android.material.navigation.NavigationView>
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_right"
+        android:id="@+id/activity_main_nav_view_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"

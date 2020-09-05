@@ -46,9 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         progressBar = findViewById(R.id.progressBar);
-        userId = findViewById(R.id.userId);
-        userPwd = findViewById(R.id.userPwd);
-        loginBtn = findViewById(R.id.loginButton);
+        userId = findViewById(R.id.activity_login_et_userId);
+        userPwd = findViewById(R.id.activity_login_et_userPwd);
+        loginBtn = findViewById(R.id.activity_login_bt_loginBtn);
         registerTextView = findViewById(R.id.registerTextView);
         progressBar.setVisibility(View.GONE);
         loginBtn.setOnClickListener(new View.OnClickListener() {

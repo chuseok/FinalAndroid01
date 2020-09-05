@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.logintest.adapter.CardViewAdapter;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.Open, R.string.Close);
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        leftNavigationView = (NavigationView)findViewById(R.id.nav_view_left);
+
+        leftNavigationView = (NavigationView)findViewById(R.id.activity_main_nav_view_left);
         leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -67,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        rightNavigationView = findViewById(R.id.nav_view_right);
+
+        rightNavigationView = findViewById(R.id.activity_main_nav_view_right);
         rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(new Model(R.drawable.ic_launcher_background,"4444","555555555555"));
 
         adapter = new CardViewAdapter(models,this);
-        viewPager = findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.activity_main_viewPager);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(130,0,130,0);
 

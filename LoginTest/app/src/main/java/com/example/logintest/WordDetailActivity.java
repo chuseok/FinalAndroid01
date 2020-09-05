@@ -19,7 +19,7 @@ public class WordDetailActivity extends AppCompatActivity{
         String title = intent.getExtras().getString("param");
         tx.setText(title);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
     }
 }
