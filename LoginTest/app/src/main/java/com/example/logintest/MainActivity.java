@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "wordSort",Toast.LENGTH_SHORT).show();break;
                     case R.id.wordTest:
                         Toast.makeText(MainActivity.this, "My wordTest",Toast.LENGTH_SHORT).show();break;
+
                     default:
                         return true;
                 }
@@ -90,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
 
                 drawer.closeDrawer(GravityCompat.END);
                 return true;
+            }
+        });
+
+        Button setting = findViewById(R.id.activity_main_bt_setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"aaa",Toast.LENGTH_SHORT).show();
+                drawer.closeDrawer(GravityCompat.START);
             }
         });
 
@@ -148,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {//toolbar에 버튼 추가
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.app_bar_ic_notification, menu);
         return true;
     }
     @Override
