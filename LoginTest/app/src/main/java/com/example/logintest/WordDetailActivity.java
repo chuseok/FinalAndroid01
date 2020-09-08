@@ -1,16 +1,20 @@
 package com.example.logintest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
-import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 public class WordDetailActivity extends AppCompatActivity{
@@ -30,10 +34,18 @@ public class WordDetailActivity extends AppCompatActivity{
         //AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        c.setExpandedTitleColor(Color.TRANSPARENT);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayShowTitleEnabled(true);
+        c.setExpandedTitleColor(Color.TRANSPARENT);//헤더 확장될때 타이틀 투명하게 처리
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//헤더 back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        Button shareBtn = findViewById(R.id.activity_word_detail_bt_share);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"share",Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -43,5 +55,19 @@ public class WordDetailActivity extends AppCompatActivity{
         return true;
     }
 
+    @SuppressLint("RestrictedApi")//버그인듯..
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){//헤더 우측의 overflow menu 생성
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_bar_overflow,menu);
+
+        if(menu instanceof MenuBuilder){
+
+            MenuBuilder menuBuilder = (MenuBuilder) menu;
+            menuBuilder.setOptionalIconsVisible(true);
+        }
+
+        return true;
+    }
 }
 

@@ -106,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
 
         //cardView setting
         models = new ArrayList<>();
-        models.add(new Model(R.drawable.ic_launcher_background,"1111","22222222222"));
-        models.add(new Model(R.drawable.ic_launcher_background,"2222","33333333333"));
-        models.add(new Model(R.drawable.ic_launcher_background,"4444","555555555555"));
+        models.add(new Model("1111","22222222222"));
+        models.add(new Model("2222","33333333333"));
+        models.add(new Model("4444","555555555555"));
 
         adapter = new CardViewAdapter(models,this);
         viewPager = findViewById(R.id.activity_main_viewPager);
@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-// TODO Auto-generated method stub
         super.onDestroy();
         SharedPrefManager session = SharedPrefManager.getInstance(getApplicationContext());
         session.destorySession();

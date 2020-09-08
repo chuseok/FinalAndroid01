@@ -11,6 +11,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "sharedpref";
     private static final String KEY_USERID = "userId";
     private static final String KEY_USERPASSWORD = "userPwd";
+    private static final String KEY_IDCHECK = "idCheck";
 
     private static SharedPrefManager mInstance;
     private static Context mCtx;
@@ -33,6 +34,7 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERID, user.getUserId());
         editor.putString(KEY_USERPASSWORD, user.getUserPwd());
+        editor.putBoolean(KEY_IDCHECK, user.isIdCheck());
         editor.apply();
     }
 
@@ -41,13 +43,13 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERID, null) != null;
     }
-
     //this method will give the logged in user
     public User getUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new User(
                 sharedPreferences.getString(KEY_USERID, null),
-                sharedPreferences.getString(KEY_USERPASSWORD, null)
+                sharedPreferences.getString(KEY_USERPASSWORD, null),
+                sharedPreferences.getBoolean(KEY_IDCHECK,false)
         );
     }
 

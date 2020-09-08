@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:title="계정정보"
-        >
+    <!--
+    <item android:title="계정정보">
         <menu>
-            <item android:title="My Account"
-                />
+            <item android:title="My Account" />
         </menu>
     </item>
+    -->
     <group android:id="@+id/word">
 
         <item android:id="@+id/wordSort"

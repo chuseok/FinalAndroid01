@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:minHeight="250dp"
+            android:minHeight="70dp"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
@@ -69,19 +69,21 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_worddetail" />
+    <include layout="@layout/content_word_detail" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/header_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
-        android:src="@drawable/ic_setting_black"
+        android:src="@drawable/ic_test_black"
         app:backgroundTint="#FFFFFF"
         app:layout_anchor="@id/activity_word_detail_app_bar"
         app:layout_anchorGravity="bottom|right|end" />

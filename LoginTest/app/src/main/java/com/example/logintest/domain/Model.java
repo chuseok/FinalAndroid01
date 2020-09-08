@@ -1,23 +1,13 @@
 package com.example.logintest.domain;
 
 public class Model {
-    private int image;
     private String title;
     private String desc;
 
-    public Model(int image, String title, String desc) {
-        this.image = image;
+    public Model(String title, String desc) {
         this.title = title;
         this.desc = desc;
 
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getTitle() {
