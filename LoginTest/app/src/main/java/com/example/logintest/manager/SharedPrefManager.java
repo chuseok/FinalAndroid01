@@ -11,6 +11,8 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "sharedpref";
     private static final String KEY_USERID = "userId";
     private static final String KEY_USERPASSWORD = "userPwd";
+    private static final String KEY_USERNAME = "userName";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_IDCHECK = "idCheck";
 
     private static SharedPrefManager mInstance;
@@ -34,6 +36,8 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERID, user.getUserId());
         editor.putString(KEY_USERPASSWORD, user.getUserPwd());
+        editor.putString(KEY_USERNAME, user.getUserName());
+        editor.putString(KEY_EMAIL, user.getEmail());
         editor.putBoolean(KEY_IDCHECK, user.isIdCheck());
         editor.apply();
     }
@@ -49,6 +53,8 @@ public class SharedPrefManager {
         return new User(
                 sharedPreferences.getString(KEY_USERID, null),
                 sharedPreferences.getString(KEY_USERPASSWORD, null),
+                sharedPreferences.getString(KEY_USERNAME,null),
+                sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getBoolean(KEY_IDCHECK,false)
         );
     }

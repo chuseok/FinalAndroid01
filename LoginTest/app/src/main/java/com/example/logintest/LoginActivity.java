@@ -44,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        System.out.println(SharedPrefManager.getInstance(this).isIdCheckedIn());
-
 
 
         /* 자동 로그인 설정...
@@ -110,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (et_userId.equalsIgnoreCase(array.getJSONObject(i).getString("userId")) &&
                                         et_userPwd.equalsIgnoreCase(array.getJSONObject(i).getString("userPwd"))) {
 
-                                    User user = new User(et_userId, et_userPwd, idCheck.isChecked());
+                                    User user = new User(et_userId, et_userPwd, array.getJSONObject(i).getString("userName"),
+                                            array.getJSONObject(i).getString("email"), idCheck.isChecked());
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));

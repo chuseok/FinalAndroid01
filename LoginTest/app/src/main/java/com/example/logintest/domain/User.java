@@ -3,12 +3,16 @@ package com.example.logintest.domain;
 public class User {
     private String userId;
     private String userPwd;
+    private String userName;
+    private String email;
     private boolean idCheck;
 
-    public User(String userId, String userPwd, boolean idCheck){
-        this.userId=userId;
-        this.userPwd=userPwd;
-        this.idCheck=idCheck;
+    public User(String userId, String userPwd, String userName, String email, boolean idCheck) {
+        this.userId = userId;
+        this.userPwd = userPwd;
+        this.userName = userName;
+        this.email = email;
+        this.idCheck = idCheck;
     }
 
     public String getUserId() {
@@ -25,6 +29,22 @@ public class User {
 
     public void setUserPwd(String userPwd) {
         this.userPwd = userPwd;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean isIdCheck() {

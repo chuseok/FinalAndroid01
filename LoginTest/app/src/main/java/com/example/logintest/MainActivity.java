@@ -4,15 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.logintest.adapter.CardViewAdapter;
@@ -94,14 +98,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button setting = findViewById(R.id.activity_main_bt_setting);
+        Button setting = findViewById(R.id.nav_left_setting_bt);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"aaa",Toast.LENGTH_SHORT).show();
-                drawer.closeDrawer(GravityCompat.START);
+                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
             }
         });
+
+        //navigation
+        View headerView = leftNavigationView.getHeaderView(0);
+        TextView userId_nav = (TextView)headerView.findViewById(R.id.nav_left_userId_tv);
+        TextView email_nav = (TextView)headerView.findViewById(R.id.nav_left_email_tv);
+        userId_nav.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId());
+        email_nav.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
+
 
 
         //cardView setting

@@ -8,29 +8,29 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nav_left_account_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:text="계정 정보"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/nav_left_userId_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/nav_left_avatar_iv"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/nav_left_account_title_tv"
         android:src="@drawable/ic_launcher_background" />
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/nav_left_userId_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -38,17 +38,17 @@
         android:text="11111111"
         android:textColor="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/nav_left_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@+id/nav_left_account_title_tv" />
 
     <TextView
-        android:id="@+id/tv_userId"
+        android:id="@+id/nav_left_email_tv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="email@naver.com"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toEndOf="@+id/nav_left_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@+id/nav_left_userId_tv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
