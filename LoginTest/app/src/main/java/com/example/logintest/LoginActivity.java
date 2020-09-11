@@ -44,10 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        System.out.println(SharedPrefManager.getInstance(this).isIdCheckedIn());
-
-
-
         /* 자동 로그인 설정...
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();

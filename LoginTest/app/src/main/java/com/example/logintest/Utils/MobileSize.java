@@ -1,12 +1,15 @@
 package com.example.logintest.Utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
 
 public class MobileSize {
 
-    private int standardSize_X, standardSize_Y;
+    private float standardSize_X, standardSize_Y;
     private float density;
 
     public Point getScreenSize(Activity activity) {
@@ -21,11 +24,21 @@ public class MobileSize {
         Point ScreenSize = getScreenSize(activity);
         density  = activity.getResources().getDisplayMetrics().density;
 
-        standardSize_X = (int) (ScreenSize.x / density);
-        standardSize_Y = (int) (ScreenSize.y / density);
+        standardSize_X = (ScreenSize.x / density)* activity.getResources().getDisplayMetrics().density;
+        standardSize_Y = (ScreenSize.y / density)* activity.getResources().getDisplayMetrics().density;
     }
 
-    public int getStandardSize_X() {
+    public static float dpFromPx(final Context context, final float px) {
+        return px / context.getResources().getDisplayMetrics().density;
+    }
+
+    public void setLayoutParams(View view, int height) {
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
+        params.height = (int) height;
+        view.setLayoutParams(params);
+    }
+
+    public float getStandardSize_X() {
         return standardSize_X;
     }
 
@@ -33,7 +46,7 @@ public class MobileSize {
         this.standardSize_X = standardSize_X;
     }
 
-    public int getStandardSize_Y() {
+    public float getStandardSize_Y() {
         return standardSize_Y;
     }
 

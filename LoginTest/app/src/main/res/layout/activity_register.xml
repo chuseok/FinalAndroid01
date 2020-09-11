@@ -20,5 +20,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="콩나물" />
+        android:text="인증 단계" />
+
+    <EditText
+        android:id="@+id/ac_register_userId_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="아이디" />
+
+    <EditText
+        android:id="@+id/ac_register_userPwd_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="비밀번호"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/ac_register_userPwd_Confirm_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="비밀번호 확인"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/ac_register_next_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="다음" />
 </LinearLayout>

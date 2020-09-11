@@ -2,6 +2,8 @@
     <string name="app_name">LoginTest</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
+
+    <string name="register_title">개인회원 가입</string>
     <string name="register_customer">계정이 없으세요? 회원가입하기</string>
     <string name="wordDetail_share">공유하기</string>
 </resources>
