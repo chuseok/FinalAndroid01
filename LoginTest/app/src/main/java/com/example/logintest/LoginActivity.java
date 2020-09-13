@@ -46,11 +46,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        /* 자동 로그인 설정...
+        /* 자동 로그인 설정...*/
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
-        }*/
+        }
 
         progressBar = findViewById(R.id.progressBar);
         userId = findViewById(R.id.activity_login_et_userId);

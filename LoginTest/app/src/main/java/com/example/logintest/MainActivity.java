@@ -7,6 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -33,14 +36,17 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
     private NavigationView leftNavigationView;
     private NavigationView rightNavigationView;
-    ViewPager viewPager;
-    CardViewAdapter adapter;
-    List<Model> models;
+    FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragmentManager = getSupportFragmentManager();
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frag_nav,new MainFragment());
+        fragmentTransaction.commit();
 
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
@@ -64,7 +70,11 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "wordSort",Toast.LENGTH_SHORT).show();break;
                     case R.id.wordTest:
                         Toast.makeText(MainActivity.this, "My wordTest",Toast.LENGTH_SHORT).show();break;
-
+                    case R.id.dragonList:
+                        fragmentManager = getSupportFragmentManager();
+                        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.frag_nav,new DragonListFragment());
+                        fragmentTransaction.commit(); break;
                     default:
                         return true;
                 }
@@ -106,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //navigation
+        //navigation header
         View headerView = leftNavigationView.getHeaderView(0);
         TextView userId_nav = (TextView)headerView.findViewById(R.id.nav_left_userId_tv);
         TextView email_nav = (TextView)headerView.findViewById(R.id.nav_left_email_tv);
@@ -114,34 +124,6 @@ public class MainActivity extends AppCompatActivity {
         email_nav.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
 
 
-
-        //cardView setting
-        models = new ArrayList<>();
-        models.add(new Model("1111","22222222222"));
-        models.add(new Model("2222","33333333333"));
-        models.add(new Model("4444","555555555555"));
-
-        adapter = new CardViewAdapter(models,this);
-        viewPager = findViewById(R.id.activity_main_viewPager);
-        viewPager.setAdapter(adapter);
-        viewPager.setPadding(130,0,130,0);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -173,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     @Override
-    protected void onDestroy() {
+    protected void onDestroy() {//세션 데이터 삭제
         super.onDestroy();
         SharedPrefManager session = SharedPrefManager.getInstance(getApplicationContext());
         session.destorySession();
