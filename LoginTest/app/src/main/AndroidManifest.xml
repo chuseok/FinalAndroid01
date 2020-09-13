@@ -18,8 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+<<<<<<< .merge_file_a15692
 
         <activity android:name=".SettingActivity" />
+=======
+<<<<<<< HEAD
+        <activity android:name=".RegisterSecondActivity">
+        </activity>
+=======
+        <activity android:name=".SettingActivity"></activity>
+>>>>>>> e15e91af56bc780243e7b5683612a1b20a51d764
+>>>>>>> .merge_file_a17096
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

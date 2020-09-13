@@ -20,6 +20,8 @@ $(function(){
 	$.validator.addMethod("hangle", function (value, element) {
 		return this.optional(element) || /^[\uAC00-\uD7A3]+$/.test(value);
 	}, "");
+	
+	이혜
 		
 	$(".form").validate({
 		

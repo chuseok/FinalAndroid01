@@ -44,9 +44,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+<<<<<<< HEAD
+=======
 
 
+<<<<<<< HEAD
         /* 자동 로그인 설정...*/
+=======
+>>>>>>> e15e91af56bc780243e7b5683612a1b20a51d764
+        /* 자동 로그인 설정...
+>>>>>>> 0d9be698d3366d636765f591feee948c2e2c490c
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
