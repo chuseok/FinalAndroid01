@@ -1,6 +1,7 @@
 package com.example.logintest.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.logintest.DragonDetailActivity;
 import com.example.logintest.R;
 import com.example.logintest.domain.Dragon;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
@@ -77,22 +79,11 @@ public class DragonCardViewAdapter extends PagerAdapter {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position==0) {
 
+                    Intent intent = new Intent(context, DragonDetailActivity.class);
+                    intent.putExtra("dragon", dragonList.get(position).getDragonId());
+                    context.startActivity(intent);
 
-                }
-                else if(position==1){
-
-                }
-                else if(position==2){
-
-
-                }
-                else if(position==3){
-                    /*Intent intent = new Intent(context, MainActivity.class);
-                    //intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);*/
-                }
             }
 
         });

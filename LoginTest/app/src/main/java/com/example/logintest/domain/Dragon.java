@@ -3,11 +3,12 @@ package com.example.logintest.domain;
 public class Dragon {
     private String imagePath;
     private int progress;
+    private int dragonId;
 
-    public Dragon(String imagePath, int progress) {
+    public Dragon(String imagePath, int progress, int dragonId) {
         this.imagePath = imagePath;
         this.progress = progress;
-
+        this.dragonId = dragonId;
     }
 
     public String getImagePath() {
@@ -24,5 +25,13 @@ public class Dragon {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public int getDragonId() {
+        return dragonId;
+    }
+
+    public void setDragonId(int dragonId) {
+        this.dragonId = dragonId;
     }
 }

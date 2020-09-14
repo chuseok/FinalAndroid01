@@ -107,9 +107,10 @@ public class DragonListFragment extends Fragment {
                                 String replaceUrl = array.getJSONObject(i).getString("dragonImage").replace("../",URLs.ROOT_URL);
 
                                 int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
-                                models.add(new Dragon(replaceUrl,hungryValue));
+                                int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
+                                models.add(new Dragon(replaceUrl,hungryValue,dragonId));
                             }
-                            System.out.println(models.size());
+
                             adapter.notifyDataSetChanged();//models 변경되었다는것 알리기
 
                         } catch (Exception e) {
