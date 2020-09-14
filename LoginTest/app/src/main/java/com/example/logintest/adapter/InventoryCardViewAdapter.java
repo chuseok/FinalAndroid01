@@ -92,4 +92,9 @@ public class InventoryCardViewAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View)object);
     }
+    @Override
+    public float getPageWidth(final int position) {
+        // this will have 3 pages in a single view
+        return 0.32f;
+    }
 }

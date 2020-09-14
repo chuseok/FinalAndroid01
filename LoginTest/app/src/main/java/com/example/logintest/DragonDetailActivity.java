@@ -29,6 +29,7 @@ import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -133,6 +134,9 @@ public class DragonDetailActivity extends AppCompatActivity {
         adapter = new InventoryCardViewAdapter(test,getApplicationContext());
         viewPager.setAdapter(adapter);
         viewPager.setPadding(10,0,10,0);
+        TabLayout tabLayout = findViewById(R.id.ac_dragonDetail_tabDots);
+        tabLayout.setupWithViewPager(viewPager,true);
+        
     }
 
     @Override
