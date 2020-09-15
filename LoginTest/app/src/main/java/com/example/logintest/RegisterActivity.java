@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +27,18 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userPwdConfirmEditText;
     Button nextButton;
 
+    String userId;
+    String userPwd;
+
+    String userId_Val;
+    String userPwd_Val;
+    String userPwdConFirm_Val;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
 
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
@@ -44,19 +53,75 @@ public class RegisterActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.ac_register_next_bt);
 
         mobileSize.setLayoutHeight(authTextView, (int) authImageSize);
-        mobileSize.setLayputMargin(loginTextView, 0, (int) ((displayYHeight-authImageSize) / 10) * 3, 0, 0);
+        mobileSize.setLayputMargin(loginTextView, 0, (int) ((displayYHeight-authImageSize) / 20), 0, 0);
         mobileSize.setLayoutHeight(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(nextButton, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayputMargin(nextButton, 0, (int) ((displayYHeight-authImageSize) / 10) * 2, 0, 0);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        if(extras == null) {
+            Log.d("EXTRAS", "NULL");
+        } else if(extras != null) {
+            userId = intent.getExtras().getString("userId");
+            userIdEditText.setText(userId);
+            userPwd = intent.getExtras().getString("userPwd");
+            userPwdEditText.setText(userPwd);
+        }
+
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userId_Val = userIdEditText.getText().toString();
+                userPwd_Val = userPwdEditText.getText().toString();
+                userPwdConFirm_Val = userPwdConfirmEditText.getText().toString();
+
+                if(TextUtils.isEmpty(userId_Val)) {
+                    userIdEditText.setError("아이디를 입력해주세요!");
+                    userIdEditText.requestFocus();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(userPwd_Val)) {
+                    userPwdEditText.setError("비밀번호를 입력해주세요!");
+                    userPwdEditText.requestFocus();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(userPwdConFirm_Val)) {
+                    userPwdConfirmEditText.setError("비밀번호 확인을 입력해주세요!");
+                    userPwdConfirmEditText.requestFocus();
+                    return;
+                }
+
+                if(!userPwd_Val.equalsIgnoreCase(userPwdConFirm_Val)) {
+                    userPwdConfirmEditText.setError("비밀번호가 맞지 않습니다!");
+                    userPwdConfirmEditText.requestFocus();
+                    return;
+                }
+
                 Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
+                SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
+                SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
                 startActivity(SecondRegisterActivity);
             }
         });
+
+
+        loginTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginActivity);
+                finish();
+            }
+        });
+
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         mToolbar.setTitle(R.string.register_title);
@@ -70,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
                 return true;
             }
