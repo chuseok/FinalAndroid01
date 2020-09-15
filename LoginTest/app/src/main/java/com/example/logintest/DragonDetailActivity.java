@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.Utils.ViewPagerIndicatorView;
+import com.example.logintest.adapter.AdapterCallBack;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.adapter.InventoryCardViewAdapter;
 import com.example.logintest.domain.Dragon;
@@ -43,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DragonDetailActivity extends AppCompatActivity {
+public class DragonDetailActivity extends AppCompatActivity implements AdapterCallBack {
 
     TextView levelText, coinText;
     ImageView dragonImage;
@@ -93,26 +96,12 @@ public class DragonDetailActivity extends AppCompatActivity {
                             int dragonLevel = Integer.parseInt(object.getString("dragonTotalLevel"));
                             int hungryValue = Integer.parseInt(object.getString("hungryValue"));
                             int coin = Integer.parseInt(object.getString("coin"));
-                            circleProgressBar.setProgress(levelValue);
-                            levelText.setText(dragonLevel+"");
+                            setLevelValue(levelValue);
+                            setLevelText(dragonLevel);
                             coinText.setText(coin+"");
-                            hungryProgress.setProgress(hungryValue);
-                            String replaceUrl = object.getString("dragonImage").replace("../",URLs.ROOT_URL);
-                            GlideToVectorYou
-                                    .init()
-                                    .with(getApplicationContext())
-                                    .withListener(new GlideToVectorYouListener() {
-                                        @Override
-                                        public void onLoadFailed() {
-                                            System.out.println("Image Failed");
-                                        }
+                            setFoodValue(hungryValue);
+                            setDragonImage(object.getString("dragonImage"));
 
-                                        @Override
-                                        public void onResourceReady() {
-                                            System.out.println("Image Ready");
-                                        }
-                                    })
-                                    .load(Uri.parse(replaceUrl), dragonImage);
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -155,12 +144,7 @@ public class DragonDetailActivity extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
 
                             }
-                            int iv_count = invenList.size()-2;
-                            if(iv_count<0){
-                                iv_count=invenList.size();
-                            }
-
-                            indicatorView.init(iv_count, R.drawable.default_dot, R.drawable.selected_dot,15);
+                            setDotIndicator(invenList.size());
                             indicatorView.setSelection(0);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -188,6 +172,7 @@ public class DragonDetailActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.ac_dragonDetail_viewPager);
         adapter = new InventoryCardViewAdapter(invenList,getApplicationContext());
+        adapter.setOnShareClickedListener(this);
         viewPager.setAdapter(adapter);
         viewPager.setPadding(10,0,10,0);
 
@@ -223,4 +208,49 @@ public class DragonDetailActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    @Override
+    public void setLevelValue(int data) {
+        circleProgressBar.setProgress(data);
+    }
+
+    @Override
+    public void setFoodValue(int data) {
+        hungryProgress.setProgress(data);
+    }
+
+    @Override
+    public void setLevelText(int data) {
+        levelText.setText(data+"");
+    }
+
+    @Override
+    public void setDotIndicator(int data) {
+        int count = data-2;
+        if(count<0){
+            count=data;
+        }
+        indicatorView.init(count,R.drawable.default_dot,R.drawable.selected_dot,15);
+    }
+
+    @Override
+    public void setDragonImage(String path) {
+        String replaceUrl = path.replace("../",URLs.ROOT_URL);
+        GlideToVectorYou
+                .init()
+                .with(getApplicationContext())
+                .withListener(new GlideToVectorYouListener() {
+                    @Override
+                    public void onLoadFailed() {
+                        System.out.println("Image Failed");
+                    }
+
+                    @Override
+                    public void onResourceReady() {
+                        System.out.println("Image Ready");
+                    }
+                })
+                .load(Uri.parse(replaceUrl), dragonImage);
+    }
+
 }
