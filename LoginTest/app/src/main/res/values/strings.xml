@@ -6,6 +6,7 @@
     <string name="register_title">개인회원 가입</string>
     <string name="register_customer">계정이 없으세요? 회원가입하기</string>
     <string name="register_customer_two">이미 계정이 있으세요? 로그인하기</string>
+    <string name="register_sign_up_complete">회원가입에 성공하셨습니다.</string>
     <string name="wordDetail_share">공유하기</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
