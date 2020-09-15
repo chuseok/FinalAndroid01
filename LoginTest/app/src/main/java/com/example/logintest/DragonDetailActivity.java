@@ -75,7 +75,7 @@ public class DragonDetailActivity extends AppCompatActivity {
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
         float displayYHeight = mobileSize.getStandardSize_Y();
-        mobileSize.setLayoutParams(dragonPanel,(int)displayYHeight/10*6);
+        mobileSize.setLayoutHeight(dragonPanel,(int)displayYHeight/10*6);
 
         String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
 
