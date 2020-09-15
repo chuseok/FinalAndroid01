@@ -3,6 +3,10 @@ package org.dragon.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.dragon.domain.DragonVO;
 import org.dragon.domain.InventoryVO;
 import org.dragon.domain.ProductVO;
@@ -135,6 +139,45 @@ public class InventoryServiceImpl implements InventoryService{
 		}
 		return false;
 		
+	}
+	
+	@Override
+	public int valueSettingByItem(int productId, String userId, int dragonId) throws ScriptException {// for android
+		
+		ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
+		String[] strArray = proMapper.getById(productId).getDescription().split(" ");
+		DragonVO dragonVO = new DragonVO(userId, dragonId, false);
+		DragonVO targetDragon = dragonMapper.getById(dragonVO);
+		Integer result = -1;
+		switch (strArray[0]) {
+		case "포만감":
+			int value = targetDragon.getFoodValue();
+			String foo = value+strArray[1];
+			result = (Integer)engine.eval(foo);
+			if(result>100) {
+				result=100;
+			}
+			targetDragon.setFoodValue(result);
+			dragonMapper.update(targetDragon);
+			break;
+		case "경험치":
+			value = dragonMapper.get(userId).getLevelValue();
+			foo = value+strArray[1];
+			result = (Integer)engine.eval(foo);
+			if(result>100) {
+				result=0;
+				targetDragon.setTotalLevel(targetDragon.getTotalLevel()+1);
+			}
+			targetDragon.setLevelValue(result);
+			dragonMapper.update(targetDragon);
+			break;
+		default:
+			result=-1;
+			break;
+		}
+		
+		
+		return result;
 	}
 
 	

@@ -87,26 +87,25 @@
                 android:layout_alignParentEnd="true"
                 android:progressDrawable="@drawable/progressbar_design" />
 
-            <ImageView
-                android:id="@+id/coin"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignBottom="@+id/ac_dragonDetail_hungryTitle_tv"
-
-                android:layout_marginStart="137dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="21dp"
-                android:layout_marginBottom="-5dp"
-                android:layout_toEndOf="@+id/cpb_circlebar"
-                android:src="@drawable/ic_coin" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/coin"
-                android:text="1000" />
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:id="@+id/ac_dragonDetail_coinImage_iv"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_coin"/>
+
+                <TextView
+                    android:id="@+id/ac_dragonDetail_coin_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1000"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -24,5 +24,5 @@ public interface DragonService {
 	public boolean delete(DragonVO dragonVO);
 	public int getProductId(int dragonId);
 	public boolean reviveDragon(String userId);
-
+	public DragonVO getDragonByDragonId(DragonVO dragonVO);
 }

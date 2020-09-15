@@ -93,4 +93,7 @@
 	from dragonlist
 	where dragonid = #{dragonId}
 </select>
+<select id="getById" resultType="org.dragon.domain.DragonVO">
+	select * from dragoninfo where userid = #{userId} and dragonid = #{dragonId}
+</select>
 </mapper>
