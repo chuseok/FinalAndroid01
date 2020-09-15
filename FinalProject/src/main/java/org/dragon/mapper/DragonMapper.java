@@ -24,4 +24,5 @@ public interface DragonMapper {
 	public int updateFoodValue(DragonVO dragonVO);
 	public int delete(DragonVO dragonVO);
 	public int getProductId(int dragonId);
+	public DragonVO getById(DragonVO dragonVO);
 }

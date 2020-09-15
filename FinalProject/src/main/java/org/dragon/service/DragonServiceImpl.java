@@ -124,6 +124,10 @@ public class DragonServiceImpl implements DragonService {
 		return mapper.update(dragonVO)==1;
 		
 	}
+	@Override
+	public DragonVO getDragonByDragonId(DragonVO dragonVO) {
+		return mapper.getById(dragonVO);
+	}
 	
 
 

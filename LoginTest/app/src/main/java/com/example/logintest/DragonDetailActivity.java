@@ -45,7 +45,7 @@ import java.util.Map;
 
 public class DragonDetailActivity extends AppCompatActivity {
 
-    TextView levelText;
+    TextView levelText, coinText;
     ImageView dragonImage;
     ProgressBar hungryProgress;
     CircleProgressBar circleProgressBar;
@@ -66,6 +66,7 @@ public class DragonDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         levelText = findViewById(R.id.ac_dragonDetail_Level_tv);
+        coinText = findViewById(R.id.ac_dragonDetail_coin_tv);
         dragonImage = findViewById(R.id.ac_dragonDetail_dragonImage_iv);
         circleProgressBar = findViewById(R.id.cpb_circlebar);
         hungryProgress = findViewById(R.id.ac_dragonDetail_hungry_pb);
@@ -75,12 +76,12 @@ public class DragonDetailActivity extends AppCompatActivity {
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
         float displayYHeight = mobileSize.getStandardSize_Y();
-        mobileSize.setLayoutParams(dragonPanel,(int)displayYHeight/10*6);
+        mobileSize.setLayoutHeight(dragonPanel,(int)displayYHeight/10*6);
 
         String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
-
+        final int dragonId = getIntent().getIntExtra("dragon",0);
         //dragon value 값 받아오기
-        String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+getIntent().getIntExtra("dragon",0);
+        String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+dragonId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -94,6 +95,7 @@ public class DragonDetailActivity extends AppCompatActivity {
                             int coin = Integer.parseInt(object.getString("coin"));
                             circleProgressBar.setProgress(levelValue);
                             levelText.setText(dragonLevel+"");
+                            coinText.setText(coin+"");
                             hungryProgress.setProgress(hungryValue);
                             String replaceUrl = object.getString("dragonImage").replace("../",URLs.ROOT_URL);
                             GlideToVectorYou
@@ -148,7 +150,8 @@ public class DragonDetailActivity extends AppCompatActivity {
                             for (int i = 0; i < array.length(); i++) {
                                 String imagePath = array.getJSONObject(i).getString("productImage").replace("../",URLs.ROOT_URL);
                                 int count = Integer.parseInt(array.getJSONObject(i).getString("count"));
-                                invenList.add(new Inven(imagePath,count));
+                                int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
+                                invenList.add(new Inven(productId,imagePath,count,dragonId));
                                 adapter.notifyDataSetChanged();
 
                             }

@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=C\:\\gitFolderAnd\\.git;
-GitRepositoriesView.GitDirectories.relative=.git;
+GitRepositoriesView.GitDirectories=C\:\\git\\.git;C\:\\git\\finalAndroid01\\.git;
+GitRepositoriesView.GitDirectories.relative=C\:\\git\\.git;.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1
