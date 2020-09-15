@@ -47,8 +47,8 @@ public class CardViewAdapter extends PagerAdapter {
         TextView title, desc;
 
         View card = view.findViewById(R.id.card_target);
-        title = view.findViewById(R.id.title);
-        desc = view.findViewById(R.id.desc);
+        title = view.findViewById(R.id.ac_dragonDetail_invenImage_iv);
+        desc = view.findViewById(R.id.ac_dragonDetail_invenCnt_tv);
 
         title.setText(models.get(position).getTitle());
         desc.setText(models.get(position).getDesc());

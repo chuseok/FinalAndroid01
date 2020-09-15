@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,9 +21,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.example.logintest.Utils.MobileSize;
+import com.example.logintest.Utils.ViewPagerIndicatorView;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.adapter.InventoryCardViewAdapter;
 import com.example.logintest.domain.Dragon;
+import com.example.logintest.domain.Inven;
 import com.example.logintest.domain.Model;
 import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
@@ -49,6 +52,8 @@ public class DragonDetailActivity extends AppCompatActivity {
     LinearLayout dragonPanel;
     ViewPager viewPager;
     InventoryCardViewAdapter adapter;
+    ViewPagerIndicatorView indicatorView;
+    List<Inven> invenList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +70,17 @@ public class DragonDetailActivity extends AppCompatActivity {
         circleProgressBar = findViewById(R.id.cpb_circlebar);
         hungryProgress = findViewById(R.id.ac_dragonDetail_hungry_pb);
         dragonPanel = findViewById(R.id.ac_dragonDetail_dragonPanel_ll);
+        indicatorView = findViewById(R.id.indicator);
+        invenList= new ArrayList<Inven>();
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
         float displayYHeight = mobileSize.getStandardSize_Y();
         mobileSize.setLayoutParams(dragonPanel,(int)displayYHeight/10*6);
 
-        String url = URLs.URL_DRAGON_GET+"?userId="+ SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId()+"&dragonId="+getIntent().getIntExtra("dragon",0);
+        String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+
+        //dragon value 값 받아오기
+        String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+getIntent().getIntExtra("dragon",0);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -81,6 +91,7 @@ public class DragonDetailActivity extends AppCompatActivity {
                             int levelValue = Integer.parseInt(object.getString("dragonLevelValue"));
                             int dragonLevel = Integer.parseInt(object.getString("dragonTotalLevel"));
                             int hungryValue = Integer.parseInt(object.getString("hungryValue"));
+                            int coin = Integer.parseInt(object.getString("coin"));
                             circleProgressBar.setProgress(levelValue);
                             levelText.setText(dragonLevel+"");
                             hungryProgress.setProgress(hungryValue);
@@ -117,26 +128,91 @@ public class DragonDetailActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userId", "111111");
-                params.put("dragonId", "3");
+                //params.put("userId", "111111");
+                //params.put("dragonId", "3");
                 return params;
             }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        //dragon value 값 받아오기 end
+
+        //inventory list 값 받아오기
+        StringRequest invenStringRequest = new StringRequest(Request.Method.GET, URLs.URL_INVEN_LIST+"?userId="+userId,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                String imagePath = array.getJSONObject(i).getString("productImage").replace("../",URLs.ROOT_URL);
+                                int count = Integer.parseInt(array.getJSONObject(i).getString("count"));
+                                invenList.add(new Inven(imagePath,count));
+                                adapter.notifyDataSetChanged();
+
+                            }
+                            int iv_count = invenList.size()-2;
+                            if(iv_count<0){
+                                iv_count=invenList.size();
+                            }
+
+                            indicatorView.init(iv_count, R.drawable.default_dot, R.drawable.selected_dot,15);
+                            indicatorView.setSelection(0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //params.put("userId", "111111");
+                //params.put("dragonId", "3");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(invenStringRequest);
+        //inventory list 값 받아오기 end
 
         viewPager = findViewById(R.id.ac_dragonDetail_viewPager);
-        List<Model> test = new ArrayList<Model>();
-        test.add(new Model("aaaa","aaaaa"));
-        test.add(new Model("aaaa","aaaaa"));
-        test.add(new Model("aaaa","aaaaa"));
-        test.add(new Model("aaaa","aaaaa"));
-        adapter = new InventoryCardViewAdapter(test,getApplicationContext());
+        adapter = new InventoryCardViewAdapter(invenList,getApplicationContext());
         viewPager.setAdapter(adapter);
         viewPager.setPadding(10,0,10,0);
-        TabLayout tabLayout = findViewById(R.id.ac_dragonDetail_tabDots);
-        tabLayout.setupWithViewPager(viewPager,true);
-        
+
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+            @Override
+            public void onPageSelected(int position) {
+
+                indicatorView.setSelection(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        indicatorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(view.getId());
+            }
+        });
     }
 
     @Override
