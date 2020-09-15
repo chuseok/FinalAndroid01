@@ -78,6 +78,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.register_sign_up_complete, Toast.LENGTH_LONG).show();
             }
         });
+
+
     }
 
     @Override
