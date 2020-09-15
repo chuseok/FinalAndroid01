@@ -27,12 +27,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userPwdConfirmEditText;
     Button nextButton;
 
-    String userId;
-    String userPwd;
-
     String userId_Val;
     String userPwd_Val;
-    String userPwdConFirm_Val;
+    String userPwdConfirm_Val;
 
 
     @Override
@@ -66,49 +63,26 @@ public class RegisterActivity extends AppCompatActivity {
         if(extras == null) {
             Log.d("EXTRAS", "NULL");
         } else if(extras != null) {
-            userId = intent.getExtras().getString("userId");
+            String userId = intent.getExtras().getString("userId");
             userIdEditText.setText(userId);
-            userPwd = intent.getExtras().getString("userPwd");
+            String userPwd = intent.getExtras().getString("userPwd");
             userPwdEditText.setText(userPwd);
         }
-
-
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 userId_Val = userIdEditText.getText().toString();
                 userPwd_Val = userPwdEditText.getText().toString();
-                userPwdConFirm_Val = userPwdConfirmEditText.getText().toString();
+                userPwdConfirm_Val = userPwdConfirmEditText.getText().toString();
 
-                if(TextUtils.isEmpty(userId_Val)) {
-                    userIdEditText.setError("아이디를 입력해주세요!");
-                    userIdEditText.requestFocus();
-                    return;
+                boolean Certification = verifyUserInfo(userId_Val, userPwd_Val, userPwdConfirm_Val);
+                if(Certification) {
+                    Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
+                    SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
+                    SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
+                    startActivity(SecondRegisterActivity);
                 }
-
-                if(TextUtils.isEmpty(userPwd_Val)) {
-                    userPwdEditText.setError("비밀번호를 입력해주세요!");
-                    userPwdEditText.requestFocus();
-                    return;
-                }
-
-                if(TextUtils.isEmpty(userPwdConFirm_Val)) {
-                    userPwdConfirmEditText.setError("비밀번호 확인을 입력해주세요!");
-                    userPwdConfirmEditText.requestFocus();
-                    return;
-                }
-
-                if(!userPwd_Val.equalsIgnoreCase(userPwdConFirm_Val)) {
-                    userPwdConfirmEditText.setError("비밀번호가 맞지 않습니다!");
-                    userPwdConfirmEditText.requestFocus();
-                    return;
-                }
-
-                Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
-                SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
-                SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
-                startActivity(SecondRegisterActivity);
             }
         });
 
@@ -141,5 +115,33 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean verifyUserInfo(String userId, String userPwd, String userPwdConfirm) {
+        if(TextUtils.isEmpty(userId)) {
+            userIdEditText.setError("아이디를 입력해주세요!");
+            userIdEditText.requestFocus();
+            return false;
+        }
+
+        if(TextUtils.isEmpty(userPwd)) {
+            userPwdEditText.setError("비밀번호를 입력해주세요!");
+            userPwdEditText.requestFocus();
+            return false;
+        }
+
+        if(TextUtils.isEmpty(userPwdConfirm)) {
+            userPwdConfirmEditText.setError("비밀번호 확인을 입력해주세요!");
+            userPwdConfirmEditText.requestFocus();
+            return false;
+        }
+
+        if(!userPwd.equalsIgnoreCase(userPwdConfirm)) {
+            userPwdConfirmEditText.setError("비밀번호가 맞지 않습니다!");
+            userPwdConfirmEditText.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }
