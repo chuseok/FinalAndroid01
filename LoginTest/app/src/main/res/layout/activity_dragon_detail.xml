@@ -77,7 +77,6 @@
                 android:text="포만감"
                 android:textSize="15dp"
                 android:textColor="#000000"/>
-
             <ProgressBar
                 android:id="@+id/ac_dragonDetail_hungry_pb"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -87,6 +86,27 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:progressDrawable="@drawable/progressbar_design" />
+
+            <ImageView
+                android:id="@+id/coin"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignBottom="@+id/ac_dragonDetail_hungryTitle_tv"
+
+                android:layout_marginStart="137dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="21dp"
+                android:layout_marginBottom="-5dp"
+                android:layout_toEndOf="@+id/cpb_circlebar"
+                android:src="@drawable/ic_coin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/coin"
+                android:text="1000" />
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,17 +131,17 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/ac_dragonDetail_viewPager"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:clipToPadding="false"
         android:overScrollMode="never">
     </androidx.viewpager.widget.ViewPager>
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/ac_dragonDetail_tabDots"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
+    <com.example.logintest.Utils.ViewPagerIndicatorView
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_alignParentBottom="true"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp"/>
+        android:layout_marginBottom="10dp"
+        />
 </LinearLayout>

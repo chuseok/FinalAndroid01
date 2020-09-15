@@ -21,7 +21,7 @@
 
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/ac_dragonDetail_invenImage_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -30,10 +30,10 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/desc"
+                android:id="@+id/ac_dragonDetail_invenCnt_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
+                android:layout_below="@id/ac_dragonDetail_invenImage_iv"
                 android:layout_marginTop="3dp"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"

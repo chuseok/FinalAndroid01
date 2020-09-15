@@ -1,7 +1,7 @@
 package com.example.logintest.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.logintest.R;
-import com.example.logintest.WordDetailActivity;
-import com.example.logintest.domain.Model;
+import com.example.logintest.domain.Inven;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 
 import java.util.List;
 
 public class InventoryCardViewAdapter extends PagerAdapter {
-    private List<Model> models;
+    private List<Inven> invenList;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public InventoryCardViewAdapter(List<Model> models, Context context){
-        this.models = models;
+    public InventoryCardViewAdapter(List<Inven> invenList, Context context){
+        this.invenList = invenList;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return models.size();
+        return invenList.size();
     }
 
     @Override
@@ -44,42 +45,38 @@ public class InventoryCardViewAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.cardview_item_inventory, container, false);
 
         ImageView imageView;
-        TextView title, desc;
+        TextView title, invenCnt;
 
         View card = view.findViewById(R.id.card_target);
-        title = view.findViewById(R.id.title);
-        desc = view.findViewById(R.id.desc);
+        imageView = view.findViewById(R.id.ac_dragonDetail_invenImage_iv);
+        invenCnt = view.findViewById(R.id.ac_dragonDetail_invenCnt_tv);
 
-        title.setText(models.get(position).getTitle());
-        desc.setText(models.get(position).getDesc());
+        GlideToVectorYou
+                .init()
+                .with(context)
+                .withListener(new GlideToVectorYouListener() {
+                    @Override
+                    public void onLoadFailed() {
+                        System.out.println("Image Failed");
+                    }
+
+                    @Override
+                    public void onResourceReady() {
+                        System.out.println("Image Ready");
+                    }
+                })
+                .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
+        invenCnt.setText("X"+invenList.get(position).getCount());
 
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position==0) {
-                    //Toast.makeText(v.getContext(),"click1",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);
 
-                }
-                else if(position==1){
-                    Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);
-                }
-                else if(position==2){
-
-                    Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);
-                }
-                else if(position==3){
                     /*Intent intent = new Intent(context, MainActivity.class);
                     //intent.putExtra("param", models.get(position).getTitle());
                     context.startActivity(intent);*/
-                }
+
             }
 
         });
