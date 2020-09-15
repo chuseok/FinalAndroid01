@@ -19,12 +19,10 @@ import com.example.logintest.Utils.MobileSize;
 public class RegisterActivity extends AppCompatActivity {
 
     TextView authTextView;
+    TextView loginTextView;
     EditText userIdEditText;
     EditText userPwdEditText;
     EditText userPwdConfirmEditText;
-//    EditText emailEditText;
-//    LinearLayout phoneLayout;
-//    LinearLayout authLayout;
     Button nextButton;
 
     @Override
@@ -39,22 +37,18 @@ public class RegisterActivity extends AppCompatActivity {
         float displayYHeight = mobileSize.getStandardSize_Y();
         float authImageSize = displayYHeight/5;
         authTextView = findViewById(R.id.authTextView);
+        loginTextView = findViewById(R.id.loginTextView);
         userIdEditText = findViewById(R.id.ac_register_userId_et);
         userPwdEditText = findViewById(R.id.ac_register_userPwd_et);
         userPwdConfirmEditText = findViewById(R.id.ac_register_userPwd_Confirm_et);
-//        emailEditText = findViewById(R.id.ac_register_email_et);
-//        phoneLayout = findViewById(R.id.ac_register_phone_layout);
-//        authLayout = findViewById(R.id.ac_register_auth_layout);
         nextButton = findViewById(R.id.ac_register_next_bt);
 
-        mobileSize.setLayoutParams(authTextView, (int) authImageSize);
-        mobileSize.setLayoutParams(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
-//        mobileSize.setLayoutParams(emailEditText, (int) (displayYHeight-authImageSize) / 10);
-//        mobileSize.setLayoutParams(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
-//        mobileSize.setLayoutParams(authLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(nextButton, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(authTextView, (int) authImageSize);
+        mobileSize.setLayputMargin(loginTextView, 0, (int) ((displayYHeight-authImageSize) / 10) * 3, 0, 0);
+        mobileSize.setLayoutHeight(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(nextButton, (int) (displayYHeight-authImageSize) / 10);
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override

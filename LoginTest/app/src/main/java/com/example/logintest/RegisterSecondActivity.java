@@ -37,11 +37,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
         authLayout = findViewById(R.id.ac_register_auth_layout);
         signUpButton = findViewById(R.id.ac_register_sign_up_bt);
 
-        mobileSize.setLayoutParams(authTextView, (int) authImageSize);
-        mobileSize.setLayoutParams(emailEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(authLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutParams(signUpButton, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(authTextView, (int) authImageSize);
+        mobileSize.setLayoutHeight(emailEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(authLayout, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutHeight(signUpButton, (int) (displayYHeight-authImageSize) / 10);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.ac_res_two_main_toolbar);
         mToolbar.setTitle(R.string.register_title);

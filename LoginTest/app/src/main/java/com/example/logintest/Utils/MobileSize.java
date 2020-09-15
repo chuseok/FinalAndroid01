@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 public class MobileSize {
 
@@ -32,11 +33,18 @@ public class MobileSize {
         return px / context.getResources().getDisplayMetrics().density;
     }
 
-    public void setLayoutParams(View view, int height) {
+    public void setLayoutHeight(View view, int height) {
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
         params.height = (int) height;
         view.setLayoutParams(params);
     }
+
+    public void setLayputMargin(View view, int left, int top, int right, int bottom) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        params.setMargins(left, top, right, bottom);
+        view.requestLayout();
+    }
+
 
     public float getStandardSize_X() {
         return standardSize_X;
