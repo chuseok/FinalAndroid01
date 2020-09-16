@@ -38,7 +38,11 @@ public class InventoryCardViewAdapter extends PagerAdapter {
     private List<Inven> invenList;
     private LayoutInflater layoutInflater;
     private Context context;
+    private AdapterCallBack listener;
 
+    public void setOnShareClickedListener(AdapterCallBack listener) {
+        this.listener = listener;
+    }
 
     public InventoryCardViewAdapter(List<Inven> invenList, Context context){
         this.invenList = invenList;
@@ -59,19 +63,16 @@ public class InventoryCardViewAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
+
         View view = layoutInflater.inflate(R.layout.cardview_item_inventory, container, false);
+        //View detailView = layoutInflater.inflate(R.layout.activity_dragon_detail, container, false);
 
         final ImageView imageView;
-        final TextView levelText, invenCnt;
-        final CircleProgressBar circleProgressBar;
-        final ProgressBar hungryProgress;
+        final TextView invenCnt;
 
         View card = view.findViewById(R.id.card_target);
         imageView = view.findViewById(R.id.ac_dragonDetail_invenImage_iv);
-        levelText = view.findViewById(R.id.ac_dragonDetail_Level_tv);
         invenCnt = view.findViewById(R.id.ac_dragonDetail_invenCnt_tv);
-        circleProgressBar = view.findViewById(R.id.cpb_circlebar);
-        hungryProgress = view.findViewById(R.id.ac_dragonDetail_hungry_pb);
 
         GlideToVectorYou
                 .init()
@@ -96,7 +97,6 @@ public class InventoryCardViewAdapter extends PagerAdapter {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(invenList.get(position).getProductId());
 
                 StringRequest useStringRequest = new StringRequest(Request.Method.POST, URLs.URL_INVEN_USE,
                         new Response.Listener<String>() {
@@ -105,7 +105,7 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                                 invenList.clear();
                                 try {
                                     JSONArray array = new JSONArray(response);
-                                    for (int i = 0; i < array.length(); i++) {
+                                    for (int i = 0; i < array.length()-1; i++) {
                                         int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
                                         String imagePath = array.getJSONObject(i).getString("productImage").replace("../",URLs.ROOT_URL);
                                         int count = Integer.parseInt(array.getJSONObject(i).getString("count"));
@@ -115,6 +115,16 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                                         //System.out.println("위치 : "+position+"->"+invenList.get(position).getCount());
                                         notifyDataSetChanged();
                                     }
+                                    JSONObject object = array.getJSONObject(array.length()-1);
+                                    int levelValue = Integer.parseInt(object.getString("dragonLevelValue"));
+                                    int dragonLevel = Integer.parseInt(object.getString("dragonTotalLevel"));
+                                    int hungryValue = Integer.parseInt(object.getString("hungryValue"));
+                                    listener.setLevelValue(levelValue);
+                                    listener.setFoodValue(hungryValue);
+                                    listener.setLevelText(dragonLevel);
+                                    listener.setDotIndicator(invenList.size());
+                                    listener.setDragonImage(object.getString("dragonImage"));
+
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -137,62 +147,9 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                         return params;
                     }
                 };
-                String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+dragonId;
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                try {
-                                    JSONObject object = new JSONObject(response);
-                                    int levelValue = Integer.parseInt(object.getString("dragonLevelValue"));
-                                    int dragonLevel = Integer.parseInt(object.getString("dragonTotalLevel"));
-                                    int hungryValue = Integer.parseInt(object.getString("hungryValue"));
-                                    int coin = Integer.parseInt(object.getString("coin"));
-                                    circleProgressBar.setProgress(levelValue);
-                                    levelText.setText(dragonLevel+"");
-                                    hungryProgress.setProgress(hungryValue);
-                                    String replaceUrl = object.getString("dragonImage").replace("../",URLs.ROOT_URL);
-                                    GlideToVectorYou
-                                            .init()
-                                            .with(context)
-                                            .withListener(new GlideToVectorYouListener() {
-                                                @Override
-                                                public void onLoadFailed() {
-                                                    System.out.println("Image Failed");
-                                                }
-
-                                                @Override
-                                                public void onResourceReady() {
-                                                    System.out.println("Image Ready");
-                                                }
-                                            })
-                                            .load(Uri.parse(replaceUrl), imageView);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(context, error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        //params.put("userId", "111111");
-                        //params.put("dragonId", "3");
-                        return params;
-                    }
-                };
 
                 VolleySingleton.getInstance(context).addToRequestQueue(useStringRequest);
-                VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
                 GlideToVectorYou
                         .init()
                         .with(context)
@@ -209,6 +166,7 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                         })
                         .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
                 invenCnt.setText("X"+invenList.get(position).getCount());
+
             }
 
         });
@@ -226,10 +184,7 @@ public class InventoryCardViewAdapter extends PagerAdapter {
         // this will have 3 pages in a single view
         return 0.32f;
     }
-
-
     @Override
-
     public int getItemPosition(Object object) {
         return POSITION_NONE;
 

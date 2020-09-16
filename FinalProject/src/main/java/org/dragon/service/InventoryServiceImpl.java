@@ -154,7 +154,7 @@ public class InventoryServiceImpl implements InventoryService{
 			int value = targetDragon.getFoodValue();
 			String foo = value+strArray[1];
 			result = (Integer)engine.eval(foo);
-			if(result>100) {
+			if(result>=100) {
 				result=100;
 			}
 			targetDragon.setFoodValue(result);
@@ -164,7 +164,7 @@ public class InventoryServiceImpl implements InventoryService{
 			value = dragonMapper.get(userId).getLevelValue();
 			foo = value+strArray[1];
 			result = (Integer)engine.eval(foo);
-			if(result>100) {
+			if(result>=100) {
 				result=0;
 				targetDragon.setTotalLevel(targetDragon.getTotalLevel()+1);
 			}

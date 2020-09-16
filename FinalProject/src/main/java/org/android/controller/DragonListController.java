@@ -147,9 +147,17 @@ public class DragonListController {
 				result.add(map);
 			}
 		}
-		
-		
-		
+		Map<String, String> dragonValue = new HashMap<String, String>();
+		DragonVO userInfo = new DragonVO(userId, dragonId, false);
+		DragonVO dragon = service.getDragonByDragonId(userInfo);
+		int coin = service.getCoin(userId);
+		setImg(dragon);
+		dragonValue.put("dragonImage",dragon.getImg());
+		dragonValue.put("hungryValue", dragon.getFoodValue()+"");
+		dragonValue.put("dragonTotalLevel",dragon.getTotalLevel()+"");
+		dragonValue.put("dragonLevelValue",dragon.getLevelValue()+"");
+		dragonValue.put("dragonId",dragon.getDragonId()+"");
+		result.add(dragonValue);
 		return result;
 	}
 	
