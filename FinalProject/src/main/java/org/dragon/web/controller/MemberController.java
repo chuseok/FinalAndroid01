@@ -1,4 +1,4 @@
-package org.login.controller;
+package org.dragon.web.controller;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ import com.test.tst.NaverLoginBO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Controller
+@Controller("web.controller.MemberController")
 @Log4j
 @AllArgsConstructor
 public class MemberController {
@@ -39,7 +39,7 @@ public class MemberController {
 		
 		model.addAttribute("home1", service.getList());
 	}
-	//íšŒì›ê°€ì…
+	//?šŒ?›ê°??…
 	@PostMapping("/main/join")
 	public String register(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo") AuthVO vo, RedirectAttributes rttr) {
 		log.info("join: " + mem);
@@ -55,8 +55,8 @@ public class MemberController {
 				service.register(mem);
 				service.register(vo);			
 			}
-			// ì…ë ¥ëœ ì•„ì´ë””ê°€ ì¡´ì¬í•œë‹¤ë©´ -> ë‹¤ì‹œ íšŒì›ê°€ì… í˜ì´ì§€ë¡œ ëŒì•„ê°€ê¸° 
-			// ì¡´ì¬í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ -> register
+			// ?…? ¥?œ ?•„?´?””ê°? ì¡´ì¬?•œ?‹¤ë©? -> ?‹¤?‹œ ?šŒ?›ê°??… ?˜?´ì§?ë¡? ?Œ?•„ê°?ê¸? 
+			// ì¡´ì¬?•˜ì§? ?•Š?Š”?‹¤ë©? -> register
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
@@ -72,13 +72,13 @@ public class MemberController {
 	public void join() {
 		
 	}
-	// íšŒì› íƒˆí‡´ get
+	// ?šŒ?› ?ƒˆ?‡´ get
 	@RequestMapping(value="/withdrawal", method = RequestMethod.GET)
 	public String withdrawalView(){
 		return "/withdrawal";
 	}
 	
-	// íšŒì› íƒˆí‡´ post
+	// ?šŒ?› ?ƒˆ?‡´ post
 	@RequestMapping(value = "/withdrawal", method = RequestMethod.POST)
 public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo") AuthVO vo,HttpSession session,
 		Model model, RedirectAttributes rttr){
@@ -139,7 +139,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 	public void update() {
 		
 	}
-	//ë‹‰ë„¤ì„ ë³€ê²½
+	//?‹‰?„¤?„ ë³?ê²?
 	@PostMapping("/main/updateFrm")
 	public String update(@ModelAttribute("mem") MemberVO mem, RedirectAttributes rttr) {
 		log.info("update userName: " + mem);
@@ -167,7 +167,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 	public void update2() {
 		
 	}
-	//ë¹„ë°€ë²ˆí˜¸ ë³€ê²½
+	//ë¹„ë?ë²ˆí˜¸ ë³?ê²?
 	@PostMapping("/main/updateFrm2")
 	public String update2(@ModelAttribute("mem") MemberVO mem, RedirectAttributes rttr) {
 		log.info("update password: " + mem);
@@ -179,12 +179,12 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 		
 		return "redirect:/main/home1";
 	}
-	//í•¸ë“œí° ë²ˆí˜¸ ë³€ê²½
+	//?•¸?“œ?° ë²ˆí˜¸ ë³?ê²?
 	@GetMapping("/main/updateFrm3")
 	public void update3() {
 		
 	}
-	//í•¸ë“œí° ë²ˆí˜¸ ë³€ê²½
+	//?•¸?“œ?° ë²ˆí˜¸ ë³?ê²?
 	@PostMapping("/main/updateFrm3")
 	public String update3(@ModelAttribute("mem") MemberVO mem, RedirectAttributes rttr) {
 		log.info("update phoneNo: " + mem);
@@ -196,12 +196,12 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 		
 		return "redirect:/main/home1";
 	}
-	//ì´ë©”ì¼ì£¼ì†Œ ë³€ê²½
+	//?´ë©”ì¼ì£¼ì†Œ ë³?ê²?
 		@GetMapping("/main/updateFrm4")
 		public void update4() {
 			
 		}
-		//í•¸ë“œí° ë²ˆí˜¸ ë³€ê²½
+		//?•¸?“œ?° ë²ˆí˜¸ ë³?ê²?
 		@PostMapping("/main/updateFrm4")
 		public String update4(@ModelAttribute("mem") MemberVO mem, RedirectAttributes rttr) {
 			log.info("update email: " + mem);
@@ -213,7 +213,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 			
 			return "redirect:/main/home1";
 		}
-    //íšŒì›ê°€ì… ì²´í¬
+    //?šŒ?›ê°??… ì²´í¬
 	@ResponseBody
 	@RequestMapping(value="/main/idCheck", method = RequestMethod.POST)
 	public int idChk(MemberVO mem) throws Exception {
@@ -228,7 +228,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 		return result;
 	}
 	
-	//íšŒì›íƒˆí‡´,ì •ë³´ë³€ê²½ì‹œ í•„ìš”í•œ ë¹„ë°€ë²ˆí˜¸ì²´í¬
+	//?šŒ?›?ƒˆ?‡´,? •ë³´ë?ê²½ì‹œ ?•„?š”?•œ ë¹„ë?ë²ˆí˜¸ì²´í¬
 	@ResponseBody
 	@RequestMapping(value="/main/PwdCheck", method = RequestMethod.POST)
 	public int PwdChk(MemberVO mem) throws Exception {
@@ -241,7 +241,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
         String naverAuthUrl = NaverLoginBO.getAuthorizationUrl(session);
         
       
-        System.out.println("å ì™ì˜™å ì‹±ë±„ì˜™:" + naverAuthUrl);
+        System.out.println("? ?™?˜™? ?‹±ë±„ì˜™:" + naverAuthUrl);
         
         model.addAttribute("url", naverAuthUrl);
 

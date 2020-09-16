@@ -28,6 +28,14 @@
 	<context:component-scan base-package="org.dragon.service"/>
 	<context:component-scan base-package="org.login.controller" />
 	<context:component-scan base-package="org.android.controller" />
-	
+	<context:component-scan base-package="org.dragon" />
+	<!-- <context:component-scan base-package="org.dragon.web.controller" />
+	<context:component-scan base-package="org.dragon.android.controller" /> -->
+	<!-- <context:component-scan base-package="org.dragon" name-generator="org.dragon.utils.CustomBeanNameGenerator">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	    <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+	</context:component-scan> -->
+
 	<security:global-method-security pre-post-annotations="enabled" />
 </beans:beans>
