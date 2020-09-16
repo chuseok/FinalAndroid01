@@ -4,10 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -27,6 +34,8 @@ import com.example.logintest.Utils.ViewPagerIndicatorView;
 import com.example.logintest.adapter.AdapterCallBack;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.adapter.InventoryCardViewAdapter;
+import com.example.logintest.dialog.DragonDialog;
+import com.example.logintest.dialog.DragonDialogListener;
 import com.example.logintest.domain.Dragon;
 import com.example.logintest.domain.Inven;
 import com.example.logintest.domain.Model;
@@ -38,6 +47,7 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,7 +56,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DragonDetailActivity extends AppCompatActivity implements AdapterCallBack {
+public class DragonDetailActivity extends AppCompatActivity implements AdapterCallBack, DragonDialogListener {
 
     TextView levelText, coinText;
     ImageView dragonImage;
@@ -57,6 +67,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
     InventoryCardViewAdapter adapter;
     ViewPagerIndicatorView indicatorView;
     List<Inven> invenList;
+    DragonDialog dragonDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +79,8 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//헤더 back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
+
         levelText = findViewById(R.id.ac_dragonDetail_Level_tv);
         coinText = findViewById(R.id.ac_dragonDetail_coin_tv);
         dragonImage = findViewById(R.id.ac_dragonDetail_dragonImage_iv);
@@ -78,8 +91,14 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
         invenList= new ArrayList<Inven>();
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
-        float displayYHeight = mobileSize.getStandardSize_Y();
+        final float displayXHeight = mobileSize.getStandardSize_X();
+        final float displayYHeight = mobileSize.getStandardSize_Y();
         mobileSize.setLayoutHeight(dragonPanel,(int)displayYHeight/10*6);
+
+        //dialog set
+        dragonDialog = new DragonDialog(this);
+        dragonDialog.setCancelable(false);
+        dragonDialog.setDragonDialogListener(this);
 
         String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
         final int dragonId = getIntent().getIntExtra("dragon",0);
@@ -101,7 +120,12 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
                             coinText.setText(coin+"");
                             setFoodValue(hungryValue);
                             setDragonImage(object.getString("dragonImage"));
-
+                            if(hungryValue==0){
+                                dragonDialog.show();
+                                Window DialogWindow = dragonDialog.getWindow();
+                                DialogWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                DialogWindow.setLayout((int)(displayXHeight*0.8),(int)(displayYHeight*0.6));
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -171,6 +195,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
         //inventory list 값 받아오기 end
 
         viewPager = findViewById(R.id.ac_dragonDetail_viewPager);
+        mobileSize.setLayoutHeight(viewPager, (int) (displayYHeight*0.18));
         adapter = new InventoryCardViewAdapter(invenList,getApplicationContext());
         adapter.setOnShareClickedListener(this);
         viewPager.setAdapter(adapter);
@@ -201,6 +226,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
                 System.out.println(view.getId());
             }
         });
+
     }
 
     @Override
@@ -209,6 +235,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
         return true;
     }
 
+    //Adapter implement
     @Override
     public void setLevelValue(int data) {
         circleProgressBar.setProgress(data);
@@ -253,4 +280,50 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
                 .load(Uri.parse(replaceUrl), dragonImage);
     }
 
+    //DragonDialog implement
+    @Override
+    public void reviveDragon(int data) {
+        final String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+        StringRequest reviveStringRequest = new StringRequest(Request.Method.GET, URLs.URL_DRAGON_REVIVE+"?userId="+userId+"&dragonId="+data,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            if(object.getInt("checkCoin")==-1){
+                                Toast.makeText(getApplicationContext(),"코인이 부족합니다.",Toast.LENGTH_SHORT).show();
+                            }else{
+                                setFoodValue(100);
+                                coinText.setText(object.getInt("coin")+"");
+                                dragonDialog.dismiss();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                //params.put("userId", userId);
+                //params.put("dragonId", "3");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(reviveStringRequest);
+    }
+
+    @Override
+    public void cancel() {
+        Intent i = new Intent();
+        setResult(0,i);
+        finish();
+    }
 }

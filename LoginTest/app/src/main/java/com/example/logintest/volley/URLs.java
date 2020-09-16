@@ -9,4 +9,5 @@ public class URLs {
     public static final String URL_DRAGON_GET = ROOT_URL+"android/dragon/get";
     public static final String URL_INVEN_LIST = ROOT_URL+"android/inven/list";
     public static final String URL_INVEN_USE = ROOT_URL+"android/inven/use";
+    public static final String URL_DRAGON_REVIVE = ROOT_URL+"android/dragon/revive";
 }

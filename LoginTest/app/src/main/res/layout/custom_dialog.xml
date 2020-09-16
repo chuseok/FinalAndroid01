@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_main_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/round">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="용이 죽었습니다!"
+        android:textSize="30dp"
+        android:textColor="#000000"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_word_detail_margin"
+        android:gravity="center"
+        android:text="@string/revive_subText"
+        android:textSize="15dp"/>
+
+    <ProgressBar
+        android:id="@+id/dialog_hungryProgress_pb"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_word_detail_margin"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_gravity="center"
+        android:progressDrawable="@drawable/progressbar_design"/>
+    <ImageView
+        android:id="@+id/dialog_targetDragon_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_word_detail_margin"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher_background"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:weightSum="100">
+        <Button
+            android:id="@+id/dialog_revive_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="부활하기"
+            android:textColor="#DF1C1C"
+            android:background="#ffffff"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+        <Button
+            android:id="@+id/dialog_back_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="취소"
+            android:textColor="#DF1C1C"
+            android:background="#ffffff"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+    </LinearLayout>
+
+</LinearLayout>

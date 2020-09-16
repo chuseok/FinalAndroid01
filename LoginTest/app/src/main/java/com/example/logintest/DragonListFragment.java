@@ -17,6 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.adapter.CardViewAdapter;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.domain.Dragon;
@@ -91,9 +92,16 @@ public class DragonListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View mainView = inflater.inflate(R.layout.fragment_dragon_list,null);
-        adapter = new DragonCardViewAdapter(models,mainView.getContext());
+
         final TextView dragonNum = mainView.findViewById(R.id.frag_dragonList_dragonNum_tv);
 
+        MobileSize mobileSize = new MobileSize();
+        mobileSize.getStandardSize((MainActivity)getActivity());
+        float displayYHeight = mobileSize.getStandardSize_Y();
+
+        mobileSize.setLayputMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
+
+        adapter = new DragonCardViewAdapter(models,mainView.getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
                 new Response.Listener<String>() {
                     @Override
@@ -139,6 +147,7 @@ public class DragonListFragment extends Fragment {
         dragonNum.setText("1/"+models.size());
 
         viewPager = mainView.findViewById(R.id.frag_dragonList_viewPager);
+        mobileSize.setLayoutHeight(viewPager,(int)(displayYHeight*0.5));
         viewPager.setAdapter(adapter);
         viewPager.setPadding(130,0,130,0);
 
