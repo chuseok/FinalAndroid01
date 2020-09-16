@@ -231,7 +231,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+        super.onBackPressed();
         return true;
     }
 

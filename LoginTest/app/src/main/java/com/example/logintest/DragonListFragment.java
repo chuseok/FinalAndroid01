@@ -87,6 +87,65 @@ public class DragonListFragment extends Fragment {
         }*/
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        final View mainView = getView();
+
+        final TextView dragonNum = mainView.findViewById(R.id.frag_dragonList_dragonNum_tv);
+
+        MobileSize mobileSize = new MobileSize();
+        mobileSize.getStandardSize((MainActivity)getActivity());
+        float displayYHeight = mobileSize.getStandardSize_Y();
+
+        mobileSize.setLayputMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            models.clear();
+                            for (int i = 0; i < array.length(); i++) {
+
+                                String replaceUrl = array.getJSONObject(i).getString("dragonImage").replace("../",URLs.ROOT_URL);
+
+                                int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
+                                int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
+                                models.add(new Dragon(replaceUrl,hungryValue,dragonId));
+                            }
+
+                            adapter.notifyDataSetChanged();//models 변경되었다는것 알리기
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userId", "111111");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+
+        dragonNum.setText("1/"+models.size());
+
+        viewPager.setAdapter(adapter);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

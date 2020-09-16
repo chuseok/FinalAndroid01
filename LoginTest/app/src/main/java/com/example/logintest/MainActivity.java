@@ -71,10 +71,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.wordTest:
                         Toast.makeText(MainActivity.this, "My wordTest",Toast.LENGTH_SHORT).show();break;
                     case R.id.dragonList:
-                        fragmentManager = getSupportFragmentManager();
-                        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.frag_nav,new DragonListFragment());
-                        fragmentTransaction.commit(); break;
+                        final FragmentTransaction dragonListFt = fragmentManager.beginTransaction();
+                        dragonListFt.replace(R.id.frag_nav,new DragonListFragment());
+                        dragonListFt.commit(); break;
+                    case R.id.itemList:
+                        final FragmentTransaction itemListFt = fragmentManager.beginTransaction();
+                        itemListFt.replace(R.id.frag_nav,new ItemListFragment());
+                        itemListFt.commit(); break;
                     default:
                         return true;
                 }
