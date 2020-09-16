@@ -161,6 +161,33 @@ public class DragonListController {
 		return result;
 	}
 	
+	@GetMapping(value = "/dragon/revive")
+	public Map<String, Integer> reviveDragontWithRequestAndResponse(HttpServletRequest request) {
+
+		String userId = request.getParameter("userId");
+		int dragonId = Integer.parseInt(request.getParameter("dragonId"));
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		
+		MemberVO member = memberService.get(userId);
+		
+		if(member.getCoin()<20000) {
+			result.put("checkCoin", -1);
+			result.put("coin",-1);
+			return result;
+		}
+		member.setCoin(member.getCoin()-20000);
+		
+		DragonVO userInfo = new DragonVO(userId, dragonId, false);
+		DragonVO dragon = service.getDragonByDragonId(userInfo);
+		dragon.setFoodValue(100);
+		service.updateCoin(member);
+		service.updateDragon(dragon);
+		result.put("checkCoin", 0);
+		result.put("coin",member.getCoin());
+		return result;
+
+	}
+	
 
 	public DragonVO setImg(DragonVO vo) {// 이미지 셋팅
 
