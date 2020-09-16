@@ -25,20 +25,24 @@ public class MemberController {
 
 	MemberService memberService;
 	
-	@GetMapping(value = "/get")
-	public Map<String, String> get(HttpServletRequest request) {
+	@GetMapping(value = "/getList")
+	public List<Map<String, String>> get(HttpServletRequest request) {
 		
-//		String userId = request.getParameter("userId");
-		String userId = "aaa";
-		List<MemberVO> MemList = new ArrayList<MemberVO>();
-		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+        List<MemberVO> MemList = new ArrayList<MemberVO>();
+        List<Map<String, String>> result = new ArrayList<Map<String, String>>();
         
-		MemberVO member = memberService.get(userId);
+        MemList = memberService.getList();
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userId", member.getUserId());
+        
+        for(int i=0;i<MemList.size();i++) {
+        	Map<String, String> map = new HashMap<String, String>();
+        	String userId = MemList.get(i).getUserId();
+        	map.put("userId",userId);
+        	
+        	result.add(map);
+        }
 		
-		return map;
+		return result;
 		
 	}
 	

@@ -46,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     String userId_Val;
     String userPwd_Val;
     String userPwdConfirm_Val;
+    boolean Certification;
 
 
     @Override
@@ -92,18 +93,32 @@ public class RegisterActivity extends AppCompatActivity {
                 userPwd_Val = userPwdEditText.getText().toString();
                 userPwdConfirm_Val = userPwdConfirmEditText.getText().toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_MEMBER_GET,
+                Certification = verifyUserInfo(userId_Val, userPwd_Val, userPwdConfirm_Val);
+
+                String registerUrl = URLs.URL_MEMBER_GETLIST + "?userId=" + userId_Val;
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, registerUrl,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                                    JSONObject member = new JSONObject(response);
-                                    Log.d("RESPONSE_WEB","response");
-                                    Log.d("MEMBER",member.getString("userId"));
-                                    if (userId_Val.equalsIgnoreCase(member.getString("userId"))) {
-                                        userIdEditText.setError("아이디가 이미 있습니다!");
-                                        userIdEditText.requestFocus();
-                                        return;
+                                    JSONArray memberArray = new JSONArray(response);
+                                    boolean idCheck = true;
+                                    for (int i = 0; i < memberArray.length(); i++) {
+                                        Log.d("RESPONSE_WEB", "response");
+                                        Log.d("MEMBER_ID", memberArray.getJSONObject(i).getString("userId"));
+                                        if (userId_Val.equalsIgnoreCase(memberArray.getJSONObject(i).getString("userId"))) {
+                                            userIdEditText.setError("아이디가 이미 있습니다!");
+                                            userIdEditText.requestFocus();
+                                            idCheck = false;
+                                            return;
+                                        }
+                                    }
+
+                                    if(idCheck && Certification) {
+                                            Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
+                                            SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
+                                            SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
+                                            startActivity(SecondRegisterActivity);
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -113,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.e("CONN_ERROR", error.getMessage());
                             }
                         }) {
                     @Override
@@ -127,15 +142,10 @@ public class RegisterActivity extends AppCompatActivity {
                 VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
 
-                boolean Certification = verifyUserInfo(userId_Val, userPwd_Val, userPwdConfirm_Val);
 
 
-//                if(Certification) {
-//                    Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
-//                    SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
-//                    SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
-//                    startActivity(SecondRegisterActivity);
-//                }
+
+
 
 
             }
