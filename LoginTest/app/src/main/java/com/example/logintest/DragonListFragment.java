@@ -1,6 +1,5 @@
 package com.example.logintest;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,18 +17,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
-import com.example.logintest.adapter.CardViewAdapter;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.domain.Dragon;
-import com.example.logintest.domain.Model;
-import com.example.logintest.domain.User;
-import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +51,7 @@ public class DragonListFragment extends Fragment {
     public DragonListFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -90,16 +85,8 @@ public class DragonListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        final View mainView = getView();
 
-        final TextView dragonNum = mainView.findViewById(R.id.frag_dragonList_dragonNum_tv);
-
-        MobileSize mobileSize = new MobileSize();
-        mobileSize.getStandardSize((MainActivity)getActivity());
-        float displayYHeight = mobileSize.getStandardSize_Y();
-
-        mobileSize.setLayputMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
-
+        //adapter = new DragonCardViewAdapter(models,getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
                 new Response.Listener<String>() {
                     @Override
@@ -115,9 +102,11 @@ public class DragonListFragment extends Fragment {
                                 int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
                                 int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
                                 models.add(new Dragon(replaceUrl,hungryValue,dragonId));
+                                System.out.println(models.get(i).getProgress());
+                                //models 변경되었다는것 알리기
                             }
+                            adapter.notifyDataSetChanged();
 
-                            adapter.notifyDataSetChanged();//models 변경되었다는것 알리기
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -141,10 +130,9 @@ public class DragonListFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-
-        dragonNum.setText("1/"+models.size());
-
         viewPager.setAdapter(adapter);
+
+
     }
 
     @Override

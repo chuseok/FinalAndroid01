@@ -1,6 +1,6 @@
 package com.example.logintest.adapter;
 
-public interface AdapterCallBack {
+public interface InventoryAdapterCallBack {
     void setLevelValue(int data);
     void setFoodValue(int data);
     void setLevelText(int data);
