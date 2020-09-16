@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -183,31 +184,49 @@ public class RegisterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean verifyUserInfo(String userId, String userPwd, String userPwdConfirm) {
+    private boolean verifyUserInfo(String userId, String userPwd, String userPwdConfirm) {
         if(TextUtils.isEmpty(userId)) {
             userIdEditText.setError("아이디를 입력해주세요!");
             userIdEditText.requestFocus();
             return false;
-        }
-
-        if(TextUtils.isEmpty(userPwd)) {
+        } else if(TextUtils.isEmpty(userPwd)) {
             userPwdEditText.setError("비밀번호를 입력해주세요!");
+            userPwdEditText.requestFocus();
+            return false;
+        } else if(TextUtils.isEmpty(userPwdConfirm)) {
+            userPwdConfirmEditText.setError("비밀번호 확인을 입력해주세요!");
+            userPwdConfirmEditText.requestFocus();
+            return false;
+        } else if(!userPwd.equalsIgnoreCase(userPwdConfirm)) {
+            userPwdConfirmEditText.setError("비밀번호가 맞지 않습니다!");
+            userPwdConfirmEditText.requestFocus();
+            return false;
+        } else if(!validateUserId(userId)) {
+            userIdEditText.setError("영문,숫자만 입력가능합니다!");
+            userIdEditText.requestFocus();
+            return false;
+        } else if(!validateUserPwd(userPwd)) {
+            userPwdEditText.setError("영문+숫자+특수문자 포함 8~16자로 입력해주세요!");
             userPwdEditText.requestFocus();
             return false;
         }
 
-        if(TextUtils.isEmpty(userPwdConfirm)) {
-            userPwdConfirmEditText.setError("비밀번호 확인을 입력해주세요!");
-            userPwdConfirmEditText.requestFocus();
+        return true;
+    }
+
+    private boolean validateUserId(String userId) {
+        boolean idCheck = Pattern.matches("^[a-zA-Z0-9]+$", userId);
+        if(!idCheck) {
             return false;
         }
+        return true;
+    }
 
-        if(!userPwd.equalsIgnoreCase(userPwdConfirm)) {
-            userPwdConfirmEditText.setError("비밀번호가 맞지 않습니다!");
-            userPwdConfirmEditText.requestFocus();
+    private boolean validateUserPwd(String userPwd) {
+        boolean pwdCheck = Pattern.matches("^.*(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", userPwd);
+        if(!pwdCheck) {
             return false;
         }
-
         return true;
     }
 }
