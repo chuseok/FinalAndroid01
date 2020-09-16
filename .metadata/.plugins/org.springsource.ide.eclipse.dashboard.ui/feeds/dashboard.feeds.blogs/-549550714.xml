@@ -5,7 +5,81 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2020-09-14T12:00:00Z</updated>
+  <updated>2020-09-15T15:32:31Z</updated>
+  <entry>
+    <title>Spring Framework 5.3 goes RC1</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/09/15/spring-framework-5-3-goes-rc1" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Juergen Hoeller</name>
+    </author>
+    <id>tag:spring.io,2020-09-15:4197</id>
+    <updated>2020-09-15T15:32:31Z</updated>
+    <content type="html">&lt;p&gt;Dear Spring community,&lt;/p&gt;
+&lt;p&gt;On behalf of the development team, it is my pleasure to announce that a feature-complete Spring Framework 5.3 release candidate is available from our &lt;a href="https://repo.spring.io/milestone/org/springframework/spring-framework-bom/5.3.0.RC1/"&gt;milestone repository&lt;/a&gt; now! Check out the list of &lt;a href="https://github.com/spring-projects/spring-framework/wiki/What%27s-New-in-Spring-Framework-5.x#whats-new-in-version-53"&gt;new features&lt;/a&gt; and &lt;a href="https://github.com/spring-projects/spring-framework/wiki/Upgrading-to-Spring-Framework-5.x#upgrading-to-version-53"&gt;upgrade notes&lt;/a&gt; on our GitHub wiki, including several deprecation notes.&lt;/p&gt;
+&lt;p&gt;As the last feature branch of the 5.x generation, we are preparing the 5.3.x line for general availability in late October - with an extended maintenance phase up until 2024. While we strongly encourage appropriate migration steps, all of our deprecated packages are going to remain in place for the entire 5.3.x phase. In terms of Java platform support, the current range is JDK 8-15 but we expect this to grow into JDK 8-17 for our Spring Framework 5.3.x releases next year.&lt;/p&gt;
+&lt;p&gt;Spring supports Java 14/15 records and similar record-style classes now, as a refined variant of constructor-based binding. Spring&amp;rsquo;s core container includes refinements for &lt;a href="https://github.com/spring-projects-experimental/spring-graalvm-native"&gt;native application deployment&lt;/a&gt; and performance optimizations in terms of data structures and concurrent access.&lt;/p&gt;
+&lt;p&gt;This release brings a new &lt;code&gt;spring-r2dbc&lt;/code&gt; module with core &lt;a href="https://r2dbc.io/"&gt;R2DBC&lt;/a&gt; support, including a reactive &lt;code&gt;R2dbcTransactionManager&lt;/code&gt; as well as a reactive &lt;code&gt;DatabaseClient&lt;/code&gt;. Its sister module &lt;code&gt;spring-jdbc&lt;/code&gt; features a new &lt;code&gt;JdbcTransactionManager&lt;/code&gt; (with extended data access exception translation), as well as a &lt;code&gt;DataClassRowMapper&lt;/code&gt; with constructor-based result binding support (covering Java records) and new &lt;code&gt;queryForStream&lt;/code&gt; methods (for lazy result iteration) on our good old &lt;code&gt;JdbcTemplate&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In the web framework, we provide a JSON option with &lt;a href="https://github.com/Kotlin/kotlinx.serialization"&gt;Kotlin multiplatform serialization&lt;/a&gt; now. &lt;code&gt;WebTestClient&lt;/code&gt; allows for performing requests against MockMvc, as a single test client API for mock versus live tests. WebFlux comes with a fully reactive message reader for multipart requests.&lt;/p&gt;
+&lt;p&gt;Please give Spring Framework 5.3 RC1 a try, e.g. as part of the upcoming Spring Boot 2.4 M3 release which will be available on &lt;a href="https://start.spring.io/"&gt;start.spring.io&lt;/a&gt; soon, and let us know about any regressions etc.&lt;/p&gt;
+&lt;p&gt;Cheers,&lt;br/&gt;Juergen&lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Vault 2.3 M1 available</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/09/15/spring-vault-2-3-m1-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Paluch</name>
+    </author>
+    <id>tag:spring.io,2020-09-15:4198</id>
+    <updated>2020-09-15T14:42:46Z</updated>
+    <content type="html">&lt;div class="paragraph"&gt;
+&lt;p&gt;On behalf of the community, I&amp;#8217;d like to announce the availability of the first Spring Vault milestone release &lt;code&gt;2.3.0-M1&lt;/code&gt; of the 2.3 development line.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;Most notable changes in this release are:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="ulist"&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Support for Vault&amp;#8217;s &lt;a href="https://www.vaultproject.io/docs/secrets/transform"&gt;Transform secrets backend&lt;/a&gt;. Please note that this is an enterprise feature.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;A &lt;code&gt;ReactiveVaultEndpointProvider&lt;/code&gt; for non-blocking lookup of &lt;code&gt;VaultEndpoint&lt;/code&gt; that can be used for reactive service discovery.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;VaultKeyValueMetadataOperations&lt;/code&gt; for Key-Value metadata interaction.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Updates to our documentations specifically on how to use Vault&amp;#8217;s various secret backends with Spring Vault.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;For a complete list of changes see the &lt;a href="http://docs.spring.io/spring-vault/docs/2.3.0-M1/changelog.txt"&gt;2.3.0-M1 changelog&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="paragraph"&gt;
+&lt;p&gt;&lt;a href="http://projects.spring.io/spring-vault/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-vault"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-vault/issues"&gt;Issues&lt;/a&gt; | &lt;a href="http://docs.spring.io/spring-vault/docs/2.3.0-M1/reference/html/"&gt;Documentation for 2.3.0-M1&lt;/a&gt; | &lt;a href="http://stackoverflow.com/questions/tagged/spring-vault"&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
+  <entry>
+    <title>Spring Framework 5.2.9, 5.1.18, 5.0.19, and 4.3.29 available now</title>
+    <link rel="alternate" href="https://spring.io/blog/2020/09/15/spring-framework-5-2-9-5-1-18-5-0-19-and-4-3-29-available-now" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>St?phane Nicoll</name>
+    </author>
+    <id>tag:spring.io,2020-09-15:4196</id>
+    <updated>2020-09-15T11:51:20Z</updated>
+    <content type="html">&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce a full round of Spring Framework releases.&lt;/p&gt;
+&lt;p&gt;Spring Framework 5.2.9 includes &lt;a href="https://github.com/spring-projects/spring-framework/releases/tag/v5.2.9.RELEASE"&gt;42 fixes and improvements&lt;/a&gt;. Spring Framework 5.1.18 includes &lt;a href="https://github.com/spring-projects/spring-framework/releases/tag/v5.1.18.RELEASE"&gt;16 selected fixes and improvements&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Maintenance releases for &lt;code&gt;5.0.x&lt;/code&gt; (&lt;code&gt;5.0.19&lt;/code&gt;) and &lt;code&gt;4.3.x&lt;/code&gt; (&lt;code&gt;4.3.29&lt;/code&gt;) with &lt;a href="https://github.com/spring-projects/spring-framework/releases/tag/v5.0.19.RELEASE"&gt;13 selected fixes and improvements&lt;/a&gt; and &lt;a href="https://github.com/spring-projects/spring-framework/releases/tag/v4.3.29.RELEASE"&gt;9 selected fixes and improvements&lt;/a&gt; respectively are also available today.&lt;/p&gt;
+&lt;p&gt;Stay tuned for the release candidate of Spring Framework 5.3 and follow-up Spring Boot releases!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://projects.spring.io/spring-framework/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-framework"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-framework/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-framework/docs/5.2.9.RELEASE/spring-framework-reference"&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
   <entry>
     <title>Azure in the Enterprise: Azure Cosmos DB and Spring Boot</title>
     <link rel="alternate" href="https://spring.io/blog/2020/09/14/azure-in-the-enterprise-azure-cosmos-db-and-spring-boot" />
@@ -1513,125 +1587,6 @@ When most people think of caching, they are technically referring to the &lt;em&
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>Get the very first bits of Spring Authorization Server 0.0.1 !</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/08/21/get-the-very-first-bits-of-spring-authorization-server-0-0-1" />
-    <category term="releases" label="Releases" />
-    <author>
-      <name>Joe Grandja</name>
-    </author>
-    <id>tag:spring.io,2020-08-20:4175</id>
-    <updated>2020-08-21T12:04:31Z</updated>
-    <content type="html">&lt;div class="paragraph"&gt;
-&lt;p&gt;On behalf of the team and everyone who has contributed, we are very excited to deliver the very first bits of Spring Authorization Server in the 0.0.1 release!&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;You can download it from &lt;a href="https://repo.spring.io/release/"&gt;repo.spring.io&lt;/a&gt; and Maven Central by using the module coordinates:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="listingblock"&gt;
-&lt;div class="content"&gt;
-&lt;pre class="prettyprint highlight"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;compile 'org.springframework.security.experimental:spring-security-oauth2-authorization-server:0.0.1'&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;For additional details on this new project, see the &lt;a href="https://spring.io/blog/2020/04/15/announcing-the-spring-authorization-server"&gt;initial announcement&lt;/a&gt; and &lt;a href="https://github.com/spring-projects-experimental/spring-authorization-server"&gt;project page&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;The main features delivered in this initial release are:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="ulist"&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;OAuth 2.0 Authorization Code Grant&amp;#8201;&amp;#8212;&amp;#8201;&lt;a href="https://tools.ietf.org/html/rfc6749#section-4.1"&gt;RFC 6749&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;OAuth 2.0 Client Credentials Grant&amp;#8201;&amp;#8212;&amp;#8201;&lt;a href="https://tools.ietf.org/html/rfc6749#section-4.4"&gt;RFC 6749&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;JSON Web Token (JWT)&amp;#8201;&amp;#8212;&amp;#8201;&lt;a href="https://tools.ietf.org/html/rfc7519"&gt;RFC 7519&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;JSON Web Signature (JWS)&amp;#8201;&amp;#8212;&amp;#8201;&lt;a href="https://tools.ietf.org/html/rfc7515"&gt;RFC 7515&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;JSON Web Key (JWK)&amp;#8201;&amp;#8212;&amp;#8201;&lt;a href="https://tools.ietf.org/html/rfc7517"&gt;RFC 7517&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Key Management for providing key(s) when signing a JWT (JWS)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;See the &lt;a href="https://github.com/spring-projects-experimental/spring-authorization-server/releases/tag/0.0.1"&gt;release notes&lt;/a&gt; for complete details.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;To get started using Spring Authorization Server, see the &lt;a href="https://github.com/spring-projects-experimental/spring-authorization-server/tree/master/samples/boot/oauth2-integration"&gt;sample&lt;/a&gt; to become familiar with setup and configuration.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;We would love to gather your feedback as we strive to improve and build upon this initial release.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class="paragraph"&gt;
-&lt;p&gt;&lt;a href="https://github.com/spring-projects-experimental/spring-authorization-server"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects-experimental/spring-authorization-server/issues"&gt;GitHub Issues&lt;/a&gt; |  &lt;a href="https://app.zenhub.com/workspaces/authorization-server-5e8f3182b5e8f5841bfc4902/board?repos=248032165"&gt;ZenHub Board&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>Bootiful Podcast: Google Cloud's Elena Felder on Spring Cloud GCP, Reactor, and More</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/08/21/bootiful-podcast-google-cloud-s-elena-felder-on-spring-cloud-gcp-reactor-and-more" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2020-08-21:4176</id>
-    <updated>2020-08-21T04:07:18Z</updated>
-    <content type="html">&lt;p&gt;Hi, Spring fans! In this episode, &lt;a href="http://twitter.com/starbuxman"&gt;Josh Long (@starbuxman)&lt;/a&gt; talks to Google Cloud&amp;rsquo;s &lt;a href="http://twitter.com/hellata"&gt;Elena Felder (@hellata)&lt;/a&gt; about building Reactor/Spring-based integrations for Google Cloud technologies like Google Cloud Spanner.&lt;/p&gt;
-&lt;iframe title="Google Cloud's Elena Felder on Google Cloud, Spanner, and Reactor-based integrations" height="122" width="100%" style="border: none;" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/media/player/phdqq-e80955?from=pb6admin&amp;download=1&amp;version=1&amp;auto=0&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Helvetica&amp;skin=1&amp;pfauth=&amp;btn-skin=107"&gt;&lt;/iframe&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - August 18th, 2020</title>
-    <link rel="alternate" href="https://spring.io/blog/2020/08/19/this-week-in-spring-august-18th-2020" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2020-08-19:4174</id>
-    <updated>2020-08-19T00:48:46Z</updated>
-    <content type="html">&lt;p&gt;Hi, Spring fans! Well, here we are! Nearing the end of August 2020! I can&amp;rsquo;t believe it! September follows August (last I checked) and with September comes SpringOne 2020! I am &lt;em&gt;so&lt;/em&gt; excited about this mega (and virtual) event and I hope you&amp;rsquo;ll consider joining us there! &lt;/p&gt;
-&lt;p&gt;On a personal note, today&amp;rsquo;s moving day for my family and me, so I have to get back to that. But we do have a &lt;em&gt;ton&lt;/em&gt; to get to so let&amp;rsquo;s dive into it.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/14/a-bootiful-podcast-rsocket-everywhere-and-maciej-walkowiak-on-spring-cloud-aws"&gt;A Bootiful Podcast: RSocket everywhere and Maciej Walkowiak on Spring Cloud AWS&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://blogs.vmware.com/opensource/2020/08/13/a-bootiful-podcast-software-security-in-the-supply-chain/"&gt;A Bootiful Podcast: Software Security in the Supply Chain&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/springcloud/status/1295465794554429440"&gt;A new video in the Spring Cloud AWS series, this one looking at how to scale out databases with RDS and Spring Cloud AWS.&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/17/case-study-http-request-function-and-processor"&gt;Case Study: HTTP Request Function and Processor&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/SpringData/status/1293476064094814208"&gt;CockroachDB &amp;amp; Spring Tutorials for Spring Data JDBC, JPA, &amp;amp; MyBatis&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/14/config-file-processing-in-spring-boot-2-4"&gt;Config file processing in Spring Boot 2.4&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/14/creating-efficient-docker-images-with-spring-boot-2-3"&gt;Creating Efficient Docker Images with Spring Boot 2.3&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.youtube.com/watch?v=Ts2a-YdN6vI"&gt;Getting started with Spring Cloud AWS - YouTube&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://reflectoring.io/spring-bean-lifecycle/"&gt;Hooking Into the Spring Bean Lifecycle&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/cloudfoundry/status/1295762491503292417"&gt;How &lt;code&gt;cf-for-k8s&lt;/code&gt; Reinvents Cloud Foundry as a Native Kubernetes App Platform&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://inside.java/2020/08/07/loom-performance/"&gt;Interesting post on the performance of user-mode threads and coroutines&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring-gcp.saturnism.me/"&gt;Introduction - Spring Boot on GCP&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://m.facebook.com/355408241562041/videos/708422819736807"&gt;Microsoft&amp;rsquo;s Rory Preddy on Integrating ¡°Reactive¡± APIs to traditional relational databases&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://inside.java/2020/08/18/foreign-api-jep/"&gt;New candidate JEP: 389: Foreign Linker API (Incubator)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/13/premiering-the-rsocket-revolution"&gt;Premiering: The RSocket Revolution&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/13/spring-batch-4-3-0-m2-is-out"&gt;Spring Batch 4.3.0-M2 is out!&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/13/spring-boot-2-3-3-available-now"&gt;Spring Boot 2.3.3 available now&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/14/spring-boot-2-4-0-m2-is-now-available"&gt;Spring Boot 2.4.0-M2 is now available&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/12/spring-data-2020-0-0-m2-released"&gt;Spring Data 2020.0.0-M2 released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/12/spring-data-neumann-sr3-released"&gt;Spring Data Neumann SR3 released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/17/spring-initializr-0-9-1-available-now"&gt;Spring Initializr 0.9.1 available now&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/12/spring-integration-5-4-m2-available"&gt;Spring Integration 5.4 M2 Available&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/12/spring-security-5-3-4-5-2-6-5-1-12-5-0-18-4-2-18-released"&gt;Spring Security 5.3.4, 5.2.6, 5.1.12, 5.0.18, 4.2.18 Released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2020/08/14/spring-security-5-4-0-rc1-released"&gt;Spring Security 5.4.0-RC1 Released&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/springcloud/status/1294325229913812993"&gt;The recent improvements to the way that Spring Boot loads configuration portend some nice changes for users of the Spring Cloud Config Server&amp;hellip;&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://blogs.vmware.com/opensource/2020/08/18/vmware-open-source-security-foundation/"&gt;VMware Hits the Ground Running with the Launch of Open Source Security Foundation&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/springcloud/status/1294389986016591881"&gt;Want to contribute to Spring Cloud Contract and move the code from Groovy to Java? We&amp;rsquo;d love your help&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/springcentral/status/1295765410655207428"&gt;What is Spring? A nice 4 minute explainer by Mark Heckler&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://inside.java/2020/08/12/skara-repos-transitions/"&gt;jdk/jdk repository transitions to Git, GitHub and Skara: September 5&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- rendered by Sagan Renderer Service --&gt;</content>
   </entry>
 </feed>

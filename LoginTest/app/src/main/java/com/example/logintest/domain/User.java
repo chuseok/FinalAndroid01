@@ -15,6 +15,10 @@ public class User {
         this.idCheck = idCheck;
     }
 
+    public User(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserId() {
         return userId;
     }

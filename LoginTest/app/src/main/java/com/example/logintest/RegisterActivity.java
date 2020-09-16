@@ -15,8 +15,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
+import com.example.logintest.domain.User;
+import com.example.logintest.manager.SharedPrefManager;
+import com.example.logintest.volley.URLs;
+import com.example.logintest.volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -76,13 +92,52 @@ public class RegisterActivity extends AppCompatActivity {
                 userPwd_Val = userPwdEditText.getText().toString();
                 userPwdConfirm_Val = userPwdConfirmEditText.getText().toString();
 
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_MEMBER_GET,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject member = new JSONObject(response);
+                                    Log.d("RESPONSE_WEB","response");
+                                    Log.d("MEMBER",member.getString("userId"));
+                                    if (userId_Val.equalsIgnoreCase(member.getString("userId"))) {
+                                        userIdEditText.setError("아이디가 이미 있습니다!");
+                                        userIdEditText.requestFocus();
+                                        return;
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("userId", userId_Val);
+                        return params;
+                    }
+                };
+
+                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+
                 boolean Certification = verifyUserInfo(userId_Val, userPwd_Val, userPwdConfirm_Val);
-                if(Certification) {
-                    Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
-                    SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
-                    SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
-                    startActivity(SecondRegisterActivity);
-                }
+
+
+//                if(Certification) {
+//                    Intent SecondRegisterActivity = new Intent(getApplicationContext(), RegisterSecondActivity.class);
+//                    SecondRegisterActivity.putExtra("userId", userIdEditText.getText().toString());
+//                    SecondRegisterActivity.putExtra("userPwd", userPwdEditText.getText().toString());
+//                    startActivity(SecondRegisterActivity);
+//                }
+
+
             }
         });
 
@@ -102,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 
