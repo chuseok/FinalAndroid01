@@ -27,7 +27,6 @@ public class MemberController {
 	
 	@GetMapping(value = "/getList")
 	public List<Map<String, String>> get(HttpServletRequest request) {
-		
         List<MemberVO> MemList = new ArrayList<MemberVO>();
         List<Map<String, String>> result = new ArrayList<Map<String, String>>();
         
@@ -37,7 +36,9 @@ public class MemberController {
         for(int i=0;i<MemList.size();i++) {
         	Map<String, String> map = new HashMap<String, String>();
         	String userId = MemList.get(i).getUserId();
-        	map.put("userId",userId);
+        	String userName = MemList.get(i).getUserName();
+        	map.put("userId", userId);
+        	map.put("userName", userName);
         	
         	result.add(map);
         }

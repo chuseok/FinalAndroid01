@@ -25,8 +25,8 @@ public class MobileSize {
         Point ScreenSize = getScreenSize(activity);
         density  = activity.getResources().getDisplayMetrics().density;
 
-        standardSize_X = (ScreenSize.x / density)* activity.getResources().getDisplayMetrics().density;
-        standardSize_Y = (ScreenSize.y / density)* activity.getResources().getDisplayMetrics().density;
+        standardSize_X = ScreenSize.x;
+        standardSize_Y = ScreenSize.y;
     }
 
     public static float dpFromPx(final Context context, final float px) {
@@ -39,10 +39,21 @@ public class MobileSize {
         view.setLayoutParams(params);
     }
 
-    public void setLayputMargin(View view, int left, int top, int right, int bottom) {
+    public void setLayoutWidth(View view, int width) {
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) view.getLayoutParams();
+        params.width = (int) width;
+        view.setLayoutParams(params);
+    }
+
+    public void setLayoutMargin(View view, int left, int top, int right, int bottom) {
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         params.setMargins(left, top, right, bottom);
         view.requestLayout();
+    }
+
+    public void setLayoutPadding(View view, int left, int top, int right, int bottom) {
+        float density = getDensity();
+        view.setPadding(left, top, right, bottom);
     }
 
 
