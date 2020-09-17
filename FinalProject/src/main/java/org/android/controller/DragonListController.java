@@ -188,6 +188,37 @@ public class DragonListController {
 
 	}
 	
+	@GetMapping(value = "/dragon/collection")
+	public List<Map<String, String>> getCollectionWithRequestAndResponse(HttpServletRequest request) {
+
+		String userId = request.getParameter("userId");
+		List<CollectionVO> dragonImageList = service.getListByDragonLists();
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+		List<DragonVO> users = service.getAllDragonByUser(userId);
+		
+		for(int i=0;i<dragonImageList.size();i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			for(int j=0;j<users.size();j++) {
+				if(users.get(j).getDragonId()==dragonImageList.get(i).getDragonId()) {
+					map.put("procession", "true");
+					map.put("dragonLevel",users.get(j).getTotalLevel()+"");
+				}else {
+					map.put("procession", "false");
+					map.put("dragonLevel","-1");
+				}
+			}
+			map.put("level1",dragonImageList.get(i).getLevel1());
+			map.put("level1Name",service.getLevel1Name(dragonImageList.get(i).getLevel1()));
+			map.put("level2",dragonImageList.get(i).getLevel2());
+			map.put("level2Name",service.getLevel2Name(dragonImageList.get(i).getLevel2()));
+			map.put("level3",dragonImageList.get(i).getLevel3());
+			map.put("level3Name",service.getLevel3Name(dragonImageList.get(i).getLevel3()));
+			result.add(map);
+		}
+		
+		return result;
+	
+	}
 
 	public DragonVO setImg(DragonVO vo) {// 이미지 셋팅
 

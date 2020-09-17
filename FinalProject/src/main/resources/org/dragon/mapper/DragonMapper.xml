@@ -65,6 +65,33 @@
 	from dragonlist, product where dragonlist.eggid = product.proid 
 	and dragonid = #{dragonId}
 </select>
+
+<select id="getListByDragonLists" resultType="org.dragon.domain.CollectionVO">
+<![CDATA[
+	select dragonid, level1, level2, level3
+	from dragonlist, product where dragonlist.eggid = product.proid
+	]]>
+</select>
+<select id="getLevel1Name" resultType="string">
+select product.proname, level1
+from product, dragonlist
+where product.proimg = dragonlist.level1 and
+dragonlist.level1 = #{productImage}
+</select>
+<select id="getLevel2Name" resultType="string">
+select product.proname, level2
+from product, dragonlist
+where product.proimg = dragonlist.level2 and
+dragonlist.level2 = #{productImage}
+</select>
+<select id="getLevel3Name" resultType="string">
+select product.proname, level3
+from product, dragonlist
+where product.proimg = dragonlist.level3 and
+dragonlist.level3 = #{productImage}
+</select>
+
+
 <select id="getBackground" resultType="int">
 	select backgroundid 
 	from dragoninfo
