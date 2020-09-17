@@ -83,8 +83,8 @@ public class ItemListFragment extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.frag_itemList_viewPager);
         FragmentManager fragmentManager = mainContext.getSupportFragmentManager();
         TabAdapter adapter = new TabAdapter(fragmentManager);
-        adapter.addFragment(new Tab1Fragment(),"Tab 1");
-        adapter.addFragment(new Tab2Fragment(),"Tab 2");
+        adapter.addFragment(new Tab1Fragment(),"DRAGON");
+        adapter.addFragment(new Tab2Fragment(),"BACKGROUND");
         adapter.addFragment(new Tab3Fragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

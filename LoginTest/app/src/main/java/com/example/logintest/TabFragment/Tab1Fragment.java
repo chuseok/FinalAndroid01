@@ -15,13 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.example.logintest.MainActivity;
 import com.example.logintest.R;
 import com.example.logintest.adapter.ItemListAdapter;
 import com.example.logintest.domain.Collection;
@@ -33,7 +40,9 @@ import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +65,7 @@ public class Tab1Fragment extends Fragment {
     private String mParam2;
     private List<Collection> list;
     private ItemListAdapter adapter;
+    private Spinner spinner;
 
     public Tab1Fragment() {
         // Required empty public constructor
@@ -93,9 +103,14 @@ public class Tab1Fragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.frag_dragon_tab_recyclerView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),3);
+        spinner = view.findViewById(R.id.frag_dragon_tab_spinner);
 
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        ArrayAdapter dragonAdapter = ArrayAdapter.createFromResource(getContext(), R.array.dragon_sort,R.layout.support_simple_spinner_dropdown_item);
+        dragonAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(dragonAdapter);
 
         list = new ArrayList<>();
         String userId = SharedPrefManager.getInstance(getContext()).getUser().getUserId();
@@ -114,7 +129,6 @@ public class Tab1Fragment extends Fragment {
                                 String level1Name = array.getJSONObject(i).getString("level1Name");
                                 String level2Name = array.getJSONObject(i).getString("level2Name");
                                 String level3Name = array.getJSONObject(i).getString("level3Name");
-                                System.out.println(level1Name);
                                 Boolean procession = Boolean.valueOf(array.getJSONObject(i).getString("procession"));
                                 Integer userLevel = Integer.parseInt(array.getJSONObject(i).getString("dragonLevel"));
                                 if(procession){
@@ -158,6 +172,20 @@ public class Tab1Fragment extends Fragment {
                     }
                 }) {
             @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 //params.put("userId", "111111");
@@ -168,7 +196,7 @@ public class Tab1Fragment extends Fragment {
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
-        adapter = new ItemListAdapter(getContext(),list);
+        adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
         recyclerView.setAdapter(adapter);
 
 
