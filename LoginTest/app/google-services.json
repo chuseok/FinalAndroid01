@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "790590621099",
+    "firebase_url": "https://logintest-cedc3.firebaseio.com",
+    "project_id": "logintest-cedc3",
+    "storage_bucket": "logintest-cedc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790590621099:android:536a2dc3bf981a9c5cfeee",
+        "android_client_info": {
+          "package_name": "com.example.logintest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790590621099-8r4qhc5aj8id3mcg881ufsv2l7bqsutu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.logintest",
+            "certificate_hash": "f43b9ef865cb26269e6c74f61441ce157f9efb74"
+          }
+        },
+        {
+          "client_id": "790590621099-as9m8uvm860m0o9l0hs4h8ubtf8783ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1EuNeDOkF-BA8z9BPgK5TccQ5FobB8p8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790590621099-as9m8uvm860m0o9l0hs4h8ubtf8783ei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -146,7 +146,7 @@ public class DragonListFragment extends Fragment {
         mobileSize.getStandardSize((MainActivity)getActivity());
         float displayYHeight = mobileSize.getStandardSize_Y();
 
-        mobileSize.setLayputMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
+        mobileSize.setLayoutMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
 
         adapter = new DragonCardViewAdapter(models,mainView.getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
