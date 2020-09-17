@@ -4,19 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,20 +25,16 @@ import com.android.volley.toolbox.StringRequest;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.Utils.ViewPagerIndicatorView;
-import com.example.logintest.adapter.AdapterCallBack;
-import com.example.logintest.adapter.DragonCardViewAdapter;
+import com.example.logintest.adapter.InventoryAdapterCallBack;
 import com.example.logintest.adapter.InventoryCardViewAdapter;
 import com.example.logintest.dialog.DragonDialog;
 import com.example.logintest.dialog.DragonDialogListener;
-import com.example.logintest.domain.Dragon;
 import com.example.logintest.domain.Inven;
-import com.example.logintest.domain.Model;
 import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DragonDetailActivity extends AppCompatActivity implements AdapterCallBack, DragonDialogListener {
+public class DragonDetailActivity extends AppCompatActivity implements InventoryAdapterCallBack, DragonDialogListener {
 
     TextView levelText, coinText;
     ImageView dragonImage;
@@ -231,6 +221,7 @@ public class DragonDetailActivity extends AppCompatActivity implements AdapterCa
 
     @Override
     public boolean onSupportNavigateUp() {
+        //getSupportFragmentManager().beginTransaction().add(R.id.frag_nav, new DragonListFragment()).commit();
         onBackPressed();
         return true;
     }

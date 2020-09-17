@@ -3,6 +3,7 @@ package com.example.logintest.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.logintest.DragonDetailActivity;
+import com.example.logintest.DragonListFragment;
 import com.example.logintest.R;
 import com.example.logintest.domain.Dragon;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
@@ -21,15 +24,25 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 
 import java.util.List;
 
-public class DragonCardViewAdapter extends PagerAdapter {
+public class DragonCardViewAdapter extends PagerAdapter{
     private List<Dragon> dragonList;
     private LayoutInflater layoutInflater;
     private Context context;
+    ImageView imageView;
+    ProgressBar progressBar;
+    private DragonListFragment dragonListFragment;
 
     public DragonCardViewAdapter(List<Dragon> dragonList, Context context){
         this.dragonList = dragonList;
         this.context = context;
     }
+
+    public void updateResults(List<Dragon> dragonList){
+        this.dragonList = dragonList;
+        notifyDataSetChanged();
+
+    }
+
 
     @Override
     public int getCount() {
@@ -46,9 +59,7 @@ public class DragonCardViewAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.cardview_item_dragon, container, false);
-        View fragView = layoutInflater.inflate(R.layout.fragment_dragon_list, container, false);
-        ImageView imageView;
-        ProgressBar progressBar;
+
 
 
         View card = view.findViewById(R.id.card_target);
@@ -96,8 +107,11 @@ public class DragonCardViewAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View)object);
     }
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
 
-
+    }
 
 }
 

@@ -1,6 +1,5 @@
 package com.example.logintest;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,18 +17,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
-import com.example.logintest.adapter.CardViewAdapter;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.domain.Dragon;
-import com.example.logintest.domain.Model;
-import com.example.logintest.domain.User;
-import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +52,7 @@ public class DragonListFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -85,6 +80,58 @@ public class DragonListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }*/
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //adapter = new DragonCardViewAdapter(models,getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            models.clear();
+                            for (int i = 0; i < array.length(); i++) {
+
+                                String replaceUrl = array.getJSONObject(i).getString("dragonImage").replace("../",URLs.ROOT_URL);
+
+                                int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
+                                int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
+                                models.add(new Dragon(replaceUrl,hungryValue,dragonId));
+                                System.out.println(models.get(i).getProgress());
+                                //models 변경되었다는것 알리기
+                            }
+                            adapter.notifyDataSetChanged();
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userId", "111111");
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+        viewPager.setAdapter(adapter);
+
 
     }
 
