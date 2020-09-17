@@ -10,8 +10,8 @@ public interface MemberMapper {
 //@Select("select * from mem")
 public List<MemberVO> getList();
 
-public void insert(MemberVO mem);
-public void insertAuth(AuthVO vo);
+public int insert(MemberVO mem);
+public int insertAuth(AuthVO vo);
 
 public void withdrawal(MemberVO mem);
 public void removeauth(AuthVO vo);

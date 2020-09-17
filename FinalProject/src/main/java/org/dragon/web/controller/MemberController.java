@@ -80,16 +80,16 @@ public class MemberController {
 	
 	// ?öå?õê ?Éà?á¥ post
 	@RequestMapping(value = "/withdrawal", method = RequestMethod.POST)
-public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo") AuthVO vo,HttpSession session,
+public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo") AuthVO auth,HttpSession session,
 		Model model, RedirectAttributes rttr){
 		log.info("withdrawal: " + mem);
-		log.info("removeauth...."+vo);
+		log.info("removeauth...."+auth);
 		
 		int result = service.PwdCheck(mem);
 		try {
 			if(result ==1) {
 				
-				service.withdrawal(vo);
+				service.withdrawal(auth);
 				service.withdrawal(mem);
 				
 			}else if(result == 0) {
@@ -102,7 +102,7 @@ public String withdrawal(@ModelAttribute("mem") MemberVO mem,@ModelAttribute("vo
 		
 		
 		rttr.addFlashAttribute("result",mem.getUserId());
-		rttr.addFlashAttribute("result",vo.getUserId());
+		rttr.addFlashAttribute("result",auth.getUserId());
 		
 		
 		return "redirect:/main/home1";

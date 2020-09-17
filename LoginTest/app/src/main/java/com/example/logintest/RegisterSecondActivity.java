@@ -20,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.domain.User;
@@ -42,7 +45,9 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -150,8 +155,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
             }
         });
 
-
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,13 +164,17 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 Certification = verifyUserInfo(userEmail_Val, userPhone_Val, authNum_Val, userBirth_Val);
 
-                /*StringRequest stringRequest = new StringRequest(Request.Method.PUT, URLs.URL_LOGIN,
+
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_MEMBER_SIGNUP,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
                                 try {
-                                    JSONArray array = new JSONArray(response);
+                                    if(response != null && response.length() >0) {
+                                        JSONObject resultObj = new JSONObject(response);
+                                        Log.d("INSERT_RESULT", "insertResult : " + resultObj.getString("insertResult"));
+                                    }
 
 
                                 } catch (Exception e) {
@@ -183,22 +190,43 @@ public class RegisterSecondActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }) {
+
+                    @Override
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        String character = null;
+                        try {
+                            character = new String(response.data, "UTF-8");
+                            return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                        } catch (UnsupportedEncodingException e) {
+                            return Response.error(new ParseError(e));
+                        } catch (Exception e) {
+                            // log error
+                            return Response.error(new ParseError(e));
+                        }
+                    }
+
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
+                        Log.d("USER_NAME", "userName : " + userName);
+                        Log.d("userId", "userId : " + userId);
+                        Log.d("userPwd", "userPwd : " + userPwd);
+                        Log.d("userEmail", "userEmail : " + userEmail_Val);
+                        Log.d("userPhone", "userPhone : " + userPhone_Val);
+                        Log.d("userBirth", "userBirth : " + userBirth_Val);
+
                         params.put("userName", userName);
                         params.put("userId", userId);
                         params.put("userPwd", userPwd);
                         params.put("userEmail", userEmail_Val);
-                        params.put("userPhoneNum", userPhone_Val);
+                        params.put("userPhone", userPhone_Val);
                         params.put("userBirth", userBirth_Val);
                         return params;
                     }
                 };
 
-                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);*/
+                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
-                Log.d("DATE_PICKER_VALUE", String.valueOf(datePicker.getYear()));
                 Toast.makeText(getApplicationContext(), R.string.register_sign_up_complete, Toast.LENGTH_LONG).show();
             }
         });
