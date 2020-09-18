@@ -18,9 +18,11 @@
 
     <group android:id="@+id/dragon">
         <item android:id="@+id/dragonList"
-            android:title="자신의 용 목록"/>
+            android:title="@string/nav_left_dragonList_title"/>
         <item android:id="@+id/itemList"
-            android:title="아이템 목록"/>
+            android:title="@string/nav_left_itemList_title"/>
+        <item android:id="@+id/shop"
+            android:title="@string/nav_left_shop_title"/>
     </group>
 
 

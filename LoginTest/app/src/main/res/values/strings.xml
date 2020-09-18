@@ -3,7 +3,7 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
 
-<!-- registerActivity -->
+    <!-- registerActivity -->
     <string name="register_title">개인회원 가입</string>
     <string name="register_customer">계정이 없으세요? 회원가입하기</string>
     <string name="register_customer_two">이미 계정이 있으세요? 로그인하기</string>
@@ -27,4 +27,7 @@
     <string name="revive_subText">20000코인으로 부활하시겠습니까?</string>
     <string name="dragon_tab_title">DRAGON</string>
     <string name="background_tab_title">BACKGROUND</string>
+    <string name="nav_left_dragonList_title">자신의 용 목록</string>
+    <string name="nav_left_itemList_title">아이템 목록</string>
+    <string name="nav_left_shop_title">상점</string>
 </resources>

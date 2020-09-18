@@ -233,10 +233,7 @@ public class DragonListController {
 		
 		for(int i=0;i<backgroundList.size();i++) {
 			Map<String, String> map = new HashMap<String, String>();
-			System.out.println(backgroundList.get(i).getProductImage());
 			for(int j=0;j<userItemList.size();j++) {
-				System.out.println("user : "+userItemList.get(j).getProductId());
-				System.out.println("back : "+backgroundList.get(i).getProductId());
 				if(userItemList.get(j).getProductId()==backgroundList.get(i).getProductId()) {
 					map.put("procession", "true");
 					break;

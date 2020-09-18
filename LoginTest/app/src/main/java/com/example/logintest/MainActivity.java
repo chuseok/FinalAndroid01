@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
                         final FragmentTransaction itemListFt = fragmentManager.beginTransaction();
                         itemListFt.replace(R.id.frag_nav,new ItemListFragment());
                         itemListFt.commit(); break;
+                    case R.id.shop:
+                        final FragmentTransaction shopFt = fragmentManager.beginTransaction();
+                        shopFt.replace(R.id.frag_nav,new ShopFragment());
+                        shopFt.commit(); break;
                     default:
                         return true;
                 }
