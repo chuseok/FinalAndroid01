@@ -11,13 +11,14 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
-
-    <TextView
-        android:id="@+id/authTextView"
+    <ImageView
+        android:id="@+id/authImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="인증 단계" />
+        android:layout_gravity="center"
+        android:src="@drawable/auth_step_one"
+        />
+
 
     <EditText
         android:text="90127lucy@gmail.com"

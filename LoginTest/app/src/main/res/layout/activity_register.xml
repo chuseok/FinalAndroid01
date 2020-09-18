@@ -14,13 +14,20 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
+    <ImageView
+        android:id="@+id/authImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/auth_step_one"
+        />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/authTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="인증 단계" />
+        android:text="인증 단계" />-->
 
     <EditText
         android:text="하나나"
