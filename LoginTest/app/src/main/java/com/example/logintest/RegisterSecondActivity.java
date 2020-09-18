@@ -48,6 +48,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -90,6 +93,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_second);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //ONCODESENT
 
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
@@ -151,7 +156,19 @@ public class RegisterSecondActivity extends AppCompatActivity {
         phoneConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendVerificationCodeToUser("+821035029610");
+                sendVerificationCodeToUser("+821032315052");
+            }
+        });
+
+        authConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                String userPhone = phoneEditText.getText().toString().substring(1, 11);
+//                System.out.println("userPhone : " + userPhone);
+                String userAuthNum = authNumEditText.getText().toString();
+
+                Log.d("userAuthNum", "userAuthNum : " + userAuthNum);
+//                verifyPhoneNumberWithCode(userAuthNum);
             }
         });
 
@@ -161,6 +178,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 userEmail_Val = emailEditText.getText().toString();
                 userPhone_Val = phoneEditText.getText().toString();
                 authNum_Val = authNumEditText.getText().toString();
+
+                Calendar cal = Calendar.getInstance();
+                cal.set(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
+                userBirth_Val = simpleDateFormat.format(cal.getTime());
 
                 Certification = verifyUserInfo(userEmail_Val, userPhone_Val, authNum_Val, userBirth_Val);
 
@@ -220,7 +242,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
                         params.put("userPwd", userPwd);
                         params.put("userEmail", userEmail_Val);
                         params.put("userPhone", userPhone_Val);
-                        params.put("userBirth", userBirth_Val);
+                        params.put("userBirth", String.valueOf(userBirth_Val));
                         return params;
                     }
                 };
@@ -253,7 +275,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
     private void sendVerificationCodeToUser(String phoneNo) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNo,        // Phone number to verify
-                100,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 TaskExecutors.MAIN_THREAD,   // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
@@ -265,13 +287,14 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 @Override
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                     Log.d("ONVerificationCompleted", "onVerificationCompleted:" + phoneAuthCredential.getSmsCode());
-                    Log.d("getSignInMethod", "getSignInMethod:" + phoneAuthCredential.getSignInMethod());
-                    Log.d("getProvider", "getProvider:" + phoneAuthCredential.getProvider());
+
                     String code = phoneAuthCredential.getSmsCode();
 
                     if(code != null) {
-                        verifyPhoneNumberWithCode(mVerificationId, code);
+
                         Log.d("code", "code : " + code);
+                        Log.d("VERIFICATION", "mVerificationId : " + mVerificationId);
+                        Log.d("RESEND_TOKEN", "mResendToken : " + mResendToken);
 
                     }
 
@@ -301,6 +324,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 @Override
                 public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                    super.onCodeSent(s, forceResendingToken);
                     Log.d("ONCODESENT", "onCodeSent : " + s);
                     Log.d("forceResendingToken", "forceResendingToken:" + forceResendingToken);
 
@@ -313,11 +337,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
     };
 
-    private void verifyPhoneNumberWithCode(String verificationId, String code) {
+    private void verifyPhoneNumberWithCode(String code) {
         // [START verify_with_code]
 
         //코드 확인
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
@@ -329,24 +353,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = task.getResult().getUser();
-
-                            Log.d("signInWithCredential:success", "signInWithCredential:success");
-
-                            authConfirmButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-//                String userPhone = phoneEditText.getText().toString().substring(1, 11);
-//                System.out.println("userPhone : " + userPhone);
-                                    String userAuthNum = authNumEditText.getText().toString();
-
-                                    Log.d("userAuthNum", "userAuthNum : " + userAuthNum);
-                                    verifyPhoneNumberWithCode(mVerificationId, userAuthNum);
-                                }
-                            });
+                            Toast.makeText(getApplicationContext(), "signInWithCredential:success", Toast.LENGTH_SHORT).show();
                         } else {
                             // Sign in failed, display a message and update the UI
+                            Toast.makeText(getApplicationContext(), "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
+
                             Log.w("signInWithCredential:failure", "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
