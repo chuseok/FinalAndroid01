@@ -13,4 +13,5 @@ public class URLs {
     public static final String URL_INVEN_USE = ROOT_URL+"android/inven/use";
     public static final String URL_DRAGON_REVIVE = ROOT_URL+"android/dragon/revive";
     public static final String URL_DRAGON_COLLECTION = ROOT_URL+"android/dragon/collection";
+    public static final String URL_BACKGROUND_COLLECTION = ROOT_URL+"android/background/collection";
 }

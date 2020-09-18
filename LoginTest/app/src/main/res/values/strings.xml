@@ -25,4 +25,6 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="revive_subText">20000코인으로 부활하시겠습니까?</string>
+    <string name="dragon_tab_title">DRAGON</string>
+    <string name="background_tab_title">BACKGROUND</string>
 </resources>

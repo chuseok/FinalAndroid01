@@ -35,6 +35,7 @@ import com.example.logintest.volley.VolleySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -77,6 +78,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
     String userId;
     String userPwd;
     FirebaseAuth firebaseAuth;
+    FirebaseAuth auth2;
     String mVerificationId;
     PhoneAuthProvider.ForceResendingToken mResendToken;
 
@@ -86,6 +88,12 @@ public class RegisterSecondActivity extends AppCompatActivity {
     String userBirth_Val;
 
     boolean Certification;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +153,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
         System.out.println("userId : " + userId);
         System.out.println("userPwd : " + userPwd);
 
+
 //        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
 //                new DatePicker.OnDateChangedListener() {
 //
@@ -153,10 +162,12 @@ public class RegisterSecondActivity extends AppCompatActivity {
 //
 //                    }
 //                });
+
+
         phoneConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendVerificationCodeToUser("+821032315052");
+                sendVerificationCodeToUser("+821047540384");
             }
         });
 
@@ -168,7 +179,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 String userAuthNum = authNumEditText.getText().toString();
 
                 Log.d("userAuthNum", "userAuthNum : " + userAuthNum);
-//                verifyPhoneNumberWithCode(userAuthNum);
+                verifyPhoneNumberWithCode(userAuthNum);
             }
         });
 
@@ -275,7 +286,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
     private void sendVerificationCodeToUser(String phoneNo) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNo,        // Phone number to verify
-                60,                 // Timeout duration
+                120,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 TaskExecutors.MAIN_THREAD,   // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks

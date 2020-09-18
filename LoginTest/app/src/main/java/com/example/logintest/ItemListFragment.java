@@ -10,17 +10,12 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
-import com.example.logintest.TabFragment.Tab1Fragment;
-import com.example.logintest.TabFragment.Tab2Fragment;
+import com.example.logintest.TabFragment.DragonTabFragment;
+import com.example.logintest.TabFragment.BackgroundTabFragment;
 import com.example.logintest.TabFragment.Tab3Fragment;
-import com.example.logintest.adapter.ItemListAdapter;
 import com.example.logintest.adapter.TabAdapter;
-import com.example.logintest.domain.Inven;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,8 +78,8 @@ public class ItemListFragment extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.frag_itemList_viewPager);
         FragmentManager fragmentManager = mainContext.getSupportFragmentManager();
         TabAdapter adapter = new TabAdapter(fragmentManager);
-        adapter.addFragment(new Tab1Fragment(),"DRAGON");
-        adapter.addFragment(new Tab2Fragment(),"BACKGROUND");
+        adapter.addFragment(new DragonTabFragment(),"DRAGON");
+        adapter.addFragment(new BackgroundTabFragment(),"BACKGROUND");
         adapter.addFragment(new Tab3Fragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
