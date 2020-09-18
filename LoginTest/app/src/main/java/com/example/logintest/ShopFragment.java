@@ -11,18 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.logintest.TabFragment.DragonTabFragment;
-import com.example.logintest.TabFragment.BackgroundTabFragment;
+import com.example.logintest.TabFragment.ShopBackgroundTabFragment;
+import com.example.logintest.TabFragment.ShopEggTabFragment;
 import com.example.logintest.TabFragment.Tab3Fragment;
 import com.example.logintest.adapter.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ItemListFragment#newInstance} factory method to
+ * Use the {@link ShopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ItemListFragment extends Fragment {
+public class ShopFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,16 +30,17 @@ public class ItemListFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private MainActivity mainContext;
     private int[] tabIcons = {
-            R.drawable.ic_dragon_tab,
-            R.drawable.ic_background_tab,
-            R.drawable.ic_notifications_white
+            R.drawable.ic_item_tab,
+            R.drawable.ic_egg_tab,
+            R.drawable.ic_background_tab
+
     };
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ItemListFragment() {
+    public ShopFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +50,11 @@ public class ItemListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ItemListFragment.
+     * @return A new instance of fragment ShopFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ItemListFragment newInstance(String param1, String param2) {
-        ItemListFragment fragment = new ItemListFragment();
+    public static ShopFragment newInstance(String param1, String param2) {
+        ShopFragment fragment = new ShopFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,13 +74,13 @@ public class ItemListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_shop, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
-        ViewPager viewPager = view.findViewById(R.id.frag_itemList_viewPager);
+        ViewPager viewPager = view.findViewById(R.id.frag_shop_viewPager);
         FragmentManager fragmentManager = mainContext.getSupportFragmentManager();
         TabAdapter adapter = new TabAdapter(fragmentManager);
-        adapter.addFragment(new DragonTabFragment(),"DRAGON");
-        adapter.addFragment(new BackgroundTabFragment(),"BACKGROUND");
+        adapter.addFragment(new ShopEggTabFragment(),"DRAGON");
+        adapter.addFragment(new ShopBackgroundTabFragment(),"BACKGROUND");
         adapter.addFragment(new Tab3Fragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

@@ -1,20 +1,14 @@
 package com.example.logintest.TabFragment;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -33,15 +27,11 @@ import com.example.logintest.MainActivity;
 import com.example.logintest.R;
 import com.example.logintest.adapter.ItemListAdapter;
 import com.example.logintest.domain.Collection;
-import com.example.logintest.domain.Dragon;
-import com.example.logintest.domain.Inven;
 import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -51,10 +41,10 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Tab1Fragment#newInstance} factory method to
+ * Use the {@link DragonTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1Fragment extends Fragment {
+public class DragonTabFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,9 +59,10 @@ public class Tab1Fragment extends Fragment {
     private List<Collection> notFoundList;
     private ItemListAdapter adapter;
     private Spinner spinner;
+    private TextView count;
 
 
-    public Tab1Fragment() {
+    public DragonTabFragment() {
         // Required empty public constructor
     }
 
@@ -84,8 +75,8 @@ public class Tab1Fragment extends Fragment {
      * @return A new instance of fragment Tab1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Tab1Fragment newInstance(String param1, String param2) {
-        Tab1Fragment fragment = new Tab1Fragment();
+    public static DragonTabFragment newInstance(String param1, String param2) {
+        DragonTabFragment fragment = new DragonTabFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -105,15 +96,16 @@ public class Tab1Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_tab1, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dragon_tab, container, false);
         final RecyclerView recyclerView = view.findViewById(R.id.frag_dragon_tab_recyclerView);
         spinner = view.findViewById(R.id.frag_dragon_tab_spinner);
+        count = view.findViewById(R.id.frag_dragon_tab_count_tv);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
 
         //spinner setting
-        ArrayAdapter dragonAdapter = ArrayAdapter.createFromResource(getContext(), R.array.dragon_sort,R.layout.spinner_layout);
+        ArrayAdapter dragonAdapter = ArrayAdapter.createFromResource(getContext(), R.array.itemList_sort,R.layout.spinner_layout);
         dragonAdapter.setDropDownViewResource(R.layout.spinner_layout);
         spinner.setAdapter(dragonAdapter);
 
@@ -130,8 +122,10 @@ public class Tab1Fragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
                 if(spinner.getItemAtPosition(position).equals("All")){
+                    count.setText(list.size()+" selected");
                     adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
                     recyclerView.setAdapter(adapter);
+
                 }else if(spinner.getItemAtPosition(position).equals("Found")){
                     foundList.clear();
                     for(int i=0;i<list.size();i++){
@@ -139,6 +133,7 @@ public class Tab1Fragment extends Fragment {
                             foundList.add(list.get(i));
                         }
                     }
+                    count.setText(foundList.size()+" selected");
                     adapter = new ItemListAdapter(getContext(),foundList, (MainActivity)getActivity());
                     recyclerView.setAdapter(adapter);
                 }else if(spinner.getItemAtPosition(position).equals("Not Found")){
@@ -148,6 +143,7 @@ public class Tab1Fragment extends Fragment {
                             notFoundList.add(list.get(i));
                         }
                     }
+                    count.setText(notFoundList.size()+" selected");
                     adapter = new ItemListAdapter(getContext(),notFoundList, (MainActivity)getActivity());
                     //adapter.notifyDataSetChanged();
                     recyclerView.setAdapter(adapter);
@@ -177,7 +173,7 @@ public class Tab1Fragment extends Fragment {
                                 Integer userLevel = Integer.parseInt(array.getJSONObject(i).getString("dragonLevel"));
                                 setItemList(procession, userLevel, level1, level2, level3, level1Name, level2Name, level3Name);
                                 adapter.notifyDataSetChanged();
-                                System.out.println(array.getJSONObject(i).getString("level1"));
+                                count.setText(list.size()+" selected");
                             }
 
 
@@ -218,8 +214,8 @@ public class Tab1Fragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        //adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
-        //recyclerView.setAdapter(adapter);
+        adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
+        recyclerView.setAdapter(adapter);
 
 
         return view;
@@ -248,7 +244,6 @@ public class Tab1Fragment extends Fragment {
             list.add(new Collection(level2, level2Name,false));
             list.add(new Collection(level3, level3Name,false));
         }
-        System.out.println(level1 + level2 + level3);
     }
 
 }

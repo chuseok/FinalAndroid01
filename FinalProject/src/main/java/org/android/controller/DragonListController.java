@@ -39,6 +39,7 @@ public class DragonListController {
 	DragonService service;
 	MemberService memberService;
 	InventoryService invenService;
+	ProductService proService;
 
 	@GetMapping(value = "/dragon/main")
 	public List<Map<String, String>> memberRequestAndResponse(HttpServletRequest request) {
@@ -214,6 +215,34 @@ public class DragonListController {
 			map.put("level2Name",service.getLevel2Name(dragonImageList.get(i).getLevel2()));
 			map.put("level3",dragonImageList.get(i).getLevel3());
 			map.put("level3Name",service.getLevel3Name(dragonImageList.get(i).getLevel3()));
+			result.add(map);
+		}
+		
+		return result;
+	
+	}
+	
+	@GetMapping(value = "/background/collection")
+	public List<Map<String, String>> getBackgroundCollectionWithRequestAndResponse(HttpServletRequest request) {
+
+		String userId = request.getParameter("userId");
+		List<ProductVO> backgroundList = proService.getProductByCategory("background");
+		
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+		List<ProductVO> userItemList = invenService.getInventory(userId);
+		
+		for(int i=0;i<backgroundList.size();i++) {
+			Map<String, String> map = new HashMap<String, String>();
+			for(int j=0;j<userItemList.size();j++) {
+				if(userItemList.get(j).getProductId()==backgroundList.get(i).getProductId()) {
+					map.put("procession", "true");
+					break;
+				}else {
+					map.put("procession", "false");
+				}
+				map.put("backgroundImage",backgroundList.get(i).getProductImage());
+				map.put("backgroundName",backgroundList.get(i).getProductName());
+			}
 			result.add(map);
 		}
 		

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="dragon_sort">
+    <string-array name="itemList_sort">
         <item>All</item>
         <item>Found</item>
         <item>Not Found</item>
