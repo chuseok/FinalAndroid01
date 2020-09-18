@@ -155,6 +155,7 @@ public class Tab1Fragment extends Fragment {
                                     list.add(new Collection(level3, level3Name,false));
                                 }
                                 adapter.notifyDataSetChanged();
+                                System.out.println(array.getJSONObject(i).getString("level1"));
                             }
 
 
