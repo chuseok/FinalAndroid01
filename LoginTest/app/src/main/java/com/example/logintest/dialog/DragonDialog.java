@@ -22,8 +22,10 @@ public class DragonDialog extends Dialog {
 
     private DragonDialog dragonDialog;
     private DragonDialogListener dragonDialogListener;
-    public DragonDialog(@NonNull Context context) {
+    private int dragonId;
+    public DragonDialog(@NonNull Context context, int dragonId) {
         super(context);
+        this.dragonId = dragonId;
     }
 
     public void setDragonDialogListener(DragonDialogListener dragonDialogListener) {
@@ -50,7 +52,7 @@ public class DragonDialog extends Dialog {
             @Override
             public void onClick(View view) {
 
-                dragonDialogListener.reviveDragon(3);
+                dragonDialogListener.reviveDragon(dragonId);
             }
         });
 

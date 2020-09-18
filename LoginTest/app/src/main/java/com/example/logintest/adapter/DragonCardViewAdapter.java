@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
 import com.example.logintest.DragonDetailActivity;
 import com.example.logintest.DragonListFragment;
 import com.example.logintest.R;
@@ -66,22 +67,26 @@ public class DragonCardViewAdapter extends PagerAdapter{
         imageView = view.findViewById(R.id.frag_dragonList_dragonImage_iv);
         progressBar = view.findViewById(R.id.frag_dragonList_hungry_pb);
 
+        if(dragonList.get(position).getImagePath().contains(".svg")){
+            GlideToVectorYou
+                    .init()
+                    .with(context)
+                    .withListener(new GlideToVectorYouListener() {
+                        @Override
+                        public void onLoadFailed() {
+                            System.out.println("Image Failed");
+                        }
 
-        GlideToVectorYou
-                .init()
-                .with(context)
-                .withListener(new GlideToVectorYouListener() {
-                    @Override
-                    public void onLoadFailed() {
-                        System.out.println("Image Failed");
-                    }
+                        @Override
+                        public void onResourceReady() {
+                            System.out.println("Image Ready");
+                        }
+                    })
+                    .load(Uri.parse(dragonList.get(position).getImagePath()), imageView);
+        }else if(dragonList.get(position).getImagePath().contains(".png")){
+            Glide.with(context).load(dragonList.get(position).getImagePath()).into(imageView);
+        }
 
-                    @Override
-                    public void onResourceReady() {
-                        System.out.println("Image Ready");
-                    }
-                })
-                .load(Uri.parse(dragonList.get(position).getImagePath()), imageView);
 
 
         progressBar.setProgress(dragonList.get(position).getProgress());

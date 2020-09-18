@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.Utils.ViewPagerIndicatorView;
@@ -88,15 +89,18 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
         final float displayXHeight = mobileSize.getStandardSize_X();
         final float displayYHeight = mobileSize.getStandardSize_Y();
         mobileSize.setLayoutHeight(dragonPanel,(int)displayYHeight/10*6);
+        mobileSize.setLayoutWidth(dragonImage,(int)(displayXHeight*0.4));
+
+        //dragon value 값 받아오기
+        String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+        final int dragonId = getIntent().getIntExtra("dragon",0);
 
         //dialog set
-        dragonDialog = new DragonDialog(this);
+        dragonDialog = new DragonDialog(this,dragonId);
         dragonDialog.setCancelable(false);
         dragonDialog.setDragonDialogListener(this);
 
-        String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
-        final int dragonId = getIntent().getIntExtra("dragon",0);
-        //dragon value 값 받아오기
+
         String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+dragonId;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -114,6 +118,7 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
                             coinText.setText(coin+"");
                             setFoodValue(hungryValue);
                             setDragonImage(object.getString("dragonImage"));
+                            //System.out.println(object.getString("dragonImage"));
                             if(hungryValue==0){
                                 dragonDialog.show();
                                 Window DialogWindow = dragonDialog.getWindow();
@@ -174,7 +179,6 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
                                 int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
                                 invenList.add(new Inven(productId,imagePath,count,dragonId));
                                 adapter.notifyDataSetChanged();
-
                             }
                             setDotIndicator(invenList.size());
                             indicatorView.setSelection(0);
@@ -286,21 +290,27 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
     @Override
     public void setDragonImage(String path) {
         String replaceUrl = path.replace("../",URLs.ROOT_URL);
-        GlideToVectorYou
-                .init()
-                .with(getApplicationContext())
-                .withListener(new GlideToVectorYouListener() {
-                    @Override
-                    public void onLoadFailed() {
-                        System.out.println("Image Failed");
-                    }
+        if(replaceUrl.contains(".svg")){
+            GlideToVectorYou
+                    .init()
+                    .with(getApplicationContext())
+                    .withListener(new GlideToVectorYouListener() {
+                        @Override
+                        public void onLoadFailed() {
+                            System.out.println("Image Failed");
+                        }
 
-                    @Override
-                    public void onResourceReady() {
-                        System.out.println("Image Ready");
-                    }
-                })
-                .load(Uri.parse(replaceUrl), dragonImage);
+                        @Override
+                        public void onResourceReady() {
+                            System.out.println("Image Ready");
+                        }
+                    })
+                    .load(Uri.parse(replaceUrl), dragonImage);
+        }else if(replaceUrl.contains(".png")){
+            Glide.with(getApplicationContext()).load(replaceUrl).into(dragonImage);
+        }
+
+
     }
 
     //DragonDialog implement

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,8 +65,11 @@ public class Tab1Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private List<Collection> list;
+    private List<Collection> foundList;
+    private List<Collection> notFoundList;
     private ItemListAdapter adapter;
     private Spinner spinner;
+
 
     public Tab1Fragment() {
         // Required empty public constructor
@@ -102,24 +106,64 @@ public class Tab1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_tab1, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.frag_dragon_tab_recyclerView);
+        final RecyclerView recyclerView = view.findViewById(R.id.frag_dragon_tab_recyclerView);
         spinner = view.findViewById(R.id.frag_dragon_tab_spinner);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(),3);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        ArrayAdapter dragonAdapter = ArrayAdapter.createFromResource(getContext(), R.array.dragon_sort,R.layout.support_simple_spinner_dropdown_item);
-        dragonAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        //spinner setting
+        ArrayAdapter dragonAdapter = ArrayAdapter.createFromResource(getContext(), R.array.dragon_sort,R.layout.spinner_layout);
+        dragonAdapter.setDropDownViewResource(R.layout.spinner_layout);
         spinner.setAdapter(dragonAdapter);
 
+
         list = new ArrayList<>();
+        foundList = new ArrayList<>();
+        notFoundList = new ArrayList<>();
         String userId = SharedPrefManager.getInstance(getContext()).getUser().getUserId();
-        String url = URLs.URL_DRAGON_COLLECTION+"?userId="+ userId;
+        final String url = URLs.URL_DRAGON_COLLECTION+"?userId="+ userId;
+
+        //spinner select listener
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if(spinner.getItemAtPosition(position).equals("All")){
+                    adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
+                    recyclerView.setAdapter(adapter);
+                }else if(spinner.getItemAtPosition(position).equals("Found")){
+                    foundList.clear();
+                    for(int i=0;i<list.size();i++){
+                        if(list.get(i).isPossession()){
+                            foundList.add(list.get(i));
+                        }
+                    }
+                    adapter = new ItemListAdapter(getContext(),foundList, (MainActivity)getActivity());
+                    recyclerView.setAdapter(adapter);
+                }else if(spinner.getItemAtPosition(position).equals("Not Found")){
+                    notFoundList.clear();
+                    for(int i=0;i<list.size();i++){
+                        if(!list.get(i).isPossession()){
+                            notFoundList.add(list.get(i));
+                        }
+                    }
+                    adapter = new ItemListAdapter(getContext(),notFoundList, (MainActivity)getActivity());
+                    //adapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i < array.length(); i++) {
@@ -131,29 +175,7 @@ public class Tab1Fragment extends Fragment {
                                 String level3Name = array.getJSONObject(i).getString("level3Name");
                                 Boolean procession = Boolean.valueOf(array.getJSONObject(i).getString("procession"));
                                 Integer userLevel = Integer.parseInt(array.getJSONObject(i).getString("dragonLevel"));
-                                if(procession){
-                                    if(userLevel>=30){
-                                        list.add(new Collection(level1, level1Name,true));
-                                        list.add(new Collection(level2, level2Name,true));
-                                        list.add(new Collection(level3, level3Name,true));
-                                    }else if(userLevel>=20&&userLevel<30){
-                                        list.add(new Collection(level1, level1Name,true));
-                                        list.add(new Collection(level2, level2Name,true));
-                                        list.add(new Collection(level3, level3Name,false));
-                                    }else if(userLevel>=10&&userLevel<20){
-                                        list.add(new Collection(level1, level1Name,true));
-                                        list.add(new Collection(level2, level2Name,false));
-                                        list.add(new Collection(level3, level3Name,false));
-                                    }else{
-                                        list.add(new Collection(level1, level1Name,false));
-                                        list.add(new Collection(level2, level2Name,false));
-                                        list.add(new Collection(level3, level3Name,false));
-                                    }
-                                }else{
-                                    list.add(new Collection(level1, level1Name,false));
-                                    list.add(new Collection(level2, level2Name,false));
-                                    list.add(new Collection(level3, level3Name,false));
-                                }
+                                setItemList(procession, userLevel, level1, level2, level3, level1Name, level2Name, level3Name);
                                 adapter.notifyDataSetChanged();
                                 System.out.println(array.getJSONObject(i).getString("level1"));
                             }
@@ -196,11 +218,37 @@ public class Tab1Fragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-
-        adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
-        recyclerView.setAdapter(adapter);
+        //adapter = new ItemListAdapter(getContext(),list, (MainActivity)getActivity());
+        //recyclerView.setAdapter(adapter);
 
 
         return view;
     }
+    public void setItemList(Boolean procession, int userLevel, String level1, String level2, String level3, String level1Name, String level2Name, String level3Name){
+        if(procession){
+            if(userLevel>=30){
+                list.add(new Collection(level1, level1Name,true));
+                list.add(new Collection(level2, level2Name,true));
+                list.add(new Collection(level3, level3Name,true));
+            }else if(userLevel>=20&&userLevel<30){
+                list.add(new Collection(level1, level1Name,true));
+                list.add(new Collection(level2, level2Name,true));
+                list.add(new Collection(level3, level3Name,false));
+            }else if(userLevel>=10&&userLevel<20){
+                list.add(new Collection(level1, level1Name,true));
+                list.add(new Collection(level2, level2Name,false));
+                list.add(new Collection(level3, level3Name,false));
+            }else{
+                list.add(new Collection(level1, level1Name,false));
+                list.add(new Collection(level2, level2Name,false));
+                list.add(new Collection(level3, level3Name,false));
+            }
+        }else{
+            list.add(new Collection(level1, level1Name,false));
+            list.add(new Collection(level2, level2Name,false));
+            list.add(new Collection(level3, level3Name,false));
+        }
+        System.out.println(level1 + level2 + level3);
+    }
+
 }

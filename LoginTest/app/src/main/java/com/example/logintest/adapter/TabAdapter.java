@@ -12,7 +12,6 @@ import java.util.List;
 public class TabAdapter extends FragmentStatePagerAdapter{
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
-    private int tabNumber;
 
 
     public TabAdapter(@NonNull FragmentManager fm) {
