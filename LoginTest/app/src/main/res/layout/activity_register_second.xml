@@ -20,6 +20,7 @@
         android:text="인증 단계" />
 
     <EditText
+        android:text="90127lucy@gmail.com"
         android:id="@+id/ac_register_email_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
         android:orientation="horizontal">
 
         <EditText
+            android:text="01035029610"
             android:id="@+id/ac_register_phone_et"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
