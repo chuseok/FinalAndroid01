@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="7dp"
@@ -12,12 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@null">
         <ImageView
             android:id="@+id/recycler_image_iv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_coin"/>
+            android:src="@drawable/ic_coin"
+            android:backgroundTint="#437A7A7A"
+            />
         <TextView
             android:id="@+id/recycler_text_tv"
             android:layout_width="match_parent"

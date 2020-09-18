@@ -2,6 +2,7 @@ package com.example.logintest.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -11,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.logintest.MainActivity;
 import com.example.logintest.R;
 import com.example.logintest.Utils.MobileSize;
@@ -30,11 +33,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
+        protected CardView cardView;
         protected ImageView image;
         protected TextView text;
 
         public ItemViewHolder(View view){
             super(view);
+            this.cardView = view.findViewById(R.id.recycler_cardView);
             this.image = view.findViewById(R.id.recycler_image_iv);
             this.text = view.findViewById(R.id.recycler_text_tv);
             MobileSize mobileSize = new MobileSize();
@@ -62,17 +67,28 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        GlideToVectorYou
-                .init()
-                .with(context)
-                .withListener(new GlideToVectorYouListener() {
-                    @Override
-                    public void onLoadFailed() { System.out.println("failed load image"); }
+        if(list.get(position).getImage().contains(".svg")){
+            GlideToVectorYou
+                    .init()
+                    .with(context)
+                    .withListener(new GlideToVectorYouListener() {
+                        @Override
+                        public void onLoadFailed() { System.out.println("failed load image"); }
 
-                    @Override
-                    public void onResourceReady() { }
-                })
-                .load(Uri.parse(list.get(position).getImage()), holder.image);
+                        @Override
+                        public void onResourceReady() { }
+                    })
+                    .load(Uri.parse(list.get(position).getImage()), holder.image);
+        }else if(list.get(position).getImage().contains(".png")){
+            Glide.with(context).load(list.get(position).getImage()).into(holder.image);
+        }
+
+        if(!list.get(position).isPossession()){
+            holder.cardView.setElevation(0f);
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#4D8C8C8C"));
+            holder.image.setColorFilter(R.color.imageDim);
+        }
+
         holder.text.setText(list.get(position).getName());
     }
 

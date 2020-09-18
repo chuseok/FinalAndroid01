@@ -13,10 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.example.logintest.R;
 import com.example.logintest.domain.Inven;
 import com.example.logintest.manager.SharedPrefManager;
@@ -28,6 +32,7 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,21 +77,25 @@ public class InventoryCardViewAdapter extends PagerAdapter {
         imageView = view.findViewById(R.id.ac_dragonDetail_invenImage_iv);
         invenCnt = view.findViewById(R.id.ac_dragonDetail_invenCnt_tv);
 
-        GlideToVectorYou
-                .init()
-                .with(context)
-                .withListener(new GlideToVectorYouListener() {
-                    @Override
-                    public void onLoadFailed() {
-                        System.out.println("Image Failed");
-                    }
+        if(invenList.get(position).getImagePath().contains(".svg")){
+            GlideToVectorYou
+                    .init()
+                    .with(context)
+                    .withListener(new GlideToVectorYouListener() {
+                        @Override
+                        public void onLoadFailed() {
+                            System.out.println("Image Failed");
+                        }
 
-                    @Override
-                    public void onResourceReady() {
-                        System.out.println("Image Ready");
-                    }
-                })
-                .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
+                        @Override
+                        public void onResourceReady() {
+                            System.out.println("Image Ready");
+                        }
+                    })
+                    .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
+        }else if(invenList.get(position).getImagePath().contains(".png")){
+            Glide.with(context).load(invenList.get(position).getImagePath()).into(imageView);
+        }
         invenCnt.setText("X"+invenList.get(position).getCount());
 
         final int dragonId = invenList.get(position).getDragonId();
@@ -122,6 +131,7 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                                     listener.setLevelText(dragonLevel);
                                     listener.setDotIndicator(invenList.size());
                                     listener.setDragonImage(object.getString("dragonImage"));
+                                    System.out.println(object.getString("dragonImage"));
 
 
                                 } catch (Exception e) {
@@ -137,6 +147,19 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                             }
                         }) {
                     @Override
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        String character = null;
+                        try {
+                            character = new String(response.data, "UTF-8");
+                            return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                        } catch (UnsupportedEncodingException e) {
+                            return Response.error(new ParseError(e));
+                        } catch (Exception e) {
+                            // log error
+                            return Response.error(new ParseError(e));
+                        }
+                    }
+                    @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
                         params.put("userId", userId);
@@ -147,22 +170,26 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                 };
 
                 VolleySingleton.getInstance(context).addToRequestQueue(useStringRequest);
+                if(invenList.get(position).getImagePath().contains(".svg")){
+                    GlideToVectorYou
+                            .init()
+                            .with(context)
+                            .withListener(new GlideToVectorYouListener() {
+                                @Override
+                                public void onLoadFailed() {
+                                    System.out.println("Image Failed");
+                                }
 
-                GlideToVectorYou
-                        .init()
-                        .with(context)
-                        .withListener(new GlideToVectorYouListener() {
-                            @Override
-                            public void onLoadFailed() {
-                                System.out.println("Image Failed");
-                            }
+                                @Override
+                                public void onResourceReady() {
+                                    System.out.println("Image Ready");
+                                }
+                            })
+                            .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
+                }else if(invenList.get(position).getImagePath().contains(".png")){
+                    Glide.with(context).load(invenList.get(position).getImagePath()).into(imageView);
+                }
 
-                            @Override
-                            public void onResourceReady() {
-                                System.out.println("Image Ready");
-                            }
-                        })
-                        .load(Uri.parse(invenList.get(position).getImagePath()), imageView);
                 invenCnt.setText("X"+invenList.get(position).getCount());
 
             }
