@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
 
     TextView authTextView;
+    ImageView authImageView;
     TextView loginTextView;
     EditText userNameEditText;
     EditText userIdEditText;
@@ -68,7 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
         float displayXHeight = mobileSize.getStandardSize_X();
         float displayYHeight = mobileSize.getStandardSize_Y();
         float authImageSize = displayYHeight/5;
-        authTextView = findViewById(R.id.authTextView);
+        float authImageWidth = (displayXHeight/5) * 3;
+        authImageView = findViewById(R.id.authImageView);
         loginTextView = findViewById(R.id.loginTextView);
         userNameEditText = findViewById(R.id.ac_register_userName_et);
         userIdEditText = findViewById(R.id.ac_register_userId_et);
@@ -77,8 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.ac_register_next_bt);
         nextLayout = findViewById(R.id.ac_register_next_layout);
 
-        mobileSize.setLayoutHeight(authTextView, (int) authImageSize);
-
+        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
+        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
 
 
         mobileSize.setLayoutHeight(loginTextView, (int) (int) (displayYHeight-authImageSize) / 20);

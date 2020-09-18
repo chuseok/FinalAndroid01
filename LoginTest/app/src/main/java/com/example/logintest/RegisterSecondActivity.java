@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +36,6 @@ import com.example.logintest.volley.VolleySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -61,6 +61,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
     private static final int REQUEST_BACK = 1;
 
     TextView authTextView;
+    ImageView authImageView;
     EditText emailEditText;
     EditText phoneEditText;
     EditText authNumEditText;
@@ -78,7 +79,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
     String userId;
     String userPwd;
     FirebaseAuth firebaseAuth;
-    FirebaseAuth auth2;
     String mVerificationId;
     PhoneAuthProvider.ForceResendingToken mResendToken;
 
@@ -88,12 +88,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
     String userBirth_Val;
 
     boolean Certification;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +103,9 @@ public class RegisterSecondActivity extends AppCompatActivity {
         float displayXHeight = mobileSize.getStandardSize_X();
         float displayYHeight = mobileSize.getStandardSize_Y();
         float authImageSize = displayYHeight/5;
+        float authImageWidth = (displayXHeight/5) * 3;
 
-        authTextView = findViewById(R.id.authTextView);
+        authImageView = findViewById(R.id.authImageView);
         emailEditText = findViewById(R.id.ac_register_email_et);
         phoneEditText = findViewById(R.id.ac_register_phone_et);
         authNumEditText = findViewById(R.id.ac_register_auth_et);
@@ -124,7 +119,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
         signUpLayout = findViewById(R.id.ac_register_sign_up_layout);
         signUpButton = findViewById(R.id.ac_register_sign_up_bt);
 
-        mobileSize.setLayoutHeight(authTextView, (int) authImageSize);
+        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
+        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
         mobileSize.setLayoutHeight(emailEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(authLayout, (int) (displayYHeight-authImageSize) / 10);
@@ -153,33 +149,24 @@ public class RegisterSecondActivity extends AppCompatActivity {
         System.out.println("userId : " + userId);
         System.out.println("userPwd : " + userPwd);
 
-
-//        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(),
-//                new DatePicker.OnDateChangedListener() {
-//
-//                    @Override
-//                    public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-//
-//                    }
-//                });
-
-
         phoneConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendVerificationCodeToUser("+821047540384");
+//                String userPhone = phoneEditText.getText().toString().substring(1, 11);
+//                System.out.println("userPhone : " + userPhone);
+//                sendVerificationCodeToUser("+82" + userPhone);
+                sendVerificationCodeToUser("+821032315052");
             }
         });
 
         authConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String userPhone = phoneEditText.getText().toString().substring(1, 11);
-//                System.out.println("userPhone : " + userPhone);
+
                 String userAuthNum = authNumEditText.getText().toString();
 
                 Log.d("userAuthNum", "userAuthNum : " + userAuthNum);
-                verifyPhoneNumberWithCode(userAuthNum);
+//                verifyPhoneNumberWithCode(userAuthNum);
             }
         });
 
@@ -192,7 +179,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 Calendar cal = Calendar.getInstance();
                 cal.set(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(("yyyy-MM-dd HH:mm:ss"));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(("yyyy-MM-dd"));
                 userBirth_Val = simpleDateFormat.format(cal.getTime());
 
                 Certification = verifyUserInfo(userEmail_Val, userPhone_Val, authNum_Val, userBirth_Val);
@@ -208,13 +195,9 @@ public class RegisterSecondActivity extends AppCompatActivity {
                                         JSONObject resultObj = new JSONObject(response);
                                         Log.d("INSERT_RESULT", "insertResult : " + resultObj.getString("insertResult"));
                                     }
-
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
-
                             }
                         },
                         new Response.ErrorListener() {
@@ -257,14 +240,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                         return params;
                     }
                 };
-
                 VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
                 Toast.makeText(getApplicationContext(), R.string.register_sign_up_complete, Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
 
     @Override
@@ -286,7 +266,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
     private void sendVerificationCodeToUser(String phoneNo) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNo,        // Phone number to verify
-                120,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 TaskExecutors.MAIN_THREAD,   // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
@@ -302,15 +282,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     String code = phoneAuthCredential.getSmsCode();
 
                     if(code != null) {
-
                         Log.d("code", "code : " + code);
                         Log.d("VERIFICATION", "mVerificationId : " + mVerificationId);
                         Log.d("RESEND_TOKEN", "mResendToken : " + mResendToken);
-
                     }
-
                     signInWithPhoneAuthCredential(phoneAuthCredential);
-
                     // 확인 완료
                 }
 
