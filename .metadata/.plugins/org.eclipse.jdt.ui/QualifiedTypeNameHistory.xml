@@ -9,4 +9,5 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.AnnotationBeanNameGenerator"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="org.dragon.domain.CollectionVO"/>
 </qualifiedTypeNameHistroy>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.dragon.controller.DragonController;
 import org.dragon.controller.ProductController;
+import org.dragon.domain.CollectionVO;
 import org.dragon.domain.DragonVO;
 import org.dragon.domain.ProductVO;
 import org.dragon.service.DragonService;
