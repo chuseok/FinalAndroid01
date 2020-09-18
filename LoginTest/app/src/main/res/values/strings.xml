@@ -3,7 +3,10 @@
     <string name="Open">open</string>
     <string name="Close">close</string>
 
-<!-- registerActivity -->
+    <!-- SplashActivity -->
+    <string name="splash_title">암기용</string>
+
+    <!-- registerActivity -->
     <string name="register_title">개인회원 가입</string>
     <string name="register_customer">계정이 없으세요? 회원가입하기</string>
     <string name="register_customer_two">이미 계정이 있으세요? 로그인하기</string>

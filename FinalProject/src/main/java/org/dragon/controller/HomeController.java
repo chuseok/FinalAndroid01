@@ -116,17 +116,22 @@ public class HomeController {
         
        
         for(int i=0;i<MemList.size();i++) {
-        	Map<String, String> map = new HashMap<String, String>();
-        	String userId = MemList.get(i).getUserId();
-        	String userPwd = MemList.get(i).getUserPwd();
-        	map.put("userId",userId);
-        	map.put("userPwd", userPwd);
-        	
-        	result.add(map);
+           Map<String, String> map = new HashMap<String, String>();
+           String userId = MemList.get(i).getUserId();
+           String userPwd = MemList.get(i).getUserPwd();
+           String email = MemList.get(i).getEmail();
+           String userName = MemList.get(i).getUserName();
+           map.put("userId",userId);
+           map.put("userPwd", userPwd);
+           map.put("email", email);
+           map.put("userName", userName);
+           
+           result.add(map);
         }
 
         return result;
         }
+   
 	
 	
 }
