@@ -188,7 +188,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         final String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
 
         //get coin
-        StringRequest getCoinRequest = new StringRequest(Request.Method.GET, URLs.URL_+"?userId="+userId,
+        StringRequest getCoinRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_COIN+"?userId="+userId,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

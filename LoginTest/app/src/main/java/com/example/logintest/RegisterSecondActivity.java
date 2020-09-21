@@ -103,8 +103,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
         mobileSize.getStandardSize(this);
         float displayXHeight = mobileSize.getStandardSize_X();
         float displayYHeight = mobileSize.getStandardSize_Y();
-        float authImageSize = displayYHeight/5;
-        float authImageWidth = (displayXHeight/5) * 3;
+        float authImageSize = displayYHeight/10;
+        float authImageWidth = (displayXHeight/10) * 3;
 
         authImageView = findViewById(R.id.authImageView);
         emailEditText = findViewById(R.id.ac_register_email_et);
@@ -122,6 +122,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
         mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
         mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
+        mobileSize.setLayoutMargin(authImageView, 0, (int) (displayYHeight-authImageSize) / 20, 0,(int) (displayYHeight-authImageSize) / 20);
         mobileSize.setLayoutHeight(emailEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutHeight(authLayout, (int) (displayYHeight-authImageSize) / 10);

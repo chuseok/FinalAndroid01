@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/auth_step_one"
+        android:src="@drawable/auth_step_two"
         />
 
 
@@ -45,13 +46,23 @@
             android:hint="휴대폰번호('-'없이 숫자만)"
             android:inputType="phone" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/ac_register_phone_confirm_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="20dp"
+            android:outlineAmbientShadowColor="#000000"
+            android:textColor="#000000"
+            android:text="인증번호받기"/>
+
+<!--        <Button
             android:id="@+id/ac_register_phone_confirm_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="인증번호받기" />
+            android:text="인증번호받기" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -69,13 +80,23 @@
             android:hint="인증번호"
             android:inputType="number" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/ac_register_auth_confirm_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="20dp"
+            android:outlineAmbientShadowColor="#000000"
+            android:textColor="#000000"
+            android:text="확인"/>
+
+<!--        <Button
             android:id="@+id/ac_register_auth_confirm_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="확인" />
+            android:text="확인" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -103,12 +124,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/ac_register_sign_up_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cornerRadius="20dp"
+            android:outlineAmbientShadowColor="#000000"
+            android:textColor="#000000"
+            android:text="@string/register_next_hint"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"/>
+
+        <!--<Button
             android:id="@+id/ac_register_sign_up_bt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="가입하기"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"/>-->
 
     </RelativeLayout>
 
