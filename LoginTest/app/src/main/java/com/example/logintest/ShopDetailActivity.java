@@ -53,7 +53,7 @@ public class ShopDetailActivity extends AppCompatActivity {
 
     private TextView coinText, title, description, price, checkCount, checkPrice, totalPrice;
     private ImageView image;
-    private FloatingActionButton closeBtn, minusBtn, plusBtn;
+    private FloatingActionButton closeBtn, minusBtn, plusBtn, buyBtn;
     private CheckBox writeSelf;
     private EditText count;
     private LinearLayout background;
@@ -74,6 +74,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         closeBtn = findViewById(R.id.ac_shopDetail_close_btn);
         minusBtn = findViewById(R.id.ac_shopDetail_minus_btn);
         plusBtn = findViewById(R.id.ac_shopDetail_plus_btn);
+        buyBtn = findViewById(R.id.ac_shopDetail_addCart_btn);
         writeSelf = findViewById(R.id.ac_shopDetail_writeSelf_cb);
         count = findViewById(R.id.ac_shopDetail_count_et);
         background = findViewById(R.id.ac_shopDetail_background_ll);
@@ -232,7 +233,7 @@ public class ShopDetailActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(this).addToRequestQueue(getCoinRequest);//get coin end
 
-        StringRequest buyRequest = new StringRequest(Request.Method.GET, URLs.URL_SHOP_BUY,
+        final StringRequest buyRequest = new StringRequest(Request.Method.POST, URLs.URL_SHOP_BUY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -267,7 +268,14 @@ public class ShopDetailActivity extends AppCompatActivity {
             }
         };
 
-        VolleySingleton.getInstance(this).addToRequestQueue(buyRequest);
+
+
+        buyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VolleySingleton.getInstance(ShopDetailActivity.this).addToRequestQueue(buyRequest);
+            }
+        });
     }
 
     public void showSoftKeyboard(View view) { //키보드 오픈 이벤트
