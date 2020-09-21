@@ -6585,3 +6585,9 @@ not correct please set the HOME environment variable and restart Eclipse. Otherw
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 >>>>>>> f5fa572d5526bb192d0a719ef191873ece9f9c52
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-18 17:55:50.059
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-18 17:55:50.067
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
