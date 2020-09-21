@@ -6585,6 +6585,7 @@ not correct please set the HOME environment variable and restart Eclipse. Otherw
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 >>>>>>> f5fa572d5526bb192d0a719ef191873ece9f9c52
+<<<<<<< HEAD
 !SESSION 2020-09-21 09:23:35.311 -----------------------------------------------
 eclipse.buildId=4.15.0.I20200305-0155
 java.version=11.0.7
@@ -6736,3 +6737,11 @@ java.lang.RuntimeException
 	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1656)
 	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1594)
 	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:177)
+=======
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-18 17:55:50.059
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-18 17:55:50.067
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+>>>>>>> 813dc0e92fdd07eb9e003a1ceea2114c6e5d7d9b
