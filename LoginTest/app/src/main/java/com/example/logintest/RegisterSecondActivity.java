@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,7 +59,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RegisterSecondActivity extends AppCompatActivity {
 
-    private static final int REQUEST_BACK = 1;
+    private static final String TAG = "REGISTER_SECOND_ACTIVITY";
 
     TextView authTextView;
     ImageView authImageView;
@@ -155,7 +156,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 //                String userPhone = phoneEditText.getText().toString().substring(1, 11);
 //                System.out.println("userPhone : " + userPhone);
 //                sendVerificationCodeToUser("+82" + userPhone);
-                sendVerificationCodeToUser("+821032315052");
+                sendVerificationCodeToUser("+821035029610");
             }
         });
 
@@ -165,8 +166,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 String userAuthNum = authNumEditText.getText().toString();
 
-                Log.d("userAuthNum", "userAuthNum : " + userAuthNum);
-//                verifyPhoneNumberWithCode(userAuthNum);
+                Log.d(TAG, "userAuthNum : " + userAuthNum);
+                verifyPhoneNumberWithCode(userAuthNum);
             }
         });
 
@@ -193,7 +194,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
                                 try {
                                     if(response != null && response.length() >0) {
                                         JSONObject resultObj = new JSONObject(response);
-                                        Log.d("INSERT_RESULT", "insertResult : " + resultObj.getString("insertResult"));
+                                        Log.d(TAG, "insertResult : " + resultObj.getString("insertResult"));
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -224,12 +225,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        Log.d("USER_NAME", "userName : " + userName);
-                        Log.d("userId", "userId : " + userId);
-                        Log.d("userPwd", "userPwd : " + userPwd);
-                        Log.d("userEmail", "userEmail : " + userEmail_Val);
-                        Log.d("userPhone", "userPhone : " + userPhone_Val);
-                        Log.d("userBirth", "userBirth : " + userBirth_Val);
 
                         params.put("userName", userName);
                         params.put("userId", userId);
@@ -282,11 +277,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     String code = phoneAuthCredential.getSmsCode();
 
                     if(code != null) {
-                        Log.d("code", "code : " + code);
-                        Log.d("VERIFICATION", "mVerificationId : " + mVerificationId);
-                        Log.d("RESEND_TOKEN", "mResendToken : " + mResendToken);
+                        Log.d(TAG, "code : " + code);
+                        Log.d(TAG, "mVerificationId : " + mVerificationId);
+                        Log.d(TAG, "mResendToken : " + mResendToken);
                     }
-                    signInWithPhoneAuthCredential(phoneAuthCredential);
+
                     // 확인 완료
                 }
 
@@ -312,8 +307,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 @Override
                 public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     super.onCodeSent(s, forceResendingToken);
-                    Log.d("ONCODESENT", "onCodeSent : " + s);
-                    Log.d("forceResendingToken", "forceResendingToken:" + forceResendingToken);
+                    Log.d(TAG, "onCodeSent : " + s);
+                    Log.d(TAG, "forceResendingToken:" + forceResendingToken);
 
                     mVerificationId = s;
                     mResendToken = forceResendingToken;
@@ -340,10 +335,10 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "signInWithCredential:success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
                         } else {
                             // Sign in failed, display a message and update the UI
-                            Toast.makeText(getApplicationContext(), "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "signInWithCredential:failure", Toast.LENGTH_LONG).show();
 
                             Log.w("signInWithCredential:failure", "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

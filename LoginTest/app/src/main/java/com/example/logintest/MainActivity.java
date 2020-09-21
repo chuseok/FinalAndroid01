@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MAIN_ACTIVITY";
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -44,10 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        ArrayList<String> wordTitleArray = intent.getStringArrayListExtra("wordTitle");
+        ArrayList<String> learningRateArray = intent.getStringArrayListExtra("learningRate");
+
+        Log.d(TAG, "wordTitleArray : " + wordTitleArray.size());
+
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.replace(R.id.frag_nav,new MainFragment());
+        MainFragment mainFragment = MainFragment.newInstance(wordTitleArray, learningRateArray);
+        fragmentTransaction.replace(R.id.frag_nav, mainFragment);
         fragmentTransaction.commit();
 
         Toolbar toolbar = findViewById(R.id.activity_main_toolbar);

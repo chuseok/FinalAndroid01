@@ -2,9 +2,9 @@ package com.example.logintest.domain;
 
 public class Model {
     private String title;
-    private String desc;
+    private int desc;
 
-    public Model(String title, String desc) {
+    public Model(String title, int desc) {
         this.title = title;
         this.desc = desc;
 
@@ -18,11 +18,11 @@ public class Model {
         this.title = title;
     }
 
-    public String getDesc() {
+    public int getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
+    public void setDesc(int desc) {
         this.desc = desc;
     }
 }
