@@ -6889,3 +6889,18 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 =======
 >>>>>>> 813dc0e92fdd07eb9e003a1ceea2114c6e5d7d9b
 >>>>>>> b5439b579569cb16b2c0f8dbcc166fbc1128e8f1
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-21 09:56:21.263
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2020-09-21 09:56:21.289
+!MESSAGE Using platform encoding (MS949 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.ui 2 2 2020-09-21 10:01:33.894
+!MESSAGE org.eclipse.jdt.junit.ResultView: Deprecated relationship "fast" should be converted to "stack".
+
+!ENTRY org.eclipse.ui 2 2 2020-09-21 10:01:33.894
+!MESSAGE org.springframework.ide.eclipse.aop.ui.navigator.aopReferenceModelNavigator: Deprecated relationship "fast" should be converted to "stack".
+
+!ENTRY org.eclipse.ui 2 2 2020-09-21 10:01:33.895
+!MESSAGE org.eclipse.contribution.xref.ui.views.XReferenceView: Deprecated relationship "fast" should be converted to "stack".

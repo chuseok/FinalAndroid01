@@ -2,15 +2,36 @@ package com.example.logintest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
+import com.example.logintest.manager.SharedPrefManager;
+import com.example.logintest.volley.URLs;
+import com.example.logintest.volley.VolleySingleton;
+
+import org.json.JSONArray;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class SplashActivity extends AppCompatActivity {
+
+    private static final String TAG = "SPLASH_ACTIVITY";
 
     ImageView splashImageView;
     ProgressBar progressBar;
@@ -36,36 +57,84 @@ public class SplashActivity extends AppCompatActivity {
         mobileSize.setLayoutWidth(progressBar, (int) displayXHeight / 4);
         mobileSize.setLayoutMargin(progressBar, 0, (int) (displayYHeight / 20), 0, 0);
 
-        class LoadData extends AsyncTask<String, Integer, String> {
-            @Override
-            protected String doInBackground(String... strings) {
-                //단어장 제목, 학습 진행률
+        getData();
+    }
 
-                publishProgress(1);
-                return null;
-            }
+    class LoadDataAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                publishProgress(0);
+        ArrayList<String> titleArray = new ArrayList<>();
+        ArrayList<String> learningRateArray = new ArrayList<>();
 
-                //onPreExcuted( ) 이미지를 띄워놓기 등 스레드 작업 이전에 수행할 동작
+        public LoadDataAsyncTask() {
+        };
 
-            }
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            //단어장 제목, 학습 진행률
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                //onPostExcuted( ) 리턴값을 받아서 동작을 구현 이 두개는 메인 스레드에서 실행됨
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_STUDY_GETALL_WORDLIST,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-            }
+                            try {
+                                JSONArray array = new JSONArray(response);
 
-            @Override
-            protected void onProgressUpdate(Integer... values) {
-                super.onProgressUpdate(values);
-            }
+                                String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+
+                                Log.d(TAG, "userId : " + userId);
+                                for (int i = 0; i < array.length(); i++) {
+                                    int count=0;
+                                    int percent = 0;
+                                    if (userId.equalsIgnoreCase(array.getJSONObject(i).getString("userId"))) {
+                                        titleArray.add(array.getJSONObject(i).getString("wordTitle"));
+                                        learningRateArray.add(array.getJSONObject(i).getString("learningRate"));
+                                    }
+
+                                }
+                                Thread.sleep(1000);
+
+                                Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                MainActivity.putStringArrayListExtra("wordTitle", titleArray);
+                                MainActivity.putStringArrayListExtra("learningRate", learningRateArray);
+                                startActivity(MainActivity);
+                                finish();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String character = null;
+                    try {
+                        character = new String(response.data, "UTF-8");
+                        return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                    } catch (UnsupportedEncodingException e) {
+                        return Response.error(new ParseError(e));
+                    } catch (Exception e) {
+                        // log error
+                        return Response.error(new ParseError(e));
+                    }
+                }
+            };
+
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+            return true;
         }
+    }
 
+    private void getData() {
+        LoadDataAsyncTask loadData = new LoadDataAsyncTask();
+        loadData.execute();
     }
 }

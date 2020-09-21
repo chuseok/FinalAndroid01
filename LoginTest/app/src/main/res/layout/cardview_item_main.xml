@@ -29,11 +29,24 @@
                 android:textColor="#262626"
                 android:textSize="16sp" />
 
+            <ProgressBar
+                android:id="@+id/ac_dragonDetail_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_centerInParent="true"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:max="100"
+                android:layout_below="@id/ac_dragonDetail_invenImage_iv"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
+
             <TextView
                 android:id="@+id/ac_dragonDetail_invenCnt_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ac_dragonDetail_invenImage_iv"
+                android:layout_below="@id/ac_dragonDetail_progress"
                 android:layout_marginTop="3dp"
                 android:layout_centerInParent="true"
                 android:ellipsize="end"

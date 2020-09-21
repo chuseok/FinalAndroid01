@@ -47,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
         /* 자동 로그인 설정...*/
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            startActivity(new Intent(this, SplashActivity.class));
             finish();
-            startActivity(new Intent(this, MainActivity.class));
         }
 
         progressBar = findViewById(R.id.progressBar);
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                             array.getJSONObject(i).getString("email"), idCheck.isChecked());
                                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                     finish();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    startActivity(new Intent(getApplicationContext(), SplashActivity.class));
                                 }
                             }
 
