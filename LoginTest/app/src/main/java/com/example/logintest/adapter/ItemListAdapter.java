@@ -1,10 +1,8 @@
 package com.example.logintest.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.example.logintest.MainActivity;
 import com.example.logintest.R;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.domain.Collection;
-import com.example.logintest.domain.Inven;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 
@@ -39,9 +36,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
         public ItemViewHolder(View view){
             super(view);
-            this.cardView = view.findViewById(R.id.recycler_cardView);
-            this.image = view.findViewById(R.id.recycler_image_iv);
-            this.text = view.findViewById(R.id.recycler_text_tv);
+            this.cardView = view.findViewById(R.id.recycler_item_list_cardView);
+            this.image = view.findViewById(R.id.recycler_item_list_image_iv);
+            this.text = view.findViewById(R.id.recycler_item_list_name_tv);
             MobileSize mobileSize = new MobileSize();
             mobileSize.getStandardSize(activity);
             float displayXHeight = mobileSize.getStandardSize_X();
@@ -60,7 +57,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_item_list,parent,false);
         ItemViewHolder viewHolder = new ItemViewHolder(view);
         return viewHolder;
     }
