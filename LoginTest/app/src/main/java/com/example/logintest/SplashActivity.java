@@ -36,12 +36,34 @@ public class SplashActivity extends AppCompatActivity {
         mobileSize.setLayoutWidth(progressBar, (int) displayXHeight / 4);
         mobileSize.setLayoutMargin(progressBar, 0, (int) (displayYHeight / 20), 0, 0);
 
-        class LoadData extends AsyncTask<String, Void, String> {
-            //onPreExcuted( ) 이미지를 띄워놓기 등 스레드 작업 이전에 수행할 동작
-            //onPostExcuted( ) 리턴값을 받아서 동작을 구현 이 두개는 메인 스레드에서 실행됨
+        class LoadData extends AsyncTask<String, Integer, String> {
             @Override
             protected String doInBackground(String... strings) {
+                //단어장 제목, 학습 진행률
+
+                publishProgress(1);
                 return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                publishProgress(0);
+
+                //onPreExcuted( ) 이미지를 띄워놓기 등 스레드 작업 이전에 수행할 동작
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                //onPostExcuted( ) 리턴값을 받아서 동작을 구현 이 두개는 메인 스레드에서 실행됨
+
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
             }
         }
 
