@@ -249,6 +249,29 @@ public class DragonListController {
 		return result;
 	
 	}
+	
+	@GetMapping(value = "/shop/list")
+	public List<Map<String, String>> shopListWithRequestAndResponse(HttpServletRequest request) {
+
+		List<ProductVO> shopList = proService.getList();
+		
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+		
+		for(int i=0;i<shopList.size();i++) {
+			Map<String, String> map = new HashMap<String, String>();
+		
+			map.put("productImage", shopList.get(i).getProductImage());
+			map.put("productName", shopList.get(i).getProductName());
+			map.put("category", shopList.get(i).getCategory());
+			map.put("description", shopList.get(i).getDescription());
+			map.put("price", shopList.get(i).getPrice()+"");
+			
+			result.add(map);
+		}
+		
+		return result;
+	
+	}
 
 	public DragonVO setImg(DragonVO vo) {// 이미지 셋팅
 
