@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.logintest.TabFragment.DragonTabFragment;
 import com.example.logintest.TabFragment.BackgroundTabFragment;
-import com.example.logintest.TabFragment.Tab3Fragment;
+import com.example.logintest.TabFragment.ShopItemTabFragment;
 import com.example.logintest.adapter.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -31,8 +31,7 @@ public class ItemListFragment extends Fragment {
     private MainActivity mainContext;
     private int[] tabIcons = {
             R.drawable.ic_dragon_tab,
-            R.drawable.ic_background_tab,
-            R.drawable.ic_notifications_white
+            R.drawable.ic_background_tab
     };
 
     // TODO: Rename and change types of parameters
@@ -80,12 +79,11 @@ public class ItemListFragment extends Fragment {
         TabAdapter adapter = new TabAdapter(fragmentManager);
         adapter.addFragment(new DragonTabFragment(),"DRAGON");
         adapter.addFragment(new BackgroundTabFragment(),"BACKGROUND");
-        adapter.addFragment(new Tab3Fragment(),"Tab 3");
+        adapter.addFragment(new ShopItemTabFragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         return view;
     }
     @Override

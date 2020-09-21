@@ -19,7 +19,7 @@
             android:layout_height="70dp"
             app:tabMode="scrollable"
             app:tabBackground="@drawable/tab_layout_selector"
-            app:tabSelectedTextColor="#FF0000"
+            app:tabIconTint="#000000"
             android:layout_margin="10dp"
             app:tabIndicator="@null"
             app:tabGravity="fill"/>

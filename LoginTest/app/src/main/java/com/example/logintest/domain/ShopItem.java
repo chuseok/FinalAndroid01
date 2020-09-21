@@ -1,6 +1,9 @@
 package com.example.logintest.domain;
 
-public class ShopItem {
+import java.io.Serializable;
+
+public class ShopItem implements Serializable {
+    private int productId;
     private String image;
     private String name;
     private String category;
@@ -8,12 +11,21 @@ public class ShopItem {
     private int price;
     private int count;
 
-    public ShopItem(String image, String name, String category, String description, int price) {
+    public ShopItem(int productId, String image, String name, String category, String description, int price) {
+        this.productId = productId;
         this.image = image;
         this.name = name;
         this.category = category;
         this.description = description;
         this.price = price;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getImage() {

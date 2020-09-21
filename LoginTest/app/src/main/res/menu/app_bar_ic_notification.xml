@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_openRight"
-        android:icon="@drawable/ic_notifications_white"
+        android:icon="@drawable/ic_notifications"
         android:orderInCategory="100"
         android:title="오른쪽"
         app:showAsAction="always" />

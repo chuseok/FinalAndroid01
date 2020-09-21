@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TabFragment.ShopBackgroundTabFragment">
+    tools:context=".TabFragment.ShopItemTabFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -16,14 +16,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BACKGROUND"
+                android:text="ITEM"
                 android:textSize="25dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginBottom="10dp"/>
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/frag_shop_background_tab_recyclerView"
+            android:id="@+id/frag_shop_item_tab_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

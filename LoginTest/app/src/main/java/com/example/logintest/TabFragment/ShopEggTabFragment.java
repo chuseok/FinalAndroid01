@@ -106,6 +106,7 @@ public class ShopEggTabFragment extends Fragment {
                         try {
                             JSONArray array = new JSONArray(response);
                             for (int i = 0; i < array.length(); i++) {
+                                int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
                                 String productImage = array.getJSONObject(i).getString("productImage").replace("../",URLs.ROOT_URL);
                                 String productName = array.getJSONObject(i).getString("productName");
                                 String category = array.getJSONObject(i).getString("category");
@@ -114,7 +115,7 @@ public class ShopEggTabFragment extends Fragment {
 
                                 //setItemList(procession, userLevel, level1, level2, level3, level1Name, level2Name, level3Name);
                                 if(category.equals("egg")){
-                                    list.add(new ShopItem(productImage,productName,category,description,price));
+                                    list.add(new ShopItem(productId,productImage,productName,category,description,price));
                                 }
                                 adapter.notifyDataSetChanged();
                                 //count.setText(list.size()+" selected");
@@ -158,7 +159,7 @@ public class ShopEggTabFragment extends Fragment {
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-        adapter = new ShopItemListAdapter(getContext(),list, (MainActivity)this.getActivity(), recyclerView.getHeight());
+        adapter = new ShopItemListAdapter(getContext(),list, (MainActivity)this.getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
 

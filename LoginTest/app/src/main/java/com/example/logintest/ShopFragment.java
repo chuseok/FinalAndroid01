@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.logintest.TabFragment.ShopBackgroundTabFragment;
 import com.example.logintest.TabFragment.ShopEggTabFragment;
-import com.example.logintest.TabFragment.Tab3Fragment;
+import com.example.logintest.TabFragment.ShopItemTabFragment;
 import com.example.logintest.adapter.TabAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -79,9 +79,9 @@ public class ShopFragment extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.frag_shop_viewPager);
         FragmentManager fragmentManager = mainContext.getSupportFragmentManager();
         TabAdapter adapter = new TabAdapter(fragmentManager);
-        adapter.addFragment(new ShopEggTabFragment(),"DRAGON");
-        adapter.addFragment(new ShopBackgroundTabFragment(),"BACKGROUND");
-        adapter.addFragment(new Tab3Fragment(),"Tab 3");
+        adapter.addFragment(new ShopItemTabFragment(),"BACKGROUND");
+        adapter.addFragment(new ShopEggTabFragment(),"EGG");
+        adapter.addFragment(new ShopBackgroundTabFragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);

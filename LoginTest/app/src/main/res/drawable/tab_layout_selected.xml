@@ -13,7 +13,7 @@
 
             <!-- color of the selected tab -->
             <solid
-                android:color="#FF4561"/>
+                android:color="#FF3653"/>
             <size
                 android:height="50dp"
                 android:width="50dp"/>

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,19 +38,20 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ShopBackgroundTabFragment#newInstance} factory method to
+ * Use the {@link ShopItemTabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ShopBackgroundTabFragment extends Fragment {
+public class ShopItemTabFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     // TODO: Rename and change types of parameters
+
     private List<ShopItem> list;
     private ShopItemListAdapter adapter;
 
-    public ShopBackgroundTabFragment() {
+    public ShopItemTabFragment() {
         // Required empty public constructor
     }
 
@@ -59,11 +61,11 @@ public class ShopBackgroundTabFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ShopBackgroundFragment.
+     * @return A new instance of fragment Tab3Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ShopBackgroundTabFragment newInstance(String param1, String param2) {
-        ShopBackgroundTabFragment fragment = new ShopBackgroundTabFragment();
+    public static ShopItemTabFragment newInstance(String param1, String param2) {
+        ShopItemTabFragment fragment = new ShopItemTabFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -72,13 +74,15 @@ public class ShopBackgroundTabFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_shop_background_tab, container, false);
-        final RecyclerView recyclerView = view.findViewById(R.id.frag_shop_background_tab_recyclerView);
+        final View view = inflater.inflate(R.layout.fragment_shop_item_tab, container, false);
+        final RecyclerView recyclerView = view.findViewById(R.id.frag_shop_item_tab_recyclerView);
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -100,7 +104,7 @@ public class ShopBackgroundTabFragment extends Fragment {
                                 int price = Integer.parseInt(array.getJSONObject(i).getString("price"));
 
                                 //setItemList(procession, userLevel, level1, level2, level3, level1Name, level2Name, level3Name);
-                                if(category.equals("background")){
+                                if(category.equals("item")){
                                     list.add(new ShopItem(productId,productImage,productName,category,description,price));
                                 }
                                 adapter.notifyDataSetChanged();
@@ -148,6 +152,8 @@ public class ShopBackgroundTabFragment extends Fragment {
         adapter = new ShopItemListAdapter(getContext(),list, (MainActivity)this.getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
+
         return view;
     }
 }

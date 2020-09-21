@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShopDetailActivity"
+    android:background="#F3F3F3">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_coin"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/ac_shopDetail_coin_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ac_shopDetail_close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="right"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:elevation="5dp"
+            android:backgroundTint="#ffffff"
+            app:borderWidth="0dp"
+            app:rippleColor="#000000"
+            app:fabCustomSize="30dp"
+            android:clickable="true"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ac_shopDetail_productImage_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_coin"
+        android:layout_gravity="center"
+        android:translationZ="1dp"
+        android:elevation="5dp"/>
+    <LinearLayout
+        android:id="@+id/ac_shopDetail_background_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/shop_detail_background">
+        <TextView
+            android:id="@+id/ac_shopDetail_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/ac_shopDetail_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="#6A6A6A"/>
+        <TextView
+            android:id="@+id/ac_shopDetail_description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:textColor="#BFBFBF"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/ac_shopDetail_minus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#ffffff"
+                android:clickable="true"
+                android:src="@drawable/ic__remove"
+                app:borderWidth="0dp"
+                app:fabCustomSize="30dp" />
+
+            <EditText
+                android:id="@+id/ac_shopDetail_count_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="50dp"
+                android:enabled="false"
+                android:inputType="number"
+                android:text="1"
+                android:textColor="#707070"
+                android:textSize="20dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/ac_shopDetail_plus_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@android:drawable/ic_input_add"
+                android:backgroundTint="#ffffff"
+                app:borderWidth="0dp"
+                app:fabCustomSize="30dp" />
+
+        </LinearLayout>
+        <CheckBox
+            android:id="@+id/ac_shopDetail_writeSelf_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직접 입력"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="20dp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shop_detail_background"
+            android:backgroundTint="#7CFF0000"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수량"
+                    android:textColor="#ffffff"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가격"
+                    android:textColor="#ffffff"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 가격"
+                    android:textColor="#ffffff"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ac_shopDetail_checkCount_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="1"
+                    android:textColor="#ffffff"/>
+                <TextView
+                    android:id="@+id/ac_shopDetail_checkPrice_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="1000"
+                    android:textColor="#ffffff"/>
+                <TextView
+                    android:id="@+id/ac_shopDetail_totalPrice_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="1"
+                    android:textColor="#ffffff"/>
+            </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/ac_shopDetail_addCart_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_shopping_cart"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="#ffffff"
+                android:clickable="true"
+                app:borderWidth="0dp"
+                app:elevation="5dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
