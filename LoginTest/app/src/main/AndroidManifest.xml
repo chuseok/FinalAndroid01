@@ -19,8 +19,7 @@
         <activity android:name=".RegisterSecondActivity" />
         <activity android:name=".RegisterActivity" />
         <activity
-            android:name=".SplashActivity"
-            android:theme="@style/SplashTheme" />
+            android:name=".SplashActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
