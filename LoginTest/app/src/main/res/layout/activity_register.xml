@@ -31,39 +31,51 @@
 
     <EditText
         android:text="하나나나"
+        android:textSize="15dp"
         android:id="@+id/ac_register_userName_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="@string/register_name_hint" />
+        android:hint="@string/register_name_hint"
+        android:background="@drawable/custom_input"
+        />
 
     <EditText
         android:text="11111211"
+        android:textSize="15dp"
         android:id="@+id/ac_register_userId_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="@string/register_id_hint" />
+        android:hint="@string/register_id_hint"
+        android:background="@drawable/custom_input"
+        />
 
     <EditText
         android:text="111111!a"
+        android:textSize="15dp"
         android:id="@+id/ac_register_userPwd_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/register_pwd_hint"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:background="@drawable/custom_input"
+        />
 
     <EditText
         android:text="111111!a"
+        android:textSize="15dp"
         android:id="@+id/ac_register_userPwd_Confirm_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/register_pwd_confirm_hint"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:background="@drawable/custom_input"
+        />
 
     <RelativeLayout
         android:id="@+id/ac_register_next_layout"

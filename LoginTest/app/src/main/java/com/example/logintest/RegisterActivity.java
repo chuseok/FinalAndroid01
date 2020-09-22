@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        overridePendingTransition(R.anim.left_to_right, R.anim.none);
 
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
@@ -85,9 +89,20 @@ public class RegisterActivity extends AppCompatActivity {
         mobileSize.setLayoutMargin(authImageView, 0, (int) (displayYHeight-authImageSize) / 20, 0,(int) (displayYHeight-authImageSize) / 20);
         mobileSize.setLayoutHeight(loginTextView, (int) (int) (displayYHeight-authImageSize) / 20);
         mobileSize.setLayoutHeight(userNameEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userNameEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
+        mobileSize.setLayoutPadding(userNameEditText, 5, 0, 0, 0);
         mobileSize.setLayoutHeight(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userIdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
+        mobileSize.setLayoutPadding(userIdEditText, 5, 0, 0, 0);
+
         mobileSize.setLayoutHeight(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userPwdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
+        mobileSize.setLayoutPadding(userPwdEditText, 5, 0, 0, 0);
+
         mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userPwdConfirmEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 0);
+        mobileSize.setLayoutPadding(userPwdConfirmEditText, 5, 0, 0, 0);
+
         mobileSize.setLayoutHeight(nextButton, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutMargin(nextLayout, 0, 0, 0, (int) (displayYHeight-authImageSize) / 10);
 
@@ -216,6 +231,8 @@ public class RegisterActivity extends AppCompatActivity {
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
+                overridePendingTransition(R.anim.right_to_left, R.anim.none);
+
                 return true;
             }
         }

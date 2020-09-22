@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,7 +42,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        setupWindowAnimations();
+        
         splashImageView = findViewById(R.id.splashImageView);
         progressBar = findViewById(R.id.progress);
 
@@ -58,6 +61,11 @@ public class SplashActivity extends AppCompatActivity {
         mobileSize.setLayoutMargin(progressBar, 0, (int) (displayYHeight / 20), 0, 0);
 
         getData();
+    }
+
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
     }
 
     class LoadDataAsyncTask extends AsyncTask<String, Integer, Boolean> {
