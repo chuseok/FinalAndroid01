@@ -18,5 +18,6 @@ public class URLs {
     public static final String URL_SHOP_LIST = ROOT_URL+"android/shop/list";
     public static final String URL_GET_COIN = ROOT_URL+"android/coin";
     public static final String URL_SHOP_BUY = ROOT_URL+"android/shop/buy";
+    public static final String URL_STUDY_GETWORDLIST = ROOT_URL+"android/study/getWordList";
 
 }
