@@ -2,7 +2,7 @@ package com.example.logintest.volley;
 
 public class URLs {
 
-    public static final String ROOT_URL = "http://192.168.0.198:8080/";
+    public static final String ROOT_URL = "http://10.0.2.2:8080/";
 
     public static final String URL_LOGIN= ROOT_URL + "android/dragon/main";
     public static final String URL_MEMBER_GETLIST = ROOT_URL + "android/member/getList";
@@ -18,5 +18,6 @@ public class URLs {
     public static final String URL_SHOP_LIST = ROOT_URL+"android/shop/list";
     public static final String URL_GET_COIN = ROOT_URL+"android/coin";
     public static final String URL_SHOP_BUY = ROOT_URL+"android/shop/buy";
+    public static final String URL_STUDY_GETWORDLIST = ROOT_URL+"android/study/getWordList";
 
 }

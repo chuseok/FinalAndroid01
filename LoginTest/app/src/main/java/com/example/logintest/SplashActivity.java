@@ -62,6 +62,7 @@ public class SplashActivity extends AppCompatActivity {
 
     class LoadDataAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
+        ArrayList<String> idArray = new ArrayList<>();
         ArrayList<String> titleArray = new ArrayList<>();
         ArrayList<String> learningRateArray = new ArrayList<>();
 
@@ -87,6 +88,7 @@ public class SplashActivity extends AppCompatActivity {
                                     int count=0;
                                     int percent = 0;
                                     if (userId.equalsIgnoreCase(array.getJSONObject(i).getString("userId"))) {
+                                        idArray.add(array.getJSONObject(i).getString("userId"));
                                         titleArray.add(array.getJSONObject(i).getString("wordTitle"));
                                         learningRateArray.add(array.getJSONObject(i).getString("learningRate"));
                                     }
@@ -95,6 +97,7 @@ public class SplashActivity extends AppCompatActivity {
                                 Thread.sleep(1000);
 
                                 Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                MainActivity.putStringArrayListExtra("userId", idArray);
                                 MainActivity.putStringArrayListExtra("wordTitle", titleArray);
                                 MainActivity.putStringArrayListExtra("learningRate", learningRateArray);
                                 startActivity(MainActivity);
