@@ -1,8 +1,10 @@
 package com.example.logintest;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -51,12 +53,13 @@ import java.util.Map;
 
 public class ShopDetailActivity extends AppCompatActivity {
 
-    private TextView coinText, title, description, price, checkCount, checkPrice, totalPrice;
+    private TextView coinText, title, description, price, checkCount, checkPrice, totalPrice, buyCheckTv;
     private ImageView image;
     private FloatingActionButton closeBtn, minusBtn, plusBtn, buyBtn;
     private CheckBox writeSelf;
     private EditText count;
     private LinearLayout background;
+    private boolean checkCoin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         checkCount = findViewById(R.id.ac_shopDetail_checkCount_tv);
         checkPrice = findViewById(R.id.ac_shopDetail_checkPrice_tv);
         totalPrice = findViewById(R.id.ac_shopDetail_totalPrice_tv);
+        buyCheckTv = findViewById(R.id.ac_shopDetail_buyCheck_tv);
         closeBtn = findViewById(R.id.ac_shopDetail_close_btn);
         minusBtn = findViewById(R.id.ac_shopDetail_minus_btn);
         plusBtn = findViewById(R.id.ac_shopDetail_plus_btn);
@@ -78,6 +82,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         writeSelf = findViewById(R.id.ac_shopDetail_writeSelf_cb);
         count = findViewById(R.id.ac_shopDetail_count_et);
         background = findViewById(R.id.ac_shopDetail_background_ll);
+
 
         final ShopItem item = (ShopItem)intent.getSerializableExtra("name");
         title.setText(item.getName());
@@ -108,7 +113,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         mobileSize.setLayoutWidth(image,(int)(displayXHeight*0.3));
         mobileSize.setLayoutHeight(image,(int)(displayYHeight*0.3));
         mobileSize.setLayoutMargin(background,0,-(int)(displayYHeight*0.15),0,0);
-        mobileSize.setLayoutMargin(title,0,(int)(displayYHeight*0.1),0,(int)(displayYHeight*0.02));
+        mobileSize.setLayoutMargin(title,0,(int)(displayYHeight*0.15),0,(int)(displayYHeight*0.02));
         mobileSize.setLayoutMargin(price,0,0,0,(int)(displayYHeight*0.01));
         mobileSize.setLayoutMargin(description,0,0,0,(int)(displayYHeight*0.05));
 
@@ -188,15 +193,19 @@ public class ShopDetailActivity extends AppCompatActivity {
         });
         final String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
 
-        //get coin
-        StringRequest getCoinRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_COIN+"?userId="+userId,
+
+        StringRequest checkValueRequest = new StringRequest(Request.Method.POST, URLs.URL_PRODUCT_CHECK,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             JSONObject object = new JSONObject(response);
                             int coin = object.getInt("coin");
+                            int buyCheck = object.getInt("buyCheck");
+                            if(buyCheck==1){
+                                buyBtn.setEnabled(false);
+                                buyCheckTv.setVisibility(View.VISIBLE);
+                            }
                             coinText.setText(coin+"");
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -225,14 +234,14 @@ public class ShopDetailActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                //params.put("userId", "111111");
-                //params.put("dragonId", "3");
+                params.put("userId", userId);
+                params.put("productId", item.getProductId()+"");
                 return params;
             }
         };
+        VolleySingleton.getInstance(ShopDetailActivity.this).addToRequestQueue(checkValueRequest);
 
-        VolleySingleton.getInstance(this).addToRequestQueue(getCoinRequest);//get coin end
-
+        //buy request
         final StringRequest buyRequest = new StringRequest(Request.Method.POST, URLs.URL_SHOP_BUY,
                 new Response.Listener<String>() {
                     @Override
@@ -273,7 +282,26 @@ public class ShopDetailActivity extends AppCompatActivity {
         buyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int totalValue = Integer.parseInt(totalPrice.getText().toString());
+                int coinValue = Integer.parseInt(coinText.getText().toString());
                 VolleySingleton.getInstance(ShopDetailActivity.this).addToRequestQueue(buyRequest);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShopDetailActivity.this);
+                if(coinValue<totalValue){
+                    builder.setTitle("구매 실패");
+                    builder.setMessage("코인이 부족합니다.");
+                    builder.setNegativeButton("확인",null);
+                }else{
+                    builder.setTitle("구매완료");
+                    builder.setMessage("구매를 성공하였습니다.");
+                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            onBackPressed();
+                        }
+                    });
+                }
+                builder.create().show();
+
             }
         });
     }

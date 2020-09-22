@@ -79,7 +79,6 @@ public class ItemListFragment extends Fragment {
         TabAdapter adapter = new TabAdapter(fragmentManager);
         adapter.addFragment(new DragonTabFragment(),"DRAGON");
         adapter.addFragment(new BackgroundTabFragment(),"BACKGROUND");
-        adapter.addFragment(new ShopItemTabFragment(),"Tab 3");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);
