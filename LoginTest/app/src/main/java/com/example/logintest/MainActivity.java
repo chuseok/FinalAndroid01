@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
+        ArrayList<String> wordIdArray = intent.getStringArrayListExtra("wordId");
         ArrayList<String> wordTitleArray = intent.getStringArrayListExtra("wordTitle");
         ArrayList<String> learningRateArray = intent.getStringArrayListExtra("learningRate");
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MainFragment mainFragment = MainFragment.newInstance(wordTitleArray, learningRateArray);
+        MainFragment mainFragment = MainFragment.newInstance(wordTitleArray, learningRateArray,wordIdArray);
         fragmentTransaction.replace(R.id.frag_nav, mainFragment);
         fragmentTransaction.commit();
 

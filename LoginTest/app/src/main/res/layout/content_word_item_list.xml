@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="10"
+    android:orientation="horizontal"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp"
+    >
         <TextView
             android:id="@+id/content_word_tv_word"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="단어"/>
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            android:textSize="16dp"
+            android:textColor="#222831"
+            android:text="단어" />
 
         <TextView
             android:id="@+id/content_word_tv_meaning"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="7"
+            android:gravity="left|center_vertical"
+            android:textSize="14dp"
             android:text="뜻"/>
-
-
-
-    </LinearLayout>
 
 </LinearLayout>

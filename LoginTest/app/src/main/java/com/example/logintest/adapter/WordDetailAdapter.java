@@ -51,8 +51,8 @@ public class WordDetailAdapter extends RecyclerView.Adapter<WordDetailAdapter.Cu
     @Override
     public void onBindViewHolder(@NonNull WordDetailAdapter.CustomViewHolder holder, int position) {
 
-        holder.content_word_tv_word.setGravity(Gravity.CENTER);
-        holder.content_word_tv_meaning.setGravity(Gravity.CENTER);
+        //holder.content_word_tv_word.setGravity(Gravity.CENTER);
+        //holder.content_word_tv_meaning.setGravity(Gravity.CENTER);
 
         holder.content_word_tv_word.setText(wordList.get(position).getWord());
         holder.content_word_tv_meaning.setText(wordList.get(position).getMeaning());

@@ -65,29 +65,11 @@ public class CardViewAdapter extends PagerAdapter {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position==0) {
                     //Toast.makeText(v.getContext(),"click1",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
+                    intent.putExtra("title", models.get(position).getTitle());
+                    intent.putExtra("id", models.get(position).getId());
                     context.startActivity(intent);
-
-                }
-                else if(position==1){
-                    Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);
-                }
-                else if(position==2){
-
-                    Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);
-                }
-                else if(position==3){
-                    /*Intent intent = new Intent(context, MainActivity.class);
-                    //intent.putExtra("param", models.get(position).getTitle());
-                    context.startActivity(intent);*/
-                }
             }
 
         });

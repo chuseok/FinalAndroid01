@@ -1,12 +1,15 @@
 package com.example.logintest.domain;
 
 public class Model {
+
+    private String id;
     private String title;
     private int desc;
 
-    public Model(String title, int desc) {
+    public Model(String title, int desc, String id) {
         this.title = title;
         this.desc = desc;
+        this.id = id;
 
     }
 
@@ -24,5 +27,13 @@ public class Model {
 
     public void setDesc(int desc) {
         this.desc = desc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
