@@ -14,20 +14,51 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.logintest.adapter.WordDetailAdapter;
+import com.example.logintest.domain.Word;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WordDetailActivity extends AppCompatActivity{
+
+    private List<Word> wordList;
+    private WordDetailAdapter wAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worddetail);
 
+        //recyclerView Layout
+        RecyclerView wRecyclerView = (RecyclerView) findViewById(R.id.content_word_rv);
+        LinearLayoutManager wLinearLayoutManager = new LinearLayoutManager(this);
+        wRecyclerView.setLayoutManager(wLinearLayoutManager);
+
+
+        /*wordList = new ArrayList<>();
+        Word word = new Word("red","빨강");
+        wordList.add(word);
+        word = new Word("yellow","노랑");
+        wordList.add(word);*/
+
+        wAdapter = new WordDetailAdapter(wordList);
+        wRecyclerView.setAdapter(wAdapter);
+
+
+
         TextView tx = findViewById(R.id.activity_word_detail_tv_title);
+
         Intent intent = getIntent();
 
         final String title = intent.getExtras().getString("param");
         tx.setText(title);
+
+
 
         final Toolbar toolbar = findViewById(R.id.activity_word_detail_toolbar);
         CollapsingToolbarLayout c = findViewById(R.id.activity_word_detail_collapsing_bar);
@@ -47,6 +78,35 @@ public class WordDetailActivity extends AppCompatActivity{
             }
         });
 
+
+        String bookId;
+        String bookTitle = title;
+        /*
+        String url = URLs.URL_STUDY_GETWORDLIST+"?bookId="+ bookId +"&bookTitle="+bookTitle;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //success
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        */
 
     }
     @Override

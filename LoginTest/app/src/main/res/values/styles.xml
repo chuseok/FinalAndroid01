@@ -30,6 +30,4 @@
     <style name="AppTheme.RoundOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:background">@drawable/round</item>
     </style>
-
-
 </resources>

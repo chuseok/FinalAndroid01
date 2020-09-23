@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,7 +42,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        setupWindowAnimations();
+        
         splashImageView = findViewById(R.id.splashImageView);
         progressBar = findViewById(R.id.progress);
 
@@ -60,8 +63,14 @@ public class SplashActivity extends AppCompatActivity {
         getData();
     }
 
+    private void setupWindowAnimations() {
+        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
+    }
+
     class LoadDataAsyncTask extends AsyncTask<String, Integer, Boolean> {
 
+        ArrayList<String> idArray = new ArrayList<>();
         ArrayList<String> titleArray = new ArrayList<>();
         ArrayList<String> learningRateArray = new ArrayList<>();
 
@@ -87,6 +96,7 @@ public class SplashActivity extends AppCompatActivity {
                                     int count=0;
                                     int percent = 0;
                                     if (userId.equalsIgnoreCase(array.getJSONObject(i).getString("userId"))) {
+                                        idArray.add(array.getJSONObject(i).getString("userId"));
                                         titleArray.add(array.getJSONObject(i).getString("wordTitle"));
                                         learningRateArray.add(array.getJSONObject(i).getString("learningRate"));
                                     }
@@ -95,6 +105,7 @@ public class SplashActivity extends AppCompatActivity {
                                 Thread.sleep(1000);
 
                                 Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
+                                MainActivity.putStringArrayListExtra("userId", idArray);
                                 MainActivity.putStringArrayListExtra("wordTitle", titleArray);
                                 MainActivity.putStringArrayListExtra("learningRate", learningRateArray);
                                 startActivity(MainActivity);

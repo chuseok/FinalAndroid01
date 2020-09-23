@@ -94,6 +94,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_second);
+        overridePendingTransition(R.anim.left_to_right, R.anim.none);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -253,6 +255,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 registerActivity.putExtra("userPwd", userPwd);
                 startActivity(registerActivity);
                 finish();
+                overridePendingTransition(R.anim.right_to_left, R.anim.none);
+
                 return true;
             }
         }
