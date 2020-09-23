@@ -84,6 +84,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             holder.cardView.setElevation(0f);
             holder.cardView.setCardBackgroundColor(Color.parseColor("#4D8C8C8C"));
             holder.image.setColorFilter(R.color.imageDim);
+        }else{
+            holder.cardView.setElevation(15f);
+            holder.cardView.setCardBackgroundColor(Color.parseColor("#ffffff"));
+            holder.image.setColorFilter(null);
         }
 
         holder.text.setText(list.get(position).getName());
