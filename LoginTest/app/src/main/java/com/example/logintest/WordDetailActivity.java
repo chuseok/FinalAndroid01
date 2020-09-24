@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -17,10 +18,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.example.logintest.Utils.DividerItemDecoration;
+import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.adapter.WordDetailAdapter;
 import com.example.logintest.domain.Word;
+import com.example.logintest.volley.URLs;
+import com.example.logintest.volley.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +44,9 @@ public class WordDetailActivity extends AppCompatActivity{
 
     private List<Word> wordList;
     private WordDetailAdapter wAdapter;
+    int bookNum;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +57,16 @@ public class WordDetailActivity extends AppCompatActivity{
         RecyclerView wRecyclerView = (RecyclerView) findViewById(R.id.content_word_rv);
         LinearLayoutManager wLinearLayoutManager = new LinearLayoutManager(this);
         wRecyclerView.setLayoutManager(wLinearLayoutManager);
+        wRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(),R.drawable.line_divider));
 
+
+        MobileSize mobileSize = new MobileSize();
+        mobileSize.getStandardSize(this);
+        final float displayXHeight = mobileSize.getStandardSize_X();
+        final float displayYHeight = mobileSize.getStandardSize_Y();
+
+        mobileSize.setLayoutMargin(wRecyclerView, (int) (displayXHeight/25),0 , (int) (displayXHeight/25), 0);
+        //mobileSize.setLayoutPadding();
 
         /*wordList = new ArrayList<>();
         Word word = new Word("red","빨강");
@@ -46,19 +74,13 @@ public class WordDetailActivity extends AppCompatActivity{
         word = new Word("yellow","노랑");
         wordList.add(word);*/
 
-        wAdapter = new WordDetailAdapter(wordList);
-        wRecyclerView.setAdapter(wAdapter);
-
-
-
-        TextView tx = findViewById(R.id.activity_word_detail_tv_title);
+        final TextView activity_word_detail_tv_title = findViewById(R.id.activity_word_detail_tv_title);
+        final TextView activity_word_detail_tv_subtitle = findViewById(R.id.activity_word_detail_tv_subtitle);
 
         Intent intent = getIntent();
 
-        final String title = intent.getExtras().getString("param");
-        tx.setText(title);
-
-
+        final String title = intent.getExtras().getString("title");
+        final String id = intent.getExtras().getString("id");
 
         final Toolbar toolbar = findViewById(R.id.activity_word_detail_toolbar);
         CollapsingToolbarLayout c = findViewById(R.id.activity_word_detail_collapsing_bar);
@@ -79,20 +101,36 @@ public class WordDetailActivity extends AppCompatActivity{
         });
 
 
-        String bookId;
+        String bookId = id;
         String bookTitle = title;
-        /*
+
+        wordList = new ArrayList<>();
+
         String url = URLs.URL_STUDY_GETWORDLIST+"?bookId="+ bookId +"&bookTitle="+bookTitle;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("result", "[" + response + "]");
                         try {
                             JSONArray array = new JSONArray(response);
 
+                            for(int i =0; i<array.length(); i++){
 
+                                Word words;
+                                String word = array.getJSONObject(i).getString("word");
+                                String meaning = array.getJSONObject(i).getString("meaning");
+                                words = new Word(word, meaning);
+                                wordList.add(words);
+                                wAdapter.notifyDataSetChanged();
+                            }
+                            bookNum = array.length();
+                            Log.d("bookNum", "[" + bookNum + "]");
 
+                            final String tv_subtitle = id+" | "+bookNum;
 
+                            activity_word_detail_tv_title.setText(title);
+                            activity_word_detail_tv_subtitle.setText(tv_subtitle);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,10 +143,32 @@ public class WordDetailActivity extends AppCompatActivity{
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        */
+        })  {
+
+            @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+
+
+        wAdapter = new WordDetailAdapter(wordList);
+        wRecyclerView.setAdapter(wAdapter);
 
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

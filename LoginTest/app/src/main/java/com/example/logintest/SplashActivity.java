@@ -105,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
                                 Thread.sleep(1000);
 
                                 Intent MainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                                MainActivity.putStringArrayListExtra("userId", idArray);
+                                MainActivity.putStringArrayListExtra("wordId", idArray);
                                 MainActivity.putStringArrayListExtra("wordTitle", titleArray);
                                 MainActivity.putStringArrayListExtra("learningRate", learningRateArray);
                                 startActivity(MainActivity);
