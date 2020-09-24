@@ -126,16 +126,39 @@ public class RegisterSecondActivity extends AppCompatActivity {
         mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
         mobileSize.setLayoutMargin(authImageView, 0, (int) (displayYHeight-authImageSize) / 20, 0,(int) (displayYHeight-authImageSize) / 20);
         mobileSize.setLayoutHeight(emailEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutHeight(phoneLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutHeight(authLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutHeight(dayLayout, (int) ((displayYHeight-authImageSize) / 10) * 4);
+        mobileSize.setLayoutMargin(emailEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
+        mobileSize.setLayoutPadding(emailEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(phoneEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutWidth(phoneEditText, (int) (displayXHeight/5)*3);
+        mobileSize.setLayoutMargin(phoneEditText, (int) displayXHeight/20, 5,  0, 5);
+        mobileSize.setLayoutPadding(phoneEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(authNumEditText, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutWidth(authNumEditText, (int) (displayXHeight/5)*3);
+        mobileSize.setLayoutMargin(authNumEditText, (int) displayXHeight/20, 5, 0, 5);
+        mobileSize.setLayoutPadding(authNumEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(phoneConfirmButton, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(phoneConfirmButton, 10, 0, (int) displayXHeight/20, 0);
+
+        mobileSize.setLayoutHeight(authConfirmButton, (int) (displayYHeight-authImageSize) / 10);
+        mobileSize.setLayoutMargin(authConfirmButton, 10, 0, (int) displayXHeight/20, 0);
+
+        mobileSize.setLayoutHeight(dayLayout, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
+        mobileSize.setLayoutMargin(dayLayout, 0, 5,  0, 5);
+
         mobileSize.setLayoutHeight(birthTextView, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
         mobileSize.setLayoutWidth(birthTextView, (int) (displayXHeight) / 5);
+        mobileSize.setLayoutMargin(birthTextView, (int) displayXHeight/20, 0,  0, 0);
+        mobileSize.setLayoutPadding(birthTextView, 10, 0, 0, 0);
+
         mobileSize.setLayoutHeight(datePicker, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
-        mobileSize.setLayoutWidth(datePicker, (int) ((displayXHeight) / 5) * 4);
+        mobileSize.setLayoutMargin(datePicker, 10, 0, (int) displayXHeight/20, 0);
+
         mobileSize.setLayoutHeight(signUpButton, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutHeight(signUpLayout, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(signUpLayout, 0, 0, 0, (int) ((int) ((displayYHeight-authImageSize) / 10) + (displayYHeight-authImageSize) /20));
+
+        mobileSize.setLayoutMargin(signUpLayout, (int) displayXHeight/20, 0, (int) displayXHeight/20, (int) ((int) ( (displayYHeight-authImageSize) / 10) + ((displayYHeight-authImageSize) / 20)));
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.ac_res_two_main_toolbar);
         mToolbar.setTitle(R.string.register_title);

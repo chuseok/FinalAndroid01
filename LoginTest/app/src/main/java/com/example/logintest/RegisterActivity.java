@@ -90,22 +90,21 @@ public class RegisterActivity extends AppCompatActivity {
         mobileSize.setLayoutHeight(loginTextView, (int) (int) (displayYHeight-authImageSize) / 20);
         mobileSize.setLayoutHeight(userNameEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutMargin(userNameEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userNameEditText, 5, 0, 0, 0);
+        mobileSize.setLayoutPadding(userNameEditText, 10, 0, 0, 0);
         mobileSize.setLayoutHeight(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutMargin(userIdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userIdEditText, 5, 0, 0, 0);
+        mobileSize.setLayoutPadding(userIdEditText, 10, 0, 0, 0);
 
         mobileSize.setLayoutHeight(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutMargin(userPwdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userPwdEditText, 5, 0, 0, 0);
+        mobileSize.setLayoutPadding(userPwdEditText, 10, 0, 0, 0);
 
         mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
         mobileSize.setLayoutMargin(userPwdConfirmEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 0);
-        mobileSize.setLayoutPadding(userPwdConfirmEditText, 5, 0, 0, 0);
+        mobileSize.setLayoutPadding(userPwdConfirmEditText, 10, 0, 0, 0);
 
         mobileSize.setLayoutHeight(nextButton, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(nextLayout, 0, 0, 0, (int) (displayYHeight-authImageSize) / 10);
-
+        mobileSize.setLayoutMargin(nextLayout, (int) displayXHeight/20, 0, (int) displayXHeight/20, (int) (displayYHeight-authImageSize) / 10);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
