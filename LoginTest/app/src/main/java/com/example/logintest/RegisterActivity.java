@@ -165,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         SecondRegisterActivity.putExtra("userId", userId_Val);
                                         SecondRegisterActivity.putExtra("userPwd", userPwd_Val);
                                         startActivity(SecondRegisterActivity);
+                                        finish();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
