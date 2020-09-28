@@ -33,7 +33,9 @@ import com.example.logintest.adapter.InventoryAdapterCallBack;
 import com.example.logintest.adapter.InventoryCardViewAdapter;
 import com.example.logintest.dialog.DragonDialog;
 import com.example.logintest.dialog.DragonDialogListener;
+import com.example.logintest.domain.Dragon;
 import com.example.logintest.domain.Inven;
+import com.example.logintest.domain.ShopItem;
 import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
@@ -74,7 +76,8 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//헤더 back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
+        Intent intent = getIntent();
+        final Dragon dragon = (Dragon) intent.getSerializableExtra("dragon");
 
         levelText = findViewById(R.id.ac_dragonDetail_Level_tv);
         coinText = findViewById(R.id.ac_dragonDetail_coin_tv);
@@ -91,17 +94,15 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
         mobileSize.setLayoutHeight(dragonPanel,(int)displayYHeight/10*6);
         mobileSize.setLayoutWidth(dragonImage,(int)(displayXHeight*0.4));
 
-        //dragon value 값 받아오기
         String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
-        final int dragonId = getIntent().getIntExtra("dragon",0);
 
         //dialog set
-        dragonDialog = new DragonDialog(this,dragonId);
+        dragonDialog = new DragonDialog(this,dragon.getDragonId(), dragon.getImagePath());
         dragonDialog.setCancelable(false);
         dragonDialog.setDragonDialogListener(this);
 
 
-        String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+dragonId;
+        String url = URLs.URL_DRAGON_GET+"?userId="+ userId +"&dragonId="+dragon.getDragonId();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -177,7 +178,7 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
                                 String imagePath = array.getJSONObject(i).getString("productImage").replace("../",URLs.ROOT_URL);
                                 int count = Integer.parseInt(array.getJSONObject(i).getString("count"));
                                 int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
-                                invenList.add(new Inven(productId,imagePath,count,dragonId));
+                                invenList.add(new Inven(productId,imagePath,count,dragon.getDragonId()));
                                 adapter.notifyDataSetChanged();
                             }
                             setDotIndicator(invenList.size());
@@ -359,4 +360,5 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
         setResult(0,i);
         finish();
     }
+
 }

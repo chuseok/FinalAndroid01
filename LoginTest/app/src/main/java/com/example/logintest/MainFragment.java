@@ -88,9 +88,6 @@ public class MainFragment extends Fragment {
             models.add(new Model(titleArray.get(i),Integer.parseInt(learningRateArray.get(i)), idArray.get(i)));
 
         }
-//        models.add(new Model("1111","22222222222"));
-//        models.add(new Model("2222","33333333333"));
-//        models.add(new Model("4444","555555555555"));
 
         adapter = new CardViewAdapter(models,mainView.getContext());
         viewPager = mainView.findViewById(R.id.activity_main_viewPager);

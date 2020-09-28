@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.adapter.DragonCardViewAdapter;
 import com.example.logintest.domain.Dragon;
+import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 
@@ -89,7 +91,7 @@ public class DragonListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        final String userId = SharedPrefManager.getInstance(getContext()).getUser().getUserId();
         //adapter = new DragonCardViewAdapter(models,getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
                 new Response.Listener<String>() {
@@ -106,7 +108,6 @@ public class DragonListFragment extends Fragment {
                                 int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
                                 int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
                                 models.add(new Dragon(replaceUrl,hungryValue,dragonId));
-                                System.out.println(models.get(i).getProgress());
                                 //models 변경되었다는것 알리기
                             }
                             adapter.notifyDataSetChanged();
@@ -141,7 +142,7 @@ public class DragonListFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userId", "111111");
+                params.put("userId", userId);
                 return params;
             }
         };
@@ -166,6 +167,8 @@ public class DragonListFragment extends Fragment {
         mobileSize.setLayoutMargin(dragonNum,0, (int)(displayYHeight*0.1),0,0);
 
         adapter = new DragonCardViewAdapter(models,mainView.getContext());
+
+        final String userId = SharedPrefManager.getInstance(getContext()).getUser().getUserId();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_DRAGON_LIST,
                 new Response.Listener<String>() {
                     @Override
@@ -177,6 +180,7 @@ public class DragonListFragment extends Fragment {
                             for (int i = 0; i < array.length(); i++) {
 
                                 String replaceUrl = array.getJSONObject(i).getString("dragonImage").replace("../",URLs.ROOT_URL);
+                                Log.d("checkArray", "onResponse: "+array.getJSONObject(i));
 
                                 int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
                                 int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));
@@ -199,9 +203,22 @@ public class DragonListFragment extends Fragment {
                     }
                 }) {
             @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+            @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userId", "111111");
+                params.put("userId", userId);
                 return params;
             }
         };

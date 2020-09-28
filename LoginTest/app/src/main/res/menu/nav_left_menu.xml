@@ -10,8 +10,8 @@
     -->
     <group android:id="@+id/word">
 
-        <item android:id="@+id/wordSort"
-            android:title="단어장 정렬"/>
+        <item android:id="@+id/home"
+            android:title="홈"/>
         <item android:id="@+id/wordTest"
             android:title="단어장 테스트"/>
     </group>

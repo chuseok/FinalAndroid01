@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.logintest.DragonDetailActivity;
 import com.example.logintest.MainActivity;
 import com.example.logintest.R;
@@ -23,9 +25,11 @@ public class DragonDialog extends Dialog {
     private DragonDialog dragonDialog;
     private DragonDialogListener dragonDialogListener;
     private int dragonId;
-    public DragonDialog(@NonNull Context context, int dragonId) {
+    private String imagePath;
+    public DragonDialog(@NonNull Context context, int dragonId, String imagePath) {
         super(context);
         this.dragonId = dragonId;
+        this.imagePath = imagePath;
     }
 
     public void setDragonDialogListener(DragonDialogListener dragonDialogListener) {
@@ -47,6 +51,8 @@ public class DragonDialog extends Dialog {
 
         Button reviveBtn = this.findViewById(R.id.dialog_revive_btn);
         Button backBtn = this.findViewById(R.id.dialog_back_btn);
+        ImageView image = this.findViewById(R.id.dialog_targetDragon_iv);
+        Glide.with(getContext()).load(imagePath).into(image);
 
         reviveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
