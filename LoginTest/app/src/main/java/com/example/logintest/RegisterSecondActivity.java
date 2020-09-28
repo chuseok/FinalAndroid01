@@ -264,6 +264,8 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
 
                 Toast.makeText(getApplicationContext(), R.string.register_sign_up_complete, Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
             }
         });
     }
@@ -363,10 +365,10 @@ public class RegisterSecondActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "signInWithCredential:success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "인증 성공하였습니다.", Toast.LENGTH_LONG).show();
                         } else {
                             // Sign in failed, display a message and update the UI
-                            Toast.makeText(getApplicationContext(), "signInWithCredential:failure", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "인증 실패하였습니다.", Toast.LENGTH_LONG).show();
 
                             Log.w("signInWithCredential:failure", "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

@@ -17,6 +17,7 @@
     <string name="register_pwd_hint">비밀번호</string>
     <string name="register_pwd_confirm_hint">비밀번호 확인</string>
     <string name="register_next_hint">다음</string>
+    <string name="register_sign_up_hint">회원가입</string>
     <string name="register_birth_title">생년월일</string>
 
     <string name="wordDetail_share">공유하기</string>
