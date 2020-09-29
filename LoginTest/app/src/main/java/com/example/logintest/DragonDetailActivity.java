@@ -179,8 +179,9 @@ public class DragonDetailActivity extends AppCompatActivity implements Inventory
                                 int count = Integer.parseInt(array.getJSONObject(i).getString("count"));
                                 int productId = Integer.parseInt(array.getJSONObject(i).getString("productId"));
                                 invenList.add(new Inven(productId,imagePath,count,dragon.getDragonId()));
-                                adapter.notifyDataSetChanged();
+
                             }
+                            adapter.notifyDataSetChanged();
                             setDotIndicator(invenList.size());
                             indicatorView.setSelection(0);
                         } catch (Exception e) {

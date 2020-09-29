@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recycler_word_test_main_ll"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_input"
+    android:gravity="center_vertical">
+    <!--<androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="7dp"
+        android:layout_margin="10dp"
+        app:cardElevation="3dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">-->
+            <TextView
+                android:id="@+id/recycler_word_test_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="학습하기"
+                android:textSize="20dp"
+                android:textColor="#000000"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/recycler_word_test_subTitle_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="부제목"
+                android:textSize="15dp"
+                android:gravity="center"/>
+
+    <!--
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>-->
+
+</LinearLayout>
