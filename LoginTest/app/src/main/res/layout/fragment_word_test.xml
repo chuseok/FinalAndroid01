@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WordTestFragment">
+    tools:context=".WordTestFragment"
+    android:background="#ffffff">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frag_word_test_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="wordTest" />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 </FrameLayout>
