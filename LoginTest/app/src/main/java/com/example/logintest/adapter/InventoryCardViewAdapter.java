@@ -120,7 +120,7 @@ public class InventoryCardViewAdapter extends PagerAdapter {
 
                                         invenList.add(new Inven(productId,imagePath,count, dragonId));
                                         //System.out.println("위치 : "+position+"->"+invenList.get(position).getCount());
-                                        notifyDataSetChanged();
+
                                     }
                                     JSONObject object = array.getJSONObject(array.length()-1);
                                     int levelValue = Integer.parseInt(object.getString("dragonLevelValue"));
@@ -131,8 +131,8 @@ public class InventoryCardViewAdapter extends PagerAdapter {
                                     listener.setLevelText(dragonLevel);
                                     listener.setDotIndicator(invenList.size());
                                     listener.setDragonImage(object.getString("dragonImage"));
-                                    System.out.println(object.getString("dragonImage"));
 
+                                    notifyDataSetChanged();
 
                                 } catch (Exception e) {
                                     e.printStackTrace();

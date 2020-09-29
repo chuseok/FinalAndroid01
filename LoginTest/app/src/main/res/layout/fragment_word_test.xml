@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="wordTest" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/frag_word_test_recyclerView"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </FrameLayout>
