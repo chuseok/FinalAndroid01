@@ -1,6 +1,8 @@
 package com.example.logintest.domain;
 
-public class Dragon {
+import java.io.Serializable;
+
+public class Dragon implements Serializable {
     private String imagePath;
     private int progress;
     private int dragonId;

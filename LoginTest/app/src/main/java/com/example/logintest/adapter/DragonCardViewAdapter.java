@@ -23,6 +23,7 @@ import com.example.logintest.domain.Dragon;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class DragonCardViewAdapter extends PagerAdapter{
@@ -97,7 +98,7 @@ public class DragonCardViewAdapter extends PagerAdapter{
             public void onClick(View v) {
 
                     Intent intent = new Intent(context, DragonDetailActivity.class);
-                    intent.putExtra("dragon", dragonList.get(position).getDragonId());
+                    intent.putExtra("dragon", (Serializable)dragonList.get(position));
                     context.startActivity(intent);
 
             }

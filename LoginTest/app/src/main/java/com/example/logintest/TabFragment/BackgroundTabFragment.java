@@ -201,8 +201,6 @@ public class BackgroundTabFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                //params.put("userId", "111111");
-                //params.put("dragonId", "3");
                 return params;
             }
         };

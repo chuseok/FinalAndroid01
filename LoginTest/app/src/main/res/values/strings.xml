@@ -35,4 +35,5 @@
     <string name="nav_left_dragonList_title">자신의 용 목록</string>
     <string name="nav_left_itemList_title">아이템 목록</string>
     <string name="nav_left_shop_title">상점</string>
+    <string name="revive_mainText">용이 죽었습니다!</string>
 </resources>

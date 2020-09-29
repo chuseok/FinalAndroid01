@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-        /* 자동 로그인 설정...*/
+        /* 자동 로그인 설정...
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             startActivity(new Intent(this, SplashActivity.class));
             finish();
-        }
+        }*/
 
         progressBar = findViewById(R.id.progressBar);
         userId = findViewById(R.id.activity_login_et_userId);
