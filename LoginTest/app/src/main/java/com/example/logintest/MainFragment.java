@@ -3,6 +3,7 @@ package com.example.logintest;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -111,5 +112,14 @@ public class MainFragment extends Fragment {
             }
         });
         return mainView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        FragmentActivity activity = getActivity();
+        if(activity!=null){
+            ((MainActivity)activity).setActionBarTitle("암기용");
+        }
     }
 }

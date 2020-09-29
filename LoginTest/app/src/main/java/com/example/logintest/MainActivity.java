@@ -1,6 +1,7 @@
 package com.example.logintest;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
         leftNavigationView = (NavigationView)findViewById(R.id.activity_main_nav_view_left);
         leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         mainFt.commit(); break;
                     case R.id.wordTest:
                         final FragmentTransaction wordTestFt = fragmentManager.beginTransaction();
-                        wordTestFt.replace(R.id.frag_nav,new WordTestFragment());
+                        wordTestFt.replace(R.id.frag_nav,mainFragment);
                         wordTestFt.commit(); break;
                     case R.id.dragonList:
                         final FragmentTransaction dragonListFt = fragmentManager.beginTransaction();
@@ -139,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         email_nav.setText(SharedPrefManager.getInstance(getApplicationContext()).getUser().getEmail());
 
 
+
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,5 +178,11 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         SharedPrefManager session = SharedPrefManager.getInstance(getApplicationContext());
         session.destorySession();
+    }
+    public void setActionBarTitle(String title){
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setTitle(title);
+        }
     }
 }
