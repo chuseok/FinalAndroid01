@@ -6,33 +6,59 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.example.logintest.domain.Dragon;
 import com.example.logintest.manager.SharedPrefManager;
+import com.example.logintest.volley.URLs;
+import com.example.logintest.volley.VolleySingleton;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MAIN_ACTIVITY";
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
+    private Toolbar toolbar;
     private NavigationView leftNavigationView;
     private NavigationView rightNavigationView;
     FragmentManager fragmentManager;
+    private TextView notificationText;
+    int notificationCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frag_nav, mainFragment);
         fragmentTransaction.commit();
 
-        Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
+        toolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.Open, R.string.Close);
@@ -76,10 +102,6 @@ public class MainActivity extends AppCompatActivity {
                         final FragmentTransaction mainFt = fragmentManager.beginTransaction();
                         mainFt.replace(R.id.frag_nav,mainFragment);
                         mainFt.commit(); break;
-                    case R.id.wordTest:
-                        final FragmentTransaction wordTestFt = fragmentManager.beginTransaction();
-                        wordTestFt.replace(R.id.frag_nav,mainFragment);
-                        wordTestFt.commit(); break;
                     case R.id.dragonList:
                         final FragmentTransaction dragonListFt = fragmentManager.beginTransaction();
                         dragonListFt.replace(R.id.frag_nav,new DragonListFragment());
@@ -102,28 +124,91 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         rightNavigationView = findViewById(R.id.activity_main_nav_view_right);
+
+        final Menu m = rightNavigationView.getMenu();
+        final SubMenu alertMenu = m.addSubMenu("알림");
+
+
+        final String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_MEMBER_LASTCONN,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            String connectionAlert = object.getString("connectionAlert");
+                            String hungryAlert = object.getString("hungryAlert");
+                            alertMenu.add(connectionAlert).setCheckable(true);
+                            //m.add(R.id.nav_right_group,0,Menu.NONE,connectionAlert).setCheckable(true);
+                            notificationCount++;
+                            if(hungryAlert!=null){
+                                alertMenu.add(hungryAlert).setCheckable(true);
+                                //m.add(R.id.nav_right_group,1,Menu.NONE,hungryAlert).setCheckable(true);
+                                notificationCount++;
+                            }
+                            setupBadge();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userId", userId);
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+
+
+
         rightNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
+                System.out.println(item.isChecked());
+                for(int i=0;i<alertMenu.size();i++){
+                    MenuItem m = alertMenu.getItem(i);
+                    m.setChecked(true);
+                }
 
-                    case R.id.home:
-                        Toast.makeText(MainActivity.this, "wordSort", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.wordTest:
-                        Toast.makeText(MainActivity.this, "My wordTest", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        return true;
+                if(notificationCount>0){
+                    notificationCount=0;
+                    notificationText.setText(notificationCount+"");
                 }
 
                 drawer.closeDrawer(GravityCompat.END);
                 return true;
             }
         });
+
+
+
 
         Button setting = findViewById(R.id.nav_left_setting_bt);
         setting.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +256,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {//toolbar에 버튼 추가
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.app_bar_ic_notification, menu);
+        final MenuItem menuItem = menu.findItem(R.id.action_openRight);
+        View actionView = menuItem.getActionView();
+        notificationText = actionView.findViewById(R.id.notification_badge);
+        
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
     }
     @Override
@@ -183,6 +281,21 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle(title);
+        }
+    }
+    private void setupBadge() {
+
+        if (notificationText != null) {
+            if (notificationCount == 0) {
+                if (notificationText.getVisibility() != View.GONE) {
+                    notificationText.setVisibility(View.GONE);
+                }
+            } else {
+                notificationText.setText(String.valueOf(Math.min(notificationCount, 99)));
+                if (notificationText.getVisibility() != View.VISIBLE) {
+                    notificationText.setVisibility(View.VISIBLE);
+                }
+            }
         }
     }
 }

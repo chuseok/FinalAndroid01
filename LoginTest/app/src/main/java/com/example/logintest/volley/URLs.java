@@ -19,5 +19,6 @@ public class URLs {
     public static final String URL_PRODUCT_CHECK = ROOT_URL+"android/product/check";
     public static final String URL_SHOP_BUY = ROOT_URL+"android/shop/buy";
     public static final String URL_STUDY_GETWORDLIST = ROOT_URL+"android/study/getWordList";
+    public static final String URL_MEMBER_LASTCONN = ROOT_URL+"android/member/getLastConn";
 
 }
