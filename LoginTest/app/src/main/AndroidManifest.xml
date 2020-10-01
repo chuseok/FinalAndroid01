@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
-        <activity android:name=".WordCardActivity" />
+        <!--<activity android:name=".WordCardActivity" />-->
         <activity android:name=".ShopDetailActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".RegisterSecondActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".WordCardActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

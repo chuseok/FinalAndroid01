@@ -82,11 +82,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void setupWindowAnimations() {
-        Slide slide = (Slide) TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
-        getWindow().setExitTransition(slide);
-    }
-
     private void userLogin() {
         final String et_userId = userId.getText().toString();
         final String et_userPwd = userPwd.getText().toString();

@@ -36,14 +36,14 @@ public class WordCardFragment extends Fragment {
     private static final String ARG_PARAM1 = "word";
     private static final String ARG_PARAM2 = "position";
 
-    List<Word> words;
 
     // TODO: Rename and change types of parameters
     private ArrayList<Word> mParam1;
     private int mParam2;
 
-    TextView wordTextView;
+    private TextView wordTextView;
 
+    FragmentManager fragmentManager;
 
     public WordCardFragment() {
         // Required empty public constructor
@@ -65,28 +65,39 @@ public class WordCardFragment extends Fragment {
             mParam1 = getArguments().getParcelableArrayList(ARG_PARAM1);
             mParam2 = getArguments().getInt(ARG_PARAM2);
         }
+
+        if (savedInstanceState == null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_word_card_container, CardFrontFragment.newInstance(mParam1, mParam2))
+                    .commit();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_word_card,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_word_card, container, false);
 
-        wordTextView = rootView.findViewById(R.id.fragment_word_card_word);
+
+        return rootView;
+    }
+
+/*
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        wordTextView = view.findViewById(R.id.fragment_word_card_word_front);
 
         ArrayList<Word> wordArray = getArguments().getParcelableArrayList("word");
         int position = getArguments().getInt("position");
 
         wordTextView.setText(wordArray.get(position).getWord());
 
-        return rootView;
     }
+*/
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-    }
 }
 
 
