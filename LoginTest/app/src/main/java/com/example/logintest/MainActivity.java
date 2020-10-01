@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     private TextView notificationText;
     int notificationCount = 0;
-
+    int checkNotification = 0;
     //알람
 
 
@@ -156,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
                             alertMenu.add(connectionAlert).setCheckable(true);
                             //m.add(R.id.nav_right_group,0,Menu.NONE,connectionAlert).setCheckable(true);
                             notificationCount++;
-                            if(hungryAlert!="null"){
+                            System.out.println(hungryAlert);
+                            if(hungryAlert!="null" && hungryAlert!=null){
                                 alertMenu.add(hungryAlert).setCheckable(true);
                                 //m.add(R.id.nav_right_group,1,Menu.NONE,hungryAlert).setCheckable(true);
                                 notificationCount++;
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
             }
         });
 
@@ -275,8 +276,10 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.SECOND, 0);
 
         // 이미 지난 시간을 지정했다면 1일뒤 설정
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DATE, 1);
+        while(calendar.before(Calendar.getInstance())) {
+
+            checkNotification++;
+            calendar.set(Calendar.HOUR_OF_DAY,hour+checkNotification);
         }
 
         Date currentDateTime = calendar.getTime();
@@ -303,6 +306,8 @@ public class MainActivity extends AppCompatActivity {
         PackageManager pm = this.getPackageManager();
         ComponentName receiver = new ComponentName(this, DeviceBootReceiver.class);
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        System.out.println(checkNotification);
+        alarmIntent.putExtra("time",checkNotification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -314,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
             if (alarmManager != null) {
 
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                        10*1000, pendingIntent);
+                        60*1000, pendingIntent);
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
             }

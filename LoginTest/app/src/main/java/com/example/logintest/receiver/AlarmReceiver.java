@@ -46,6 +46,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingI = PendingIntent.getActivity(context, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        int time = intent.getIntExtra("time",0);
+        System.out.println(time);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "default");
 
@@ -76,7 +78,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                 .setTicker("{Time to watch some cool stuff!}")
                 .setContentTitle("접속해주세요!")
-                .setContentText("마지막으로 접속하신지 1시간이 지났습니다.")
+                .setContentText("마지막으로 접속하신지 "+time+"시간이 지났습니다.")
                 .setContentInfo("INFO")
                 .setContentIntent(pendingI);
 
@@ -88,7 +90,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             Calendar nextNotifyTime = Calendar.getInstance();
 
             // 하루뒤 알람시간 결정
-            nextNotifyTime.add(Calendar.MINUTE, 1);
+            nextNotifyTime.add(Calendar.HOUR, 1);
 
             //  Preference에 설정한 값 저장
             SharedPreferences.Editor editor = context.getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
@@ -96,15 +98,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             editor.apply();
 
 
-            builder.setAutoCancel(true)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
-                    .setWhen(System.currentTimeMillis())
-
-                    .setTicker("{Time to watch some cool stuff!}")
-                    .setContentTitle("접속해주세요!")
-                    .setContentText("마지막으로 접속하신지 하루가 지났습니다.")
-                    .setContentInfo("INFO")
-                    .setContentIntent(pendingI);
 
             Date currentDateTime = nextNotifyTime.getTime();
             String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
