@@ -47,8 +47,7 @@
             android:id="@+id/fragment_word_card_unknown_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="@string/word_card_unknown" />
+            android:layout_gravity="right"/>
     </LinearLayout>
 
 </LinearLayout>

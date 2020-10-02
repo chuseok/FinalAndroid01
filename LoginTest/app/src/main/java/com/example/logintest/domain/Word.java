@@ -7,10 +7,17 @@ public class Word implements Parcelable {
 
     private String word;
     private String meaning;
+    private String leaningRate;
 
     public Word(String word, String meaning) {
         this.word = word;
         this.meaning = meaning;
+    }
+
+    public Word(String word, String meaning, String leaningRate) {
+        this.word = word;
+        this.meaning = meaning;
+        this.leaningRate = leaningRate;
     }
 
     protected Word(Parcel in) {
@@ -44,6 +51,14 @@ public class Word implements Parcelable {
 
     public void setMeaning(String meaning) {
         this.meaning = meaning;
+    }
+
+    public String getLeaningRate() {
+        return leaningRate;
+    }
+
+    public void setLeaningRate(String leaningRate) {
+        this.leaningRate = leaningRate;
     }
 
     @Override

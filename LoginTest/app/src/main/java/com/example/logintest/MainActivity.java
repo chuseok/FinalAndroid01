@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                             alertMenu.add(connectionAlert).setCheckable(true);
                             //m.add(R.id.nav_right_group,0,Menu.NONE,connectionAlert).setCheckable(true);
                             notificationCount++;
-                            if(hungryAlert!="null"){
+                            if(hungryAlert!="null" || hungryAlert!=null){
                                 alertMenu.add(hungryAlert).setCheckable(true);
                                 //m.add(R.id.nav_right_group,1,Menu.NONE,hungryAlert).setCheckable(true);
                                 notificationCount++;

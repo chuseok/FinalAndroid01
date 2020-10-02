@@ -10,6 +10,7 @@ public class URLs {
     public static final String URL_STUDY_GETLIST = ROOT_URL + "android/study/getList";
     public static final String URL_STUDY_GETWORDLIST = ROOT_URL+"android/study/getWordList";
     public static final String URL_STUDY_GET_LEARNEDWORDBOOK= ROOT_URL+"android/study/get/LearnedWordBook";
+    public static final String URL_STUDY_MODIFY_RATE_FROM_QUESTION= ROOT_URL+"android/study/modify/RateFromQuestion";
     public static final String URL_DRAGON_LIST = ROOT_URL+"android/dragon/list";
     public static final String URL_DRAGON_GET = ROOT_URL+"android/dragon/get";
     public static final String URL_INVEN_LIST = ROOT_URL+"android/inven/list";

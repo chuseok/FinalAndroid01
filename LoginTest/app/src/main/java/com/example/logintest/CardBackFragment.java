@@ -1,3 +1,4 @@
+/*
 package com.example.logintest;
 
 
@@ -14,9 +15,11 @@ import com.example.logintest.domain.Word;
 
 import java.util.ArrayList;
 
+*/
 /**
  * A fragment representing the back of the card.
- */
+ *//*
+
 public class CardBackFragment extends Fragment {
     private static final String ARG_PARAM1 = "word";
     private static final String ARG_PARAM2 = "position";
@@ -88,3 +91,4 @@ public class CardBackFragment extends Fragment {
     }
 }
 
+*/

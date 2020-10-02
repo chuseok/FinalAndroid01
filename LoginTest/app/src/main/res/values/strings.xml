@@ -51,7 +51,11 @@
 
     <string name="word_card_title">낱말카드</string>
     <string name="word_card_know">알아요!</string>
-    <string name="word_card_unknown">모르겠어요.</string>
+    <string name="answer_button">정답확인</string>
+
+    <string name="study_finish_title">주관식을 모두 공부했어요.</string>
+    <string name="study_finish_restart_button">재시작</string>
+    <string name="study_finish_end_button">끝내기</string>
 
 
 </resources>

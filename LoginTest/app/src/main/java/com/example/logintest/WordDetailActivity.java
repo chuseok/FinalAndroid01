@@ -32,6 +32,7 @@ import com.example.logintest.domain.Word;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,12 +47,18 @@ public class WordDetailActivity extends AppCompatActivity{
     private WordDetailAdapter wAdapter;
     int bookNum;
 
+    private FloatingActionButton testActionButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worddetail);
+
+        Intent intent = getIntent();
+
+        final String bookTitle = intent.getExtras().getString("bookTitle");
+        final String bookId = intent.getExtras().getString("userId");
 
         //recyclerView Layout
         RecyclerView wRecyclerView = (RecyclerView) findViewById(R.id.content_word_rv);
@@ -76,16 +83,25 @@ public class WordDetailActivity extends AppCompatActivity{
 
         final TextView activity_word_detail_tv_title = findViewById(R.id.activity_word_detail_tv_title);
         final TextView activity_word_detail_tv_subtitle = findViewById(R.id.activity_word_detail_tv_subtitle);
+        testActionButton = findViewById(R.id.header_fab);
 
-        Intent intent = getIntent();
+        testActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent WordCardActivity = new Intent(getApplicationContext(), WordCardActivity.class);
+                WordCardActivity.putExtra("userId", bookId);
+                WordCardActivity.putExtra("bookTitle", bookTitle);
+                startActivity(WordCardActivity);
+                finish();
+            }
+        });
 
-        final String title = intent.getExtras().getString("title");
-        final String id = intent.getExtras().getString("id");
+
 
         final Toolbar toolbar = findViewById(R.id.activity_word_detail_toolbar);
         CollapsingToolbarLayout c = findViewById(R.id.activity_word_detail_collapsing_bar);
         //AppBarLayout appbar = (AppBarLayout)findViewById(R.id.app_bar);
-        toolbar.setTitle(title);
+        toolbar.setTitle(bookTitle);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayShowTitleEnabled(true);
         c.setExpandedTitleColor(Color.TRANSPARENT);//헤더 확장될때 타이틀 투명하게 처리
@@ -101,8 +117,6 @@ public class WordDetailActivity extends AppCompatActivity{
         });
 
 
-        String bookId = id;
-        String bookTitle = title;
 
         wordList = new ArrayList<>();
 
@@ -127,9 +141,9 @@ public class WordDetailActivity extends AppCompatActivity{
                             bookNum = array.length();
                             Log.d("bookNum", "[" + bookNum + "]");
 
-                            final String tv_subtitle = id+" | "+bookNum;
+                            final String tv_subtitle = bookId+" | "+bookNum;
 
-                            activity_word_detail_tv_title.setText(title);
+                            activity_word_detail_tv_title.setText(bookTitle);
                             activity_word_detail_tv_subtitle.setText(tv_subtitle);
 
                         } catch (JSONException e) {

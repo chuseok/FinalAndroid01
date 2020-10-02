@@ -67,8 +67,8 @@ public class CardViewAdapter extends PagerAdapter {
             public void onClick(View v) {
                     //Toast.makeText(v.getContext(),"click1",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, WordDetailActivity.class);
-                    intent.putExtra("title", models.get(position).getTitle());
-                    intent.putExtra("id", models.get(position).getId());
+                    intent.putExtra("bookTitle", models.get(position).getTitle());
+                    intent.putExtra("userId", models.get(position).getId());
                     context.startActivity(intent);
             }
 

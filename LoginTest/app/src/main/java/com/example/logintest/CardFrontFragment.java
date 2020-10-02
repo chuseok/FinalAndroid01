@@ -1,3 +1,4 @@
+/*
 package com.example.logintest;
 
 import android.os.Bundle;
@@ -87,4 +88,4 @@ public class CardFrontFragment extends Fragment {
 
                 .commit();
 }
-}
+}*/
