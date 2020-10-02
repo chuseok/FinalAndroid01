@@ -84,6 +84,12 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
         }
 
         /*Volley 세팅*/
+<<<<<<< HEAD
+=======
+        String userId = SharedPrefManager.getInstance(getApplicationContext()).getUser().getUserId();
+        //String bookTitle = "숫자";//받아와야됨 - 언니꺼!!!!!!!!
+        String bookTitle = "1";
+>>>>>>> 6946afc80ca7c55d1d413390af6a04db89764a4c
         String url = URLs.URL_STUDY_GET_LEARNEDWORDBOOK + "?userId=" + userId + "&bookTitle=" + bookTitle;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {

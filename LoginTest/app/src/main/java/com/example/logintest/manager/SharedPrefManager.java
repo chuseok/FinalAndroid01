@@ -3,6 +3,7 @@ package com.example.logintest.manager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import com.example.logintest.LoginActivity;
 import com.example.logintest.domain.User;
@@ -65,7 +66,9 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
+        mCtx.startActivity(new Intent(mCtx, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        Toast.makeText(mCtx,"로그아웃에 성공하셨습니다!",Toast.LENGTH_SHORT).show();
+
     }
     public void destorySession() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
