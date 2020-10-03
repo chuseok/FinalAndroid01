@@ -15,11 +15,4 @@
         app:srcCompat="@drawable/splash_dragon" />
     <!--    수정해야함    -->
 
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_gravity="center"
-        android:layout_width="500px"
-        android:max="100"
-        android:layout_height="wrap_content" />
 </LinearLayout>

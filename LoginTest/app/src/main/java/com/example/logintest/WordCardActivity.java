@@ -159,11 +159,10 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
     public void onAnswerSelected(int position, int wordTotal) {
         if (position + 1 == wordTotal) {
             Log.d(TAG, "End : ");
-            //총 맞춘 갯수 보여주기
 
             viewPager.removeAllViews();
             pagerAdapter.notifyDataSetChanged();
-            Fragment studyFinishFragment = StudyFinishFragment.newInstance("aa", "bb");
+            Fragment studyFinishFragment = StudyFinishFragment.newInstance(model);
 
             if (!studyFinishFragment.isAdded()) {
                 transaction.add(R.id.activity_word_card_container, studyFinishFragment);

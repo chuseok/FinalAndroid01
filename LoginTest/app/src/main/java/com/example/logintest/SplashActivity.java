@@ -36,7 +36,6 @@ public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SPLASH_ACTIVITY";
 
     ImageView splashImageView;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         setupWindowAnimations();
         
         splashImageView = findViewById(R.id.splashImageView);
-        progressBar = findViewById(R.id.progress);
+
 
         MobileSize mobileSize = new MobileSize();
         mobileSize.getStandardSize(this);
@@ -57,8 +56,6 @@ public class SplashActivity extends AppCompatActivity {
         mobileSize.setLayoutMargin(splashImageView, 0, (int) (displayYHeight/3), 0, 0);
         mobileSize.setLayoutHeight(splashImageView, (int) authImageHeight);
         mobileSize.setLayoutWidth(splashImageView, (int) authImageWidth);
-        mobileSize.setLayoutWidth(progressBar, (int) displayXHeight / 4);
-        mobileSize.setLayoutMargin(progressBar, 0, (int) (displayYHeight / 20), 0, 0);
 
         getData();
     }

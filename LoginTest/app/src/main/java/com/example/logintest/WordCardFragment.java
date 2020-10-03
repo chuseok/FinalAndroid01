@@ -33,10 +33,6 @@ import com.example.logintest.volley.VolleySingleton;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 
 public class WordCardFragment extends Fragment {
@@ -167,6 +163,13 @@ public class WordCardFragment extends Fragment {
                 } else {
                     Log.d(TAG, "result : 오답~");
                     Log.d(TAG, "answer : " + answer + ", getMeaning : " + meaning);
+                    Log.d(TAG, "position : " + mParam2 + ", wordTotal : " + wordTotal);
+                    if((mParam2+1)==wordTotal) {
+                        Log.d(TAG, "position : " + mParam2 + ", wordTotal : " + wordTotal);
+                        onAnswerSelectedListner.onAnswerSelected(mParam2, wordTotal);
+                        return;
+                    }
+
                     wrongAnswerDialog = new WrongAnswerDialog(getContext(), continueListener);
                     wrongAnswerDialog.onDialogSet(word, meaning, answer);
                     wrongAnswerDialog.show();
@@ -219,13 +222,6 @@ public class WordCardFragment extends Fragment {
             onAnswerSelectedListner.onAnswerSelected(mParam2, wordTotal);
         }
     };
-
-/*
-    public void onAnswerCorrect(int knowTotal, int unknownTotal) {
-        this.knowTotal = knowTotal;
-        this.unknownTotal = unknownTotal;
-    }
-*/
 
 }
 

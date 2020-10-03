@@ -6,13 +6,16 @@
     tools:context=".StudyFinishFragment">
 
     <LinearLayout
+        android:id="@+id/fragment_study_finish_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/custom_input"
         >
 
         <TextView
+            android:id="@+id/fragment_study_finish_title"
             android:text="@string/study_finish_title"
             android:textSize="30dp"
             android:layout_width="match_parent"
