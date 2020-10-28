@@ -16,9 +16,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.domain.Model;
 import com.example.logintest.domain.Word;
@@ -28,6 +31,7 @@ import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class WordCardActivity extends AppCompatActivity implements WordCardFragment.OnAnswerSelectedListner {
@@ -98,7 +102,10 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
 
                             for (int i = 0; i < array.length(); i++) {
 
-                                Word word = new Word(array.getJSONObject(i).getString("word"), array.getJSONObject(i).getString("meaning"), array.getJSONObject(i).getString("learningRate"));
+                                Word word = new Word(
+                                        array.getJSONObject(i).getString("word"),
+                                        array.getJSONObject(i).getString("meaning"),
+                                        array.getJSONObject(i).getString("learningRate"));
                                 words.add(word);
 
                             }
@@ -118,6 +125,20 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
                         Toast.makeText(getApplicationContext(), "wordCardActivity", Toast.LENGTH_SHORT).show();
                     }
                 }) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
+
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
@@ -161,7 +182,7 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
             Log.d(TAG, "End : ");
 
             viewPager.removeAllViews();
-            pagerAdapter.notifyDataSetChanged();
+            pagerAdapter.notifyDataSetChanged();//???
             Fragment studyFinishFragment = StudyFinishFragment.newInstance(model);
 
             if (!studyFinishFragment.isAdded()) {
@@ -195,7 +216,7 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
             super(fa);
         }
 
-
+        @NonNull
         @Override
         public Fragment createFragment(int position) {
             wordCardFragment = WordCardFragment.newInstance(words, model, position);
