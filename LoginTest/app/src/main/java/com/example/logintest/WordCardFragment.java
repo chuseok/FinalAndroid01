@@ -18,9 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.dialog.WrongAnswerDialog;
@@ -32,6 +35,7 @@ import com.example.logintest.volley.VolleySingleton;
 
 import org.json.JSONArray;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 
@@ -67,7 +71,6 @@ public class WordCardFragment extends Fragment {
 
     public interface OnAnswerSelectedListner {
         void onAnswerSelected(int position, int wordTotal);
-//        void onAnswerCorrect(int knowTotal, int unknownTotal);
         void onAnswerCorrect(int position);
 
     }
@@ -212,6 +215,19 @@ public class WordCardFragment extends Fragment {
                         Toast.makeText(getContext(), "wordCardFragment", Toast.LENGTH_SHORT).show();
                     }
                 }) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String character = null;
+                try {
+                    character = new String(response.data, "UTF-8");
+                    return Response.success(character, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                } catch (Exception e) {
+                    // log error
+                    return Response.error(new ParseError(e));
+                }
+            }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }

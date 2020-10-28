@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 switch(id)
                 {
-
                     case R.id.home:
                         final FragmentTransaction mainFt = fragmentManager.beginTransaction();
                         mainFt.replace(R.id.frag_nav,mainFragment);
