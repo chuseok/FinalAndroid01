@@ -100,7 +100,10 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
 
                             for (int i = 0; i < array.length(); i++) {
 
-                                Word word = new Word(array.getJSONObject(i).getString("word"), array.getJSONObject(i).getString("meaning"), array.getJSONObject(i).getString("learningRate"));
+                                Word word = new Word(
+                                        array.getJSONObject(i).getString("word"),
+                                        array.getJSONObject(i).getString("meaning"),
+                                        array.getJSONObject(i).getString("learningRate"));
                                 words.add(word);
 
                             }
@@ -177,7 +180,7 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
             Log.d(TAG, "End : ");
 
             viewPager.removeAllViews();
-            pagerAdapter.notifyDataSetChanged();
+            pagerAdapter.notifyDataSetChanged();//???
             Fragment studyFinishFragment = StudyFinishFragment.newInstance(model);
 
             if (!studyFinishFragment.isAdded()) {
@@ -211,7 +214,7 @@ public class WordCardActivity extends AppCompatActivity implements WordCardFragm
             super(fa);
         }
 
-
+        @NonNull
         @Override
         public Fragment createFragment(int position) {
             wordCardFragment = WordCardFragment.newInstance(words, model, position);
