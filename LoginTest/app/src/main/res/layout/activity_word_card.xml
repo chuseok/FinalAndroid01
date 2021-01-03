@@ -35,12 +35,26 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-
-            <TextView
-                android:id="@+id/fragment_unknown_total_textview"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/fragment_unknown_total_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/fragment_unknown_title_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아직이에요." />
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_check" />
 
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,12 +71,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="다 외웠어요." />
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
                 <ImageView
-                    android:id="@+id/fragment_check_imageview"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40px"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_check" />
+                    <ImageView
+                        android:layout_width="40px"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_check" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

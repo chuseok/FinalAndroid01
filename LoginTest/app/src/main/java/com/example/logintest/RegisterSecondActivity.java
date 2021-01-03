@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,8 +29,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.logintest.Utils.MobileSize;
-import com.example.logintest.domain.User;
-import com.example.logintest.manager.SharedPrefManager;
 import com.example.logintest.volley.URLs;
 import com.example.logintest.volley.VolleySingleton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,15 +39,12 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -96,18 +90,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_second);
         overridePendingTransition(R.anim.left_to_right, R.anim.none);
 
-
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        //ONCODESENT
-
-        MobileSize mobileSize = new MobileSize();
-        mobileSize.getStandardSize(this);
-        float displayXHeight = mobileSize.getStandardSize_X();
-        float displayYHeight = mobileSize.getStandardSize_Y();
-        float authImageSize = displayYHeight/10;
-        float authImageWidth = (displayXHeight/10) * 3;
-
         authImageView = findViewById(R.id.authImageView);
         emailEditText = findViewById(R.id.ac_register_email_et);
         phoneEditText = findViewById(R.id.ac_register_phone_et);
@@ -122,43 +104,13 @@ public class RegisterSecondActivity extends AppCompatActivity {
         signUpLayout = findViewById(R.id.ac_register_sign_up_layout);
         signUpButton = findViewById(R.id.ac_register_sign_up_bt);
 
-        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
-        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
-        mobileSize.setLayoutMargin(authImageView, 0, (int) (displayYHeight-authImageSize) / 20, 0,(int) (displayYHeight-authImageSize) / 20);
-        mobileSize.setLayoutHeight(emailEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(emailEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(emailEditText, 10, 0, 0, 0);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        mobileSize.setLayoutHeight(phoneEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutWidth(phoneEditText, (int) (displayXHeight/5)*3);
-        mobileSize.setLayoutMargin(phoneEditText, (int) displayXHeight/20, 5,  0, 5);
-        mobileSize.setLayoutPadding(phoneEditText, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(authNumEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutWidth(authNumEditText, (int) (displayXHeight/5)*3);
-        mobileSize.setLayoutMargin(authNumEditText, (int) displayXHeight/20, 5, 0, 5);
-        mobileSize.setLayoutPadding(authNumEditText, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(phoneConfirmButton, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(phoneConfirmButton, 10, 0, (int) displayXHeight/20, 0);
-
-        mobileSize.setLayoutHeight(authConfirmButton, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(authConfirmButton, 10, 0, (int) displayXHeight/20, 0);
-
-        mobileSize.setLayoutHeight(dayLayout, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
-        mobileSize.setLayoutMargin(dayLayout, 0, 5,  0, 5);
-
-        mobileSize.setLayoutHeight(birthTextView, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
-        mobileSize.setLayoutWidth(birthTextView, (int) (displayXHeight) / 5);
-        mobileSize.setLayoutMargin(birthTextView, (int) displayXHeight/20, 0,  0, 0);
-        mobileSize.setLayoutPadding(birthTextView, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(datePicker, (int) ((int) ((displayYHeight-authImageSize) / 10) * 1.5));
-        mobileSize.setLayoutMargin(datePicker, 10, 0, (int) displayXHeight/20, 0);
-
-        mobileSize.setLayoutHeight(signUpButton, (int) (displayYHeight-authImageSize) / 10);
-
-        mobileSize.setLayoutMargin(signUpLayout, (int) displayXHeight/20, 0, (int) displayXHeight/20, (int) ((int) ( (displayYHeight-authImageSize) / 10) + ((displayYHeight-authImageSize) / 20)));
+        MobileSize mobileSize = new MobileSize();
+        mobileSize.getStandardSize(this);
+        float displayXHeight = mobileSize.getStandardSize_X();
+        float displayYHeight = mobileSize.getStandardSize_Y();
+        setDisplaySize(mobileSize, displayXHeight, displayYHeight);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.ac_res_two_main_toolbar);
         mToolbar.setTitle(R.string.register_title);
@@ -172,16 +124,13 @@ public class RegisterSecondActivity extends AppCompatActivity {
         userPwd = intent.getExtras().getString("userPwd");
         String userEmail = emailEditText.getText().toString();
 
-        System.out.println("userName : " + userName);
-        System.out.println("userId : " + userId);
-        System.out.println("userPwd : " + userPwd);
-
         phoneConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                String userPhone = phoneEditText.getText().toString().substring(1, 11);
 //                System.out.println("userPhone : " + userPhone);
 //                sendVerificationCodeToUser("+82" + userPhone);
+                //TODO: 위에 입력값으로 변경
                 sendVerificationCodeToUser("+821035029610");
             }
         });
@@ -189,7 +138,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
         authConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String userAuthNum = authNumEditText.getText().toString();
 
                 Log.d(TAG, "userAuthNum : " + userAuthNum);
@@ -203,16 +151,11 @@ public class RegisterSecondActivity extends AppCompatActivity {
                 userEmail_Val = emailEditText.getText().toString();
                 userPhone_Val = phoneEditText.getText().toString();
                 authNum_Val = authNumEditText.getText().toString();
-
-                Calendar cal = Calendar.getInstance();
-                cal.set(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(("yyyy-MM-dd"));
-                userBirth_Val = simpleDateFormat.format(cal.getTime());
+                userBirth_Val = getUserBirth();
 
                 Certification = verifyUserInfo(userEmail_Val, userPhone_Val, authNum_Val, userBirth_Val);
 
-
-
+                //회원가입
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_MEMBER_SIGNUP,
                         new Response.Listener<String>() {
                             @Override
@@ -234,6 +177,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
                             }
                         }) {
 
+                    //UTF-8 인코딩
                     @Override
                     protected Response<String> parseNetworkResponse(NetworkResponse response) {
                         String character = null;
@@ -243,7 +187,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
                         } catch (UnsupportedEncodingException e) {
                             return Response.error(new ParseError(e));
                         } catch (Exception e) {
-                            // log error
                             return Response.error(new ParseError(e));
                         }
                     }
@@ -302,7 +245,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 @Override
                 public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                    Log.d("ONVerificationCompleted", "onVerificationCompleted:" + phoneAuthCredential.getSmsCode());
+                    Log.d(TAG, "onVerificationCompleted:" + phoneAuthCredential.getSmsCode());
 
                     String code = phoneAuthCredential.getSmsCode();
 
@@ -319,7 +262,7 @@ public class RegisterSecondActivity extends AppCompatActivity {
 
                 @Override
                 public void onVerificationFailed(@NonNull FirebaseException e) {
-                    Log.w("ONVerificationFailed", "onVerificationFailed", e);
+                    Log.w(TAG, "onVerificationFailed", e);
 
                     //확인 실패
                     if (e instanceof FirebaseAuthInvalidCredentialsException) {
@@ -350,7 +293,6 @@ public class RegisterSecondActivity extends AppCompatActivity {
     };
 
     private void verifyPhoneNumberWithCode(String code) {
-        // [START verify_with_code]
 
         //코드 확인
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
@@ -358,27 +300,35 @@ public class RegisterSecondActivity extends AppCompatActivity {
         signInWithPhoneAuthCredential(credential);
     }
 
-    //자격 증명으로 사용자 로그인인
-   private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "인증 성공하였습니다.", Toast.LENGTH_LONG).show();
-                        } else {
-                            // Sign in failed, display a message and update the UI
-                            Toast.makeText(getApplicationContext(), "인증 실패하였습니다.", Toast.LENGTH_LONG).show();
-
-                            Log.w("signInWithCredential:failure", "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                            }
-                        }
+    //자격 증명으로 사용자 로그인
+    private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "인증 성공하였습니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Sign in failed, display a message and update the UI
+                    Toast.makeText(getApplicationContext(), "인증 실패하였습니다.", Toast.LENGTH_LONG).show();
+                    Log.w("signInWithCredential:failure", "signInWithCredential:failure", task.getException());
+                    if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
                     }
-                });
+                }
+            }
+        });
     }
 
+    //DatePicker 값 String으로 변환
+    private String getUserBirth() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(datePicker.getYear(), datePicker.getMonth() + 1, datePicker.getDayOfMonth());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(("yyyy-MM-dd"));
+
+        return simpleDateFormat.format(cal.getTime());
+    }
+
+    //입력한 정보 유효성 검사
     private boolean verifyUserInfo(String email, String phoneNum, String authNum, String birth) {
         if(TextUtils.isEmpty(email)) {
             emailEditText.setError("이메일은 필수입력입니다!");
@@ -391,5 +341,51 @@ public class RegisterSecondActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    //디스플레이 크기 설정
+    private void setDisplaySize(MobileSize mobileSize, float x, float y) {
+
+        float authImageSize = y/10;
+        float authImageWidth = (x/10) * 3;
+
+        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
+        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
+        mobileSize.setLayoutMargin(authImageView, 0, (int) (y-authImageSize) / 20, 0,(int) (y-authImageSize) / 20);
+        mobileSize.setLayoutHeight(emailEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(emailEditText, (int) x/20, 5, (int) x/20, 5);
+        mobileSize.setLayoutPadding(emailEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(phoneEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutWidth(phoneEditText, (int) (x/5)*3);
+        mobileSize.setLayoutMargin(phoneEditText, (int) x/20, 5,  0, 5);
+        mobileSize.setLayoutPadding(phoneEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(authNumEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutWidth(authNumEditText, (int) (x/5)*3);
+        mobileSize.setLayoutMargin(authNumEditText, (int) x/20, 5, 0, 5);
+        mobileSize.setLayoutPadding(authNumEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(phoneConfirmButton, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(phoneConfirmButton, 10, 0, (int) x/20, 0);
+
+        mobileSize.setLayoutHeight(authConfirmButton, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(authConfirmButton, 10, 0, (int) x/20, 0);
+
+        mobileSize.setLayoutHeight(dayLayout, (int) ((int) ((y-authImageSize) / 10) * 1.5));
+        mobileSize.setLayoutMargin(dayLayout, 0, 5,  0, 5);
+
+        mobileSize.setLayoutHeight(birthTextView, (int) ((int) ((y-authImageSize) / 10) * 1.5));
+        mobileSize.setLayoutWidth(birthTextView, (int) (x) / 5);
+        mobileSize.setLayoutMargin(birthTextView, (int) x/20, 0,  0, 0);
+        mobileSize.setLayoutPadding(birthTextView, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(datePicker, (int) ((int) ((y-authImageSize) / 10) * 1.5));
+        mobileSize.setLayoutMargin(datePicker, 10, 0, (int) x/20, 0);
+
+        mobileSize.setLayoutHeight(signUpButton, (int) (y-authImageSize) / 10);
+
+        mobileSize.setLayoutMargin(signUpLayout, (int) x/20, 0, (int) x/20, (int) ((int) ( (y-authImageSize) / 10) + ((y-authImageSize) / 20)));
+
     }
 }

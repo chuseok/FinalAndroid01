@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final String TAG = "REGISTER_ACTIVITY";
 
     TextView authTextView;
     ImageView authImageView;
@@ -73,8 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         mobileSize.getStandardSize(this);
         float displayXHeight = mobileSize.getStandardSize_X();
         float displayYHeight = mobileSize.getStandardSize_Y();
-        float authImageSize = displayYHeight/10;
-        float authImageWidth = (displayXHeight/10) * 3;
+        setDisplaySize(mobileSize, displayXHeight, displayYHeight);
+
         authImageView = findViewById(R.id.authImageView);
         loginTextView = findViewById(R.id.loginTextView);
         userNameEditText = findViewById(R.id.ac_register_userName_et);
@@ -84,33 +85,12 @@ public class RegisterActivity extends AppCompatActivity {
         nextButton = findViewById(R.id.ac_register_next_bt);
         nextLayout = findViewById(R.id.ac_register_next_layout);
 
-        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
-        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
-        mobileSize.setLayoutMargin(authImageView, 0, (int) (displayYHeight-authImageSize) / 20, 0,(int) (displayYHeight-authImageSize) / 20);
-        mobileSize.setLayoutHeight(loginTextView, (int) (int) (displayYHeight-authImageSize) / 20);
-        mobileSize.setLayoutHeight(userNameEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(userNameEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userNameEditText, 10, 0, 0, 0);
-        mobileSize.setLayoutHeight(userIdEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(userIdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userIdEditText, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(userPwdEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(userPwdEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 5);
-        mobileSize.setLayoutPadding(userPwdEditText, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(userPwdConfirmEditText, (int) displayXHeight/20, 5, (int) displayXHeight/20, 0);
-        mobileSize.setLayoutPadding(userPwdConfirmEditText, 10, 0, 0, 0);
-
-        mobileSize.setLayoutHeight(nextButton, (int) (displayYHeight-authImageSize) / 10);
-        mobileSize.setLayoutMargin(nextLayout, (int) displayXHeight/20, 0, (int) displayXHeight/20, (int) (displayYHeight-authImageSize) / 10);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         if(extras == null) {
-            Log.d("EXTRAS", "NULL");
+            Log.d(TAG, "EXTRAS NULL");
         } else if(extras != null) {
             String userName = intent.getExtras().getString("userName");
             userNameEditText.setText(userName);
@@ -141,9 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     boolean idCheck = true;
                                     boolean nameCheck = true;
                                     for (int i = 0; i < memberArray.length(); i++) {
-                                        Log.d("RESPONSE_WEB", "response");
-                                        Log.d("MEMBER_NAME", memberArray.getJSONObject(i).getString("userName"));
-                                        Log.d("MEMBER_ID", memberArray.getJSONObject(i).getString("userId"));
+                                        Log.d(TAG, "MEMBER_NAME : " + memberArray.getJSONObject(i).getString("userName"));
+                                        Log.d(TAG, "MEMBER_ID : " + memberArray.getJSONObject(i).getString("userId"));
 
                                         if (userName_Val.equalsIgnoreCase(memberArray.getJSONObject(i).getString("userName"))) {
                                             userNameEditText.setError("이름이 이미 있습니다!");
@@ -327,7 +306,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(userName.length() >=2 && userName.length() <=5) {
             nameCheck = true;
         }
-        Log.d("USER_NAME_LENGTH", String.valueOf(userName.length()));
+        Log.d(TAG, "USER_NAME_LENGTH : " + String.valueOf(userName.length()));
         return nameCheck;
     }
 
@@ -337,7 +316,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(userId.length() >=6 && userId.length() <=12) {
             idCheck = true;
         }
-        Log.d("USER_ID_LENGTH", String.valueOf(userId.length()));
+        Log.d(TAG, "USER_ID_LENGTH : " + String.valueOf(userId.length()));
         return idCheck;
     }
 
@@ -347,7 +326,35 @@ public class RegisterActivity extends AppCompatActivity {
         if(userPwd.length() >=8 && userPwd.length() <=16) {
             pwdCheck = true;
         }
-        Log.d("USER_PWD_LENGTH", String.valueOf(userPwd.length()));
+        Log.d(TAG, "USER_PWD_LENGTH : " + String.valueOf(userPwd.length()));
         return pwdCheck;
+    }
+
+    private void setDisplaySize(MobileSize mobileSize, float x, float y) {
+        float authImageSize = y/10;
+        float authImageWidth = (x/10) * 3;
+
+        mobileSize.setLayoutHeight(authImageView, (int) authImageSize);
+        mobileSize.setLayoutWidth(authImageView, (int) authImageWidth);
+        mobileSize.setLayoutMargin(authImageView, 0, (int) (y-authImageSize) / 20, 0,(int) (y-authImageSize) / 20);
+        mobileSize.setLayoutHeight(loginTextView, (int) (int) (y-authImageSize) / 20);
+        mobileSize.setLayoutHeight(userNameEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userNameEditText, (int) x/20, 5, (int) x/20, 5);
+        mobileSize.setLayoutPadding(userNameEditText, 10, 0, 0, 0);
+        mobileSize.setLayoutHeight(userIdEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userIdEditText, (int) x/20, 5, (int) x/20, 5);
+        mobileSize.setLayoutPadding(userIdEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(userPwdEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userPwdEditText, (int) x/20, 5, (int) x/20, 5);
+        mobileSize.setLayoutPadding(userPwdEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(userPwdConfirmEditText, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(userPwdConfirmEditText, (int) x/20, 5, (int) x/20, 0);
+        mobileSize.setLayoutPadding(userPwdConfirmEditText, 10, 0, 0, 0);
+
+        mobileSize.setLayoutHeight(nextButton, (int) (y-authImageSize) / 10);
+        mobileSize.setLayoutMargin(nextLayout, (int) x/20, 0, (int) x/20, (int) (y-authImageSize) / 10);
+
     }
 }

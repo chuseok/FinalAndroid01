@@ -44,6 +44,8 @@ public class DragonListFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "DRAGON_LIST_FRAGMENT";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ViewPager viewPager;
@@ -180,7 +182,7 @@ public class DragonListFragment extends Fragment {
                             for (int i = 0; i < array.length(); i++) {
 
                                 String replaceUrl = array.getJSONObject(i).getString("dragonImage").replace("../",URLs.ROOT_URL);
-                                Log.d("checkArray", "onResponse: "+array.getJSONObject(i));
+                                Log.d(TAG, "onResponse: "+array.getJSONObject(i));
 
                                 int hungryValue = Integer.parseInt(array.getJSONObject(i).getString("hungryValue"));
                                 int dragonId = Integer.parseInt(array.getJSONObject(i).getString("dragonId"));

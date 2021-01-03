@@ -78,7 +78,7 @@ public class SplashActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... strings) {
             //단어장 제목, 학습 진행률
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_STUDY_GETLIST,
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_STUDY_WORDBOOKS_INFORMATION,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

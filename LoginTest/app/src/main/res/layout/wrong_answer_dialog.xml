@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
@@ -14,25 +14,35 @@
     <TextView
         android:id="@+id/wrong_answer_dialog_word_tv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        />
     <TextView
         android:id="@+id/wrong_answer_dialog_answer_title"
         android:text="정답"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        />
     <TextView
         android:id="@+id/wrong_answer_dialog_answer_meaning"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        />
     <TextView
         android:id="@+id/wrong_answer_dialog_input_title"
         android:text="입력하신 답"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        />
     <TextView
         android:id="@+id/wrong_answer_dialog_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        />
     <LinearLayout
         android:id="@+id/dialog_numbers_bottom_layout"
         android:layout_width="match_parent"
@@ -49,6 +59,9 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="계속하기"
+            android:textColor="#DF1C1C"
+            android:background="#ffffff"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textSize="16sp" />
 
     </LinearLayout>

@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.example.logintest.R;
+import com.example.logintest.Utils.MobileSize;
 import com.example.logintest.WordCardFragment;
 
 
@@ -20,12 +23,6 @@ public class WrongAnswerDialog extends Dialog implements WrongAnswerDialogCallba
     private TextView titleTextView, continueTextView, wordTextView, meaningTextView, inputTextView;
 
     private String wordValue, meaningValue, inputValue;
-
-    /*public WrongAnswerDialog(@NonNull Context context, WrongAnswerDialogListener wrongAnswerDialogListener) {
-        super(context);
-        this.context = context;
-        this.wrongAnswerDialogListener = wrongAnswerDialogListener;
-    }*/
 
     public WrongAnswerDialog(@NonNull Context context, View.OnClickListener continueListener) {
         super(context);
@@ -41,7 +38,6 @@ public class WrongAnswerDialog extends Dialog implements WrongAnswerDialogCallba
         WordCardFragment wordCardFragment = new WordCardFragment();
         wordCardFragment.setOnWrongAnswerSetListner(this);
 
-
         titleTextView = findViewById(R.id.wrong_answer_dialog_title_tv);
         wordTextView = findViewById(R.id.wrong_answer_dialog_word_tv);
         meaningTextView = findViewById(R.id.wrong_answer_dialog_answer_meaning);
@@ -50,6 +46,8 @@ public class WrongAnswerDialog extends Dialog implements WrongAnswerDialogCallba
         wordTextView.setText(wordValue);
         meaningTextView.setText(meaningValue);
         inputTextView.setText(inputValue);
+
+
 
         continueTextView.setOnClickListener(continueListener);
     }

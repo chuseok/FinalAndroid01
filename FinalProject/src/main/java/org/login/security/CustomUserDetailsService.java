@@ -20,8 +20,6 @@ private MemberMapper memberMapper;
 public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
 	
 	log.warn("Load User By UserName : " + userName);
-	
-	
 	 
 	  MemberVO vo = memberMapper.read(userName);
 	  
@@ -29,5 +27,5 @@ public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundEx
 	  
 	  return vo == null ? null : new CustomUser(vo);
 	 
-}
+	}
 }

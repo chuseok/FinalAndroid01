@@ -120,7 +120,7 @@ public class WordDetailActivity extends AppCompatActivity{
 
         wordList = new ArrayList<>();
 
-        String url = URLs.URL_STUDY_GETWORDLIST+"?bookId="+ bookId +"&bookTitle="+bookTitle;
+        String url = URLs.URL_STUDY_WORDBOOKS_CONTENTS+"?bookId="+ bookId +"&bookTitle="+bookTitle;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

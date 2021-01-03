@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -172,12 +173,12 @@ public class WordCardFragment extends Fragment {
 
                     wrongAnswerDialog = new WrongAnswerDialog(getContext(), continueListener);
                     wrongAnswerDialog.onDialogSet(word, meaning, answer);
-                    wrongAnswerDialog.show();
-
                     wrongAnswerDialog.setCanceledOnTouchOutside(true);
                     wrongAnswerDialog.setCancelable(true);
                     wrongAnswerDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
                     wrongAnswerDialog.show();
+                    Window window = wrongAnswerDialog.getWindow();
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 }
             }
         });
@@ -193,8 +194,8 @@ public class WordCardFragment extends Fragment {
 
 
     private void updateRateFromQuestion() {
-        String url = URLs.URL_STUDY_MODIFY_RATE_FROM_QUESTION + "?userId=" + mParam3.getId() + "&bookTitle=" + mParam3.getTitle() + "&word=" + word;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        String url = URLs.URL_STUDY_MODIFY_LEARNING_RATE + "?userId=" + mParam3.getId() + "&bookTitle=" + mParam3.getTitle() + "&word=" + word;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
