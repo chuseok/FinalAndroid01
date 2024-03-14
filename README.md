@@ -1,11 +1,14 @@
 # 암기용 - 단어암기 앱
 
-> 암기용 웹 프로젝트와 연동한 Native App
+> Android Studio를 활용하여 암기용 웹 프로젝트와 연동한 Native App
 
 ## Technologies
 
-Volley Library를 사용하여 웹 프로젝트의 API와 HTTP 통신합니다.
-ViewPager에 PagerAdapter를 사용하여 MainFragment 화면 구현
+* Volley Library를 사용하여 웹 프로젝트의 API와 HTTP 통신합니다.
+* ViewPager에 PagerAdapter를 사용한 MainFragment 화면 구현
+* Firebase Authenticate API를 활용한 휴대폰 번호 인증
+* Dialog 알림창
+* 인터페이스를 구현하여 Activity와 Fragment간의 데이터 처리
 
 ## Features
 
